@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnhouse.app.dao.DeptUserDao">
+  <resultMap id="BaseResultMap" type="com.jnhouse.app.bean.DeptUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dept_id" jdbcType="INTEGER" property="dept_id" />
+    <result column="broker_id" jdbcType="INTEGER" property="broker_id" />
+    <result column="is_delete" jdbcType="INTEGER" property="is_delete" />
+    <result column="updated_by" jdbcType="INTEGER" property="updated_by" />
+    <result column="created_by" jdbcType="INTEGER" property="created_by" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updated_time" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="created_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, dept_id, broker_id, is_delete, updated_by, created_by, updated_time, created_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fke_dept_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectByDeptId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+    broker_id
+    from fke_dept_user
+    where dept_id = #{dept_id,jdbcType=INTEGER}
+    and is_delete = 1
+    order by id
+  </select>
+  <select id="selectUserByDeptId" parameterType="com.jnhouse.app.dto.DeptUserDto" resultType="com.jnhouse.app.dto.DeptUserDto">
+    select 
+    fdu.id,fdu.dept_id,fdu.broker_id,fbi.realname,fm.username as mobile,fbi.avatar as photo
+    from fke_dept_user fdu,fke_member fm ,fke_broker_info fbi
+    where dept_id = #{dept_id,jdbcType=INTEGER}
+    and fdu.is_delete = '1'
+	and fdu.broker_id = fm.id
+	and fm.is_broker = '1'
+	and status = '1'
+	and fm.id = fbi.id
+ 	<if test="realname != null">
+      and  fbi.realname like concat(concat('%',#{realname,jdbcType=VARCHAR}),'%') 
+    </if>
+    order by fdu.updated_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fke_dept_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+    delete from fke_dept_user
+    where id in (
+    <foreach collection="ids" item="id" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    ) 
+  </delete>
+  <insert id="insert" parameterType="com.jnhouse.app.bean.DeptUser">
+    insert into fke_dept_user (dept_id, broker_id, is_delete, 
+      updated_by, created_by, updated_time, 
+      created_time)
+    values (#{dept_id,jdbcType=INTEGER}, #{broker_id,jdbcType=INTEGER}, #{is_delete,jdbcType=INTEGER}, 
+      #{updated_by,jdbcType=INTEGER}, #{created_by,jdbcType=INTEGER}, #{updated_time,jdbcType=TIMESTAMP}, 
+      #{created_time,jdbcType=TIMESTAMP})
+  </insert>
+   <insert id="insertBatchUsers" >
+    insert into fke_dept_user (dept_id, broker_id, is_delete, 
+      updated_by, created_by, updated_time, 
+      created_time)
+    values 
+    <foreach collection="deptUserList" item="item" index="index" separator=",">  
+        (#{item.dept_id,jdbcType=INTEGER}, #{item.broker_id,jdbcType=INTEGER}, 1, 
+      #{item.updated_by,jdbcType=INTEGER}, #{item.created_by,jdbcType=INTEGER}, NOW(), NOW()) 
+    </foreach> 
+  </insert>
+  <insert id="insertSelective" parameterType="com.jnhouse.app.bean.DeptUser">
+    insert into fke_dept_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dept_id != null">
+        dept_id,
+      </if>
+      <if test="broker_id != null">
+        broker_id,
+      </if>
+      <if test="is_delete != null">
+        is_delete,
+      </if>
+      <if test="updated_by != null">
+        updated_by,
+      </if>
+      <if test="created_by != null">
+        created_by,
+      </if>
+      <if test="updated_time != null">
+        updated_time,
+      </if>
+      <if test="created_time != null">
+        created_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dept_id != null">
+        #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="broker_id != null">
+        #{broker_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_delete != null">
+        #{is_delete,jdbcType=INTEGER},
+      </if>
+      <if test="updated_by != null">
+        #{updated_by,jdbcType=INTEGER},
+      </if>
+      <if test="created_by != null">
+        #{created_by,jdbcType=INTEGER},
+      </if>
+      <if test="updated_time != null">
+        #{updated_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created_time != null">
+        #{created_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update fke_dept_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.dept_id != null">
+        dept_id = #{record.dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.broker_id != null">
+        broker_id = #{record.broker_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.is_delete != null">
+        is_delete = #{record.is_delete,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated_by != null">
+        updated_by = #{record.updated_by,jdbcType=INTEGER},
+      </if>
+      <if test="record.created_by != null">
+        created_by = #{record.created_by,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated_time != null">
+        updated_time = #{record.updated_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.created_time != null">
+        created_time = #{record.created_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update fke_dept_user
+    set id = #{record.id,jdbcType=INTEGER},
+      dept_id = #{record.dept_id,jdbcType=INTEGER},
+      broker_id = #{record.broker_id,jdbcType=INTEGER},
+      is_delete = #{record.is_delete,jdbcType=INTEGER},
+      updated_by = #{record.updated_by,jdbcType=INTEGER},
+      created_by = #{record.created_by,jdbcType=INTEGER},
+      updated_time = #{record.updated_time,jdbcType=TIMESTAMP},
+      created_time = #{record.created_time,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jnhouse.app.bean.DeptUser">
+    update fke_dept_user
+    <set>
+      <if test="dept_id != null">
+        dept_id = #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="broker_id != null">
+        broker_id = #{broker_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_delete != null">
+        is_delete = #{is_delete,jdbcType=INTEGER},
+      </if>
+      <if test="updated_by != null">
+        updated_by = #{updated_by,jdbcType=INTEGER},
+      </if>
+      <if test="created_by != null">
+        created_by = #{created_by,jdbcType=INTEGER},
+      </if>
+      <if test="updated_time != null">
+        updated_time = #{updated_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created_time != null">
+        created_time = #{created_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jnhouse.app.bean.DeptUser">
+    update fke_dept_user
+    set dept_id = #{dept_id,jdbcType=INTEGER},
+      broker_id = #{broker_id,jdbcType=INTEGER},
+      is_delete = #{is_delete,jdbcType=INTEGER},
+      updated_by = #{updated_by,jdbcType=INTEGER},
+      created_by = #{created_by,jdbcType=INTEGER},
+      updated_time = #{updated_time,jdbcType=TIMESTAMP},
+      created_time = #{created_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getDeptIdByUserId" parameterType="Integer" resultType="Integer">
+  	select dept_id from fke_dept_user where broker_id = #{userId}
+  </select>
+</mapper>

@@ -1,0 +1,6 @@
+1.mapper目录为空无法生成classes
+2.使用tomcat7-maven-plugin部署 项目右键--run as--maven build... --Goals里填上tomcat7-run即可
+3.不使用tomcat7-maven-plugin 使用tomcat部署报错 提示web.xml里面找不到类 解决办法 
+项目右键-properties-Deployment Assembly-add-Java Build Path Entries-Maven Dependencies --ok 
+这样tomcat就会在WEB-INF/lib下找到maven的jar包
+4.xml配置文件无法加载xsd 神坑~~~

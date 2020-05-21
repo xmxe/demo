@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="default" extends="struts-default,json-default">
+		<interceptors><!-- 配置拦截器 -->
+			<interceptor name="myInter" class="com.ssh.util.Interceptor"></interceptor>
+			<!-- 自定义拦截器栈，组合了defaultStack和 myInter-->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="myInter">
+					<param name="excludeMethods">generate,check</param>	<!-- 定义哪些方法不被拦截  myInter定义的拦截器必须继承MethodFilterInterceptor否则无效-->			
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 为当前包所有Action配置默认拦截器 -->
+        <default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<default-action-ref name="MainAction" /> <!-- 默认action的名称 -->      
+        <default-class-ref class="com.ssh.action.MainAction" /><!-- 配置默认action的处理类 -->
+		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+		           
+		<action name="code" method="generate">
+			<result name="success">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>	
+		<action name="check" method="check">  
+            <result type="json" name="success">  <!-- struts2返回json -->
+                <param name="root">json</param>  <!-- json应与MainAction中定义的json属性一致 -->
+            </result>  
+        </action> 
+        <action name="index" method="index">       	
+			<result name="success">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="list" method="listBook">
+			<result name="success">/WEB-INF/content/list.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="query" method="queryBook">
+			<result name="success">/WEB-INF/content/edit.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="del" method="deleteBook">
+			<result name="success" type="redirectAction">/list.action</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<!-- 
+		dispatcher  ——  请求转发到一个页面 （默认）,不可以用这种方式转发到一个action
+		chain  ——  一个action请求转发至另一个 action
+		redirect  ——  响应重定向到一个页面
+		redirectAction —— 一个action响应重定向至另一个 action
+		 -->
+		<action name="update" method="updateBook">
+			<result name="success" type="redirectAction">/list.action</result>
+			<result name="error">/error.jsp</result>
+		</action>			
+	</package>   
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+</struts>
