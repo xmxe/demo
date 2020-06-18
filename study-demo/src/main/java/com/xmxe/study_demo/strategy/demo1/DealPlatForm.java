@@ -1,7 +1,7 @@
-package com.xmxe.study_demo.strategy;
+package com.xmxe.study_demo.strategy.demo1;
 
 /**
-*策略类 
+*统一业务接口实现类（策略类） 业务逻辑越多（if else越多） 策略类越多 
 */
 public class DealPlatForm implements DealStrategy{
 

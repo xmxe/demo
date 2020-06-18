@@ -1,6 +1,6 @@
-package com.xmxe.study_demo.strategy;
+package com.xmxe.study_demo.strategy.demo1;
 
-//定义上下文，负责使用DealStrategy角色
+//封装实体类 type为分享的app类型 如qq sina DealStrategy为统一业务封装接口
 public class DealContext {
     private String type;
     private DealStrategy deal;
