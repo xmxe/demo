@@ -9,9 +9,9 @@ import org.reflections.Reflections;
 public class BeanFactory {
     
     /**
-     * Bean对象容器
+     *获取注解标记的实现类，将实现类放到map里面 key为source中的值 value为注解标记的实现类
      */
-    private static final Map<String, Object> beanContainer = new HashMap<String, Object>();
+    protected static final Map<String, Object> beanContainer = new HashMap<String, Object>();
 
     /**
      * 初始化指定包下的所有@OrderHandlerType注解标记的类

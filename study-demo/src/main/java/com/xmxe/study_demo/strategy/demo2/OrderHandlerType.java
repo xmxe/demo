@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OrderHandlerType {
     
-    String source() default "";
+    String source() default "default";
 }
