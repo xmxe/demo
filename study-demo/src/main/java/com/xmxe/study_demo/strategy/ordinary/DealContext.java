@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.demo1;
+package com.xmxe.study_demo.strategy.ordinary;
 
 //封装实体类 type为分享的app类型 如qq sina DealStrategy为统一业务封装接口
 public class DealContext {

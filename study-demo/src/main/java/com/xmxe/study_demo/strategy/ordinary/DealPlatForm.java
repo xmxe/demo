@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.demo1;
+package com.xmxe.study_demo.strategy.ordinary;
 
 /**
 *统一业务接口实现类（策略类） 业务逻辑越多（if else越多） 策略类越多 

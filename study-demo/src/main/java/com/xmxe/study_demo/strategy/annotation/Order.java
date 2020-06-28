@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.demo2;
+package com.xmxe.study_demo.strategy.annotation;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.demo1;
+package com.xmxe.study_demo.strategy.ordinary;
 
 import java.util.ArrayList;
 import java.util.List;
