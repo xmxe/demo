@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import org.junit.Test;
 
 public class WeekEnumTest {
+	//https://mp.weixin.qq.com/s/2kzQipo_cZRVWTx5C6GZ7Q 用好Java中的枚举，真的没有那么简单！
 	@Test
 	public void test1() {
 		for (WeekEnum e : WeekEnum.values()) {
