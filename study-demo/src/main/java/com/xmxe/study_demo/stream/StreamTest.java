@@ -70,6 +70,7 @@ public class StreamTest {
                 .collect(Collectors.toList());
         streamStudents.forEach(System.out::println);
 
+
         // map(转换)
         List<String> addresses = students.stream().map(s -> "住址:" + s.getAddress()).collect(Collectors.toList());
         addresses.forEach(a -> System.out.println(a));
@@ -121,10 +122,28 @@ public class StreamTest {
          * allMatch：Stream 中全部元素符合传入的 predicate，返回 true
          * noneMatch：Stream 中没有一个元素符合传入的 predicate，返回 true
          */
+        List<Integer> num = Arrays.asList(1, 2, 3, 4, 5, 6);
+        if (num.stream().anyMatch(n -> n % 3 == 0)) {
+            System.out.println("集合中有元素是3的整数倍");
+        }
 
+        /**
+         * findAny() 该方法返回当前流中的任意元素,可以和其他流操作结合使用,这里需要注意 findAny() 返回的结果
+         * 被 Optional 所包裹，Optional 是 Java8 为优雅的避免 NPE 所采用的新 API，这里需要说明的就是 
+         * Optional.ifPresent(Consumer<? super T> consumer) 表示当 Optional 包裹的元素不为空时，执行 consumer
+         */
+        num.stream().filter(n -> n > 2).findAny().ifPresent(System.out::println);
+
+        //stream求集合最大值最小值
+        num.stream().reduce(Integer::max);
+        num.stream().reduce(Integer::min);
         
 
     }
+
+
+
+    
 
     @Test
     public void map(){
