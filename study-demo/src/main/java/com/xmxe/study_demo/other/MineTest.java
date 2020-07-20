@@ -75,7 +75,6 @@ public class MineTest {
 		// 第三个参数内容：是在两个任务之间的执行时间间隔，该参数不能小于等于0
 	}
 
-	// https://mp.weixin.qq.com/s/HXF6rWJPeGyLLhiSa7zdog
 	// 定义一个整数数组，如何找出一个整数是否在这个数组里并获得整数的下标
 	@Test
 	public void 二分查找() {

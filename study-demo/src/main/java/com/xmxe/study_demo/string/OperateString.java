@@ -19,11 +19,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-/**
- * 关于 Java 字符串的全部，都在这份手册里了 --CSDN
- * https://mp.weixin.qq.com/s/iYO16IddRqAqn3D5VhURQQ
- * https://mp.weixin.qq.com/s/o7dlDYDOENhc-RvEmm__NA
- */
 public class OperateString {
 
     /**

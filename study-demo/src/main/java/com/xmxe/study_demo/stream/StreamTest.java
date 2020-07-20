@@ -14,8 +14,6 @@ import org.junit.Test;
 
 public class StreamTest {
 
-    // https://mp.weixin.qq.com/s/8k92CCGg9I6EAR7pAq698A Java 8：一文掌握 Lambda 表达式
-
     @Test
     public void lambda() {
         Consumer<String> methodParam = System.out::println;

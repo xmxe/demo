@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import org.junit.Test;
 
 public class WeekEnumTest {
-	//https://mp.weixin.qq.com/s/2kzQipo_cZRVWTx5C6GZ7Q 用好Java中的枚举，真的没有那么简单！
+	
 	@Test
 	public void test1() {
 		for (WeekEnum e : WeekEnum.values()) {
@@ -98,7 +98,6 @@ public class WeekEnumTest {
 
 		/**
 		 * 枚举替代if else if写法 一行代码搞定 如果需要再加判断只需要增加枚举类属性即可 valueOf()获取枚举类型
-		 * https://mp.weixin.qq.com/s/GJBaopEqPMOhi2pGtenL9g
 		 */
 		WeekEnum.valueOf(str).eval(1, 2);
 	}
