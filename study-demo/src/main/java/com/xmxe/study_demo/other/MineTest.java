@@ -65,7 +65,6 @@ public class MineTest {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				System.out.println("---");
 			}
 		}, 0, 60000);

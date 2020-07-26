@@ -8,7 +8,7 @@ public class BuyHouseProxy implements BuyHouse {
 	
 	@Override
 	public void buyHouse() {
-		// TODO Auto-generated method stub
+		
 		System.out.println("BuyHouseProxy1:");
 		bh.buyHouse();
 		System.out.println("BuyHouseProxy2:");

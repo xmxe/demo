@@ -11,7 +11,6 @@ import org.apache.zookeeper.ZooKeeper;
 public class ZookeeperWatchTest {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Thread t = new Thread(new Wa());
 		t.start();
 	}
@@ -33,7 +32,7 @@ class Wa implements Runnable {
 			// 设置监听器
 		/*	Watcher wc = new Watcher() {
 				public void process(WatchedEvent event) {
-					// TODO Auto-generated method stub
+					
 					if (event.getType() == EventType.NodeDataChanged) {
 						System.out.println("change");
 					}
@@ -65,13 +64,10 @@ class Wa implements Runnable {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (KeeperException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
