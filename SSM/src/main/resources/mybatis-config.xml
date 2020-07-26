@@ -9,7 +9,7 @@
 	</settings>
 	
 	<plugins>
-		<plugin interceptor="com.github.pagehelper.PageInterceptor">	
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
 		</plugin>
 	</plugins>
 </configuration>

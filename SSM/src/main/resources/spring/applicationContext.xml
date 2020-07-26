@@ -28,17 +28,38 @@
 	</context:component-scan> 
 
 	<!-- 配置dataSoure -->
-	<bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
-		<property name="driverClass" value="${jdbc.driverClass}"></property>
-		<property name="user" value="${jdbc.user}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-	</bean>
+	 <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${dataSource.url}"/>
+        <property name="driverClassName" value="${dataSource.driverClassName}"/>
+        <property name="username" value="${dataSource.username}"/>
+        <property name="password" value="${dataSource.password}"/>
+        <property name="initialSize" value="${dataSource.initialSize}"/>
+        <property name="minIdle" value="${dataSource.minIdle}"/>
+        <property name="maxActive" value="${dataSource.maxActive}"/>
+        <property name="maxWait" value="${dataSource.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="${dataSource.validationQuery}"/>
+        <property name="validationQueryTimeout" value="${dataSource.validationQueryTimeout}"/>
+        <property name="testWhileIdle" value="${dataSource.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${dataSource.testOnBorrow}"/>
+        <property name="testOnReturn" value="${dataSource.testOnReturn}"/>
+        <property name="poolPreparedStatements" value="${dataSource.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${dataSource.maxPoolPreparedStatementPerConnectionSize}"/>
+        <property name="filters" value="${dataSource.filters}"/>
+        <!--下面这个参数是设置的运行超过3分钟的SQL被强杀，用来排查连接泄露-->
+        <!-- 超过时间限制是否回收 -->
+        <property name="removeAbandoned" value="true" />
+         <!--超时时间；单位为秒。180秒=3分钟 -->
+        <property name="removeAbandonedTimeout" value="180" />
+         <!--关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+    </bean>
 	
 	<!-- 配置和Mybatis的整合 -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
-		<property name="dataSource" ref="pooledDataSource"></property>
+		<property name="dataSource" ref="dataSource"></property>
 		<!-- 指定mybatis的映射文件 -->
 		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
 	</bean>
@@ -51,7 +72,7 @@
 	
 	<!-- 配置事务管理 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="pooledDataSource"></property>
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
 	<!-- 配置事务增强-->
