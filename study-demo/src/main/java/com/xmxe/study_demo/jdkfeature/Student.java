@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.stream;
+package com.xmxe.study_demo.jdkfeature;
 
 import java.util.Objects;
 

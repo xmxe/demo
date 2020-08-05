@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.cglib.proxy.Enhancer;
 
-import com.xmxe.study_demo.stream.LambdaService;
+import com.xmxe.study_demo.jdkfeature.LambdaService;
 import com.xmxe.study_demo.proxy.dynamicproxy.CglibProxy;
 import com.xmxe.study_demo.proxy.dynamicproxy.Dao;
 import com.xmxe.study_demo.proxy.dynamicproxy.DynamicProxyHandler;

@@ -13,6 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <poi.version>4.1.2</poi.version>
+	<java.version>11</java.version>
   </properties>
 
   <dependencies>
@@ -115,4 +116,17 @@
 			<version>3.6.1</version>
 		</dependency>
   </dependencies>
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+  </build>
 </project>
