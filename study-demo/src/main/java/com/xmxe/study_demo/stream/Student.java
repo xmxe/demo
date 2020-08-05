@@ -20,6 +20,10 @@ public class Student {
         this.age = age;
         this.address = address;
     }
+    public Student(String name,int age){
+        this.name = name;
+        this.age = age;
+    }
 
     @Override
     public String toString() {

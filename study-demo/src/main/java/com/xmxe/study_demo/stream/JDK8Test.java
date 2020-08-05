@@ -6,15 +6,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Test;
 
-public class StreamTest {
+public class JDK8Test {
 
-    @Test
     public void lambda() {
         Consumer<String> methodParam = System.out::println;
 
@@ -50,7 +50,6 @@ public class StreamTest {
                 .forEach(x -> methodParam.accept("④---" + x));
     }
 
-    @Test
     public void stream() {
 
         Student s1 = new Student(1L, "肖战", 15, "浙江");
@@ -136,14 +135,9 @@ public class StreamTest {
         num.stream().reduce(Integer::max);
         num.stream().reduce(Integer::min);
         
-
     }
+  
 
-
-
-    
-
-    @Test
     public void map(){
         //将集合中的每一个字符串，全部转换成大写
         List<String> alpha = Arrays.asList("Monkey", "Lion", "Giraffe", "Lemur");
@@ -167,9 +161,40 @@ public class StreamTest {
         words.stream().map(w -> Arrays.stream(w.split(""))).forEach(System.out::println);//[[h,e,l,l,o],[w,o,r,l,d]]
         words.stream().flatMap(w -> Arrays.stream(w.split(""))).forEach(System.out::println); // [h,e,l,l,o,w,o,r,l,d]
 
+    }
 
+    
+    public void fun(){
+        /**
+         * Function<T,R> 接受一个输入参数 返回一个结果
+         * Consumer<T> 代表了接收一个输入参数并且无返回的操作
+         * Predicate<T> 接收一个输入参数并且返回布尔值结果
+         * Supplier<T> 无参数返回一个结果
+         */
 
+        // 使用双冒号::来构造静态函数引用
+        Function<String, Integer> fun = Integer::parseInt;
+        Integer value = fun.apply("123");
+        System.out.println(value);
 
+        // 使用双冒号::来构造非静态函数引用
+        String content = "Hello JDK8";
+        Function<Integer, String> func = content::substring;
+        String result = func.apply(1);
+        System.out.println(result);
 
+        // 构造函数引用
+        /**
+         * Bifunction接收两个参数返回一个参数
+         */
+        BiFunction<String, Integer, Student> biFunction = Student::new;
+        Student stu = biFunction.apply("mengday", 28);
+        System.out.println(stu.toString());
+
+    }
+
+    public static void main(String[] args) {
+        JDK8Test t = new JDK8Test();
+        t.fun();
     }
 }
