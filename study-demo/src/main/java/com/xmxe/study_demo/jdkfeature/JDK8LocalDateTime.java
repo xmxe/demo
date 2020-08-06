@@ -14,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class JDK8LocalDateTime {
     // Instant：瞬时时间。
@@ -37,19 +38,19 @@ public class JDK8LocalDateTime {
 
     public void 获取年月日时分秒(){
         //获取当前的时间，包括毫秒
-        LocalDateTime ldt = LocalDateTime.now();
-        System.out.println("当前年:"+ldt.getYear());//当前年:2018
-        System.out.println("当前年份天数:"+ldt.getDayOfYear());//当前年份天数:353
-        System.out.println("当前月:"+ldt.getMonthValue());//当前月:12
-        System.out.println("当前时:"+ldt.getHour());//当前时:15
-        System.out.println("当前分:"+ldt.getMinute());//当前分:24
-        System.out.println("当前时间:"+ldt.toString());//当前时间:2018-12-19T15:24:35.833
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("当前年:"+now.getYear());//当前年:2018
+        System.out.println("本年当中第:"+now.getDayOfYear()+"天");//本年当中第:353 天
+        System.out.println("当前月:"+now.getMonthValue());//当前月:12
+        System.out.println("当前时:"+now.getHour());//当前时:15
+        System.out.println("当前分:"+now.getMinute());//当前分:24
+        System.out.println("当前秒："+now.getSecond());//当前秒：33
+        System.out.println("当前时间:"+now.toString());//当前时间:2018-12-19T15:24:35.833
         
-        LocalDateTime localDateTime = LocalDateTime.now();
-        int dayOfYear = localDateTime.getDayOfYear();
-        int dayOfMonth = localDateTime.getDayOfMonth();
-        DayOfWeek dayOfWeek = localDateTime.getDayOfWeek();
-        System.out.println("今天是" + localDateTime + "\n"
+        int dayOfYear = now.getDayOfYear();
+        int dayOfMonth = now.getDayOfMonth();
+        DayOfWeek dayOfWeek = now.getDayOfWeek();
+        System.out.println("今天是" + now + "\n"
                 + "本年当中第" + dayOfYear + "天" + "\n"
                 + "本月当中第" + dayOfMonth + "天" + "\n"
                 + "本周中星期" + dayOfWeek.getValue() + "-即" + dayOfWeek + "\n");                
@@ -57,54 +58,27 @@ public class JDK8LocalDateTime {
         //本年当中第87天
         //本月当中第28天
         //本周中星期3-即WEDNESDAY
-
-        //获取当天时间的年月日时分秒
-        int year = localDateTime.getYear();
-        Month month = localDateTime.getMonth();
-        int day = localDateTime.getDayOfMonth();
-        int hour = localDateTime.getHour();
-        int minute = localDateTime.getMinute();
-        int second = localDateTime.getSecond();
-        System.out.println("今天是" + localDateTime + "\n"
-                + "年 ： " + year + "\n"
-                + "月 ： " + month.getValue() + "-即 "+ month + "\n"
-                + "日 ： " + day + "\n"
-                + "时 ： " + hour + "\n"
-                + "分 ： " + minute + "\n"
-                + "秒 ： " + second + "\n"
-                );
-        //今天是2018-03-28T17:11:15.180
-        //年：2018
-        //月：3-即MARCH
-        //日：28
-        //时：17
-        //分：11
-        //秒：35
         
     }
 
     public void 格式化时间(){
-        LocalDateTime ldt = LocalDateTime.now();
-        System.out.println("格式化时间: "+ ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
-        //格式化时间:2018-12-19 15:37:47.119
+        LocalDateTime now = LocalDateTime.now();
 
         //使用jdk自身配置好的日期格式
         DateTimeFormatter formatter1 = DateTimeFormatter.ISO_DATE_TIME;
-        LocalDateTime date1 = LocalDateTime.now();
-        //反过来调用也可以 : date1.format(formatter1);
-        String date1Str = formatter1.format(date1);
+        //反过来调用也可以 : now.format(formatter1);
+        String date1Str = formatter1.format(now);
         System.out.println(date1Str);//2018-01-14T16:50:43:27.2
-
-        LocalDateTime date = LocalDateTime.now();
+        //自定义日期格式
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss");
-        String date2Str = formatter2.format(date);
+        String date2Str = formatter2.format(now);
         System.out.println(date2Str);//2018年01月14日 16:50:43:27
 
         DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        System.out.println(formatter3.format(LocalDate.now()));//2018-03-28
+        System.out.println(formatter3.format(now));//2018-03-28
         
         DateTimeFormatter formatter4 = DateTimeFormatter.ofPattern("HH:mm:ss");
-        System.out.println(formatter4.format(LocalTime.now()));//18:59:36
+        System.out.println(formatter4.format(now));//18:59:36
 
         //将时间字符串转换为日期对象
         String datetime =  "2018-01-14 16:50:43";  
@@ -112,45 +86,66 @@ public class JDK8LocalDateTime {
         LocalDateTime ldt1 = LocalDateTime.parse(datetime, dtf);  
         System.out.println(ldt1);  //2018-01-14T16:50:43
 
-        //将时间日期对象转为格式化后的时间日期对象
-        //新的格式化API中，格式化后的结果都默认是String，有时我们也需要返回经过格式化的同类型对象
-        LocalDateTime ldt2 = LocalDateTime.now();
-        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String temp = dtf1.format(ldt2);
-        System.out.println(temp);//2018-01-14 16:50:43
-        LocalDateTime formatedDateTime = LocalDateTime.parse(temp, dtf1);
-        System.out.println(formatedDateTime);//2018-01-14T16:50:43:27
+       
+    }
+    public void 时间戳(){
+        //Date Instant转换
+        Instant instant = Instant.now();
+        System.out.println(instant);//2019-06-08T16:50:19.174Z
+        Date date = Date.from(instant);
+        Instant instant2 = date.toInstant();
+        System.out.println(date);//Sun Jun 09 00:50:19 CST 2019
+        System.out.println(instant2);//2019-06-08T16:50:19.174Z
 
-        //long毫秒值转对象
-        DateTimeFormatter df= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String longToDateTime = df.format(LocalDateTime.ofInstant(
-        Instant.ofEpochMilli(System.currentTimeMillis()),ZoneId.of("Asia/Shanghai")));
-        System.out.println(longToDateTime);
+        //Instant转时间戳
+        Instant now = Instant.now().plusMillis(TimeUnit.HOURS.toMillis(8));//TimeUnit.HOURS.toMillis():将小时转化为毫秒
+        System.out.println("秒数:"+now.getEpochSecond());//秒数:1539170157
+        System.out.println("毫秒数:"+now.toEpochMilli());//毫秒数:1539170157886
+
+        //LocalDateTime转时间戳，比Instant多一步转换
+        LocalDateTime localDateTime = LocalDateTime.now();
+        //LocalDateTime转Instant
+        Instant localDateTime2Instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+        System.out.println("LocalDateTime 毫秒数:"+localDateTime2Instant.toEpochMilli());//LocalDateTime 毫秒数:1539141733010
+        
+        //时间戳转LocalDateTime
+         DateTimeFormatter df= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+         LocalDateTime local = LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()),ZoneId.of("Asia/Shanghai"));
+         String longToDateTime = df.format(local);
+         System.out.println(longToDateTime);
+
+        //替代System.currentTimeMillis()获取程序执行时间      
+        Instant ins1 = Instant.now();
+        for (int i = 0; i < 10000000; i++) {
+            //循环
+        }
+        Instant ins2 = Instant.now();
+        Duration duration1 = Duration.between(ins1, ins2);
+        System.out.println("程序运行耗时为 ： " + duration1.toMillis() + "毫秒");
     }
 
     public void 对时间进行增加_减少年月日时分秒操作(){
-        LocalDateTime ldt = LocalDateTime.now();
-        System.out.println("后5天时间:"+ldt.plusDays(5));
-        System.out.println("前5天时间并格式化:"+ldt.minusDays(5).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        System.out.println("前一个月的时间:"+ldt.minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM")));
-        System.out.println("后一个月的时间:"+ldt.plusMonths(1));
-        System.out.println("指定2099年的当前时间:"+ldt.withYear(2099));
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("后5天时间:"+now.plusDays(5));
+        System.out.println("前5天时间并格式化:"+now.minusDays(5).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        System.out.println("前一个月的时间:"+now.minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM")));
+        System.out.println("后一个月的时间:"+now.plusMonths(1));
+        System.out.println("指定2099年的当前时间:"+now.withYear(2099));
        //  后5天时间:2018-12-24T15:50:37.508
        //  前5天时间并格式化:2018-12-14
        //  前一个月的时间:201712
        //  后一个月的时间:2018-02-04T09:19:29.499
        //  指定2099年的当前时间:2099-12-19T15:50:37.508
 
-        LocalDateTime localDateTime = LocalDateTime.now();
         //以下方法的参数都是long型，返回值都是LocalDateTime
-        LocalDateTime plusYearsResult = localDateTime.plusYears(2L);
-        LocalDateTime plusMonthsResult = localDateTime.plusMonths(3L);
-        LocalDateTime plusDaysResult = localDateTime.plusDays(7L);
-        LocalDateTime plusHoursResult = localDateTime.plusHours(2L);
-        LocalDateTime plusMinutesResult = localDateTime.plusMinutes(10L);
-        LocalDateTime plusSecondsResult = localDateTime.plusSeconds(10L);
+        LocalDateTime plusYearsResult = now.plusYears(2L);
+        LocalDateTime plusMonthsResult = now.plusMonths(3L);
+        LocalDateTime plusDaysResult = now.plusDays(7L);
+        LocalDateTime plusHoursResult = now.plusHours(2L);
+        LocalDateTime plusMinutesResult = now.plusMinutes(10L);
+        LocalDateTime plusSecondsResult = now.plusSeconds(10L);
                 
-        System.out.println("当前时间是 : " + localDateTime + "\n"
+        System.out.println("当前时间是 : " + now + "\n"
                 + "当前时间加2年后为 : " + plusYearsResult + "\n"
                 + "当前时间加3个月后为 : " + plusMonthsResult + "\n"
                 + "当前时间加7日后为 : " + plusDaysResult + "\n"
@@ -168,11 +163,11 @@ public class JDK8LocalDateTime {
 
         //也可以以另一种方式来相加减日期，即plus(long amountToAdd, TemporalUnit unit)
         // 参数1 ： 相加的数量， 参数2 ： 相加的单位
-        LocalDateTime nextMonth = localDateTime.plus(1, ChronoUnit.MONTHS);
-        LocalDateTime nextYear = localDateTime.plus(1, ChronoUnit.YEARS);
-        LocalDateTime nextWeek = localDateTime.plus(1, ChronoUnit.WEEKS);
+        LocalDateTime nextMonth = now.plus(1, ChronoUnit.MONTHS);
+        LocalDateTime nextYear = now.plus(1, ChronoUnit.YEARS);
+        LocalDateTime nextWeek = now.plus(1, ChronoUnit.WEEKS);
                 
-        System.out.println("now : " + localDateTime + "\n"
+        System.out.println("now : " + now + "\n"
                 + "nextYear : " + nextYear + "\n"
                 + "nextMonth : " + nextMonth + "\n"
                 + "nextWeek :" + nextWeek + "\n"
@@ -198,16 +193,16 @@ public class JDK8LocalDateTime {
     }
 
     public void 将年月日修改为指定值(){
-        LocalDate localDate = LocalDate.now();
+        LocalDate now = LocalDate.now();
         //当前时间基础上，指定本年当中的第几天，取值范围为1-365,366
-        LocalDate withDayOfYearResult = localDate.withDayOfYear(200);
+        LocalDate withDayOfYearResult = now.withDayOfYear(200);
         //当前时间基础上，指定本月当中的第几天，取值范围为1-29,30,31
-        LocalDate withDayOfMonthResult = localDate.withDayOfMonth(5);
+        LocalDate withDayOfMonthResult = now.withDayOfMonth(5);
         //当前时间基础上，直接指定年份
-        LocalDate withYearResult = localDate.withYear(2017);
+        LocalDate withYearResult = now.withYear(2017);
         //当前时间基础上，直接指定月份
-        LocalDate withMonthResult = localDate.withMonth(5);
-        System.out.println("当前时间是 : " + localDate + "\n"
+        LocalDate withMonthResult = now.withMonth(5);
+        System.out.println("当前时间是 : " + now + "\n"
                 + "指定本年当中的第200天 : " + withDayOfYearResult + "\n"
                 + "指定本月当中的第5天 : " + withDayOfMonthResult + "\n"
                 + "直接指定年份为2017 : " + withYearResult + "\n"
@@ -308,14 +303,7 @@ public class JDK8LocalDateTime {
         // 毫秒:-6380762427
         // 纳秒:-6380762427000000
 
-        //替代System.currentTimeMillis()获取程序执行时间      
-        Instant ins1 = Instant.now();
-        for (int i = 0; i < 10000000; i++) {
         
-        }
-        Instant ins2 = Instant.now();
-        Duration duration1 = Duration.between(ins1, ins2);
-        System.out.println("程序运行耗时为 ： " + duration1.toMillis() + "毫秒");
     }
 
     public void 时区时间计算(){
@@ -343,15 +331,5 @@ public class JDK8LocalDateTime {
         // 美国纽约此时的时间 和时区: 2018-12-19T03:52:22.494-05:00[America/New_York]
     }
 
-    public void 时间戳(){
-        Instant instant = Instant.now();
-        //2019-06-08T16:50:19.174Z
-        System.out.println(instant);
-        Date date = Date.from(instant);
-        Instant instant2 = date.toInstant();
-        //Sun Jun 09 00:50:19 CST 2019
-        System.out.println(date);
-        //2019-06-08T16:50:19.174Z
-        System.out.println(instant2);
-    }
+    
 }
