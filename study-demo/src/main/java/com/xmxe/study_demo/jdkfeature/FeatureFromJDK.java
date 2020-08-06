@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -71,37 +76,83 @@ public class FeatureFromJDK {
 
         // filter（筛选）
         List<Student> streamStudents = students.stream().filter(s -> "浙江".equals(s.getAddress())).collect(Collectors.toList());
-        streamStudents.forEach(System.out::println);    
+        streamStudents.forEach(System.out::println);   
+        Student stuOrelse = students.stream().filter(s -> "李四".equals(s.getName())).findAny().orElse(s1);
+        int sum = students.stream().filter(u -> "张三".equals(u.getName())).mapToInt(u -> u.getAge()).sum();
 
         // distinct(去重)
         List<String> list = Arrays.asList("111", "222", "333", "111", "222");
         list.stream().distinct().forEach(System.out::println);
         students.stream().distinct().forEach(System.out::println);
+        List<String> wnums = list.stream().flatMap(line -> Stream.of(line.split(""))).filter(word -> word.length() >= 0)
+            .map(String::toLowerCase).distinct().sorted().collect(Collectors.toList());
 
         // sorted(排序)
-        List<String> list_sort = Arrays.asList("333", "222", "111");
-        list_sort.stream().sorted().forEach(System.out::println);
+        list.stream().sorted().forEach(System.out::println);
         students.stream().sorted((stu1, stu2) -> Long.compare(stu2.getId(), stu1.getId()))
                 .sorted((stu1, stu2) -> Integer.compare(stu2.getAge(), stu1.getAge())).forEach(System.out::println);
 
         // limit（限制返回个数）
-        List<String> list_limit = Arrays.asList("333", "222", "111");
-        list_limit.stream().limit(2).forEach(System.out::println);
+        list.stream().limit(2).forEach(System.out::println);
 
         // skip(删除元素)
-        List<String> list_skip = Arrays.asList("333", "222", "111");
-        list_skip.stream().skip(2).forEach(System.out::println);
+        list.stream().skip(2).forEach(System.out::println);
 
         // reduce(聚合)
         List<String> list_reduce = Arrays.asList("欢", "迎", "你");
         String appendStr = list_reduce.stream().reduce("北京", (a, b) -> a + b);
-        System.out.println(appendStr);
+        String concat = Stream.of("A", "B", "C", "D").reduce("", String::concat);//拼接字符串
+        double minValue = Stream.of(-4.0, 1.0, 3.0, -2.0).reduce(Double.MAX_VALUE, Double::min);//得到最小值
+        int sumValue = Stream.of(1, 2, 3, 4).reduce(Integer::sum).get();//求和, 无起始值
+        sumValue = Stream.of(1, 2, 3, 4).reduce(1, Integer::sum);//求和, 有起始值
+        concat = Stream.of("a", "B", "c", "D", "e", "F").filter(x -> x.compareTo("Z") > 0).reduce("", String::concat);//过滤拼接字符串
+
+        //iterate 与reduce很像 使用时管道必须有 limit 这样的操作来限制 Stream 大小。
+        Stream.iterate(2, n -> n + 2).limit(5).forEach(x -> System.out.print(x + " "));//从2开始生成一个等差数列
+       
+        //通过实现Supplier类的方法可以自定义流计算规则。
+        //随机获取两条学生信息
+        class UserSupplier implements Supplier<Student> {
+            private int index = 10;
+            private Random random = new Random();
+           
+            @Override
+            public Student get() {
+             return new Student("pancm" + random.nextInt(10),index++);
+            }
+        }
+        Stream.generate(new UserSupplier()).limit(2).forEach(u -> System.out.println(u.getId() + ", " + u.getName()));
+        
+        //summaryStatistics使用
+        //得到最大、最小、之和以及平均数。
+        List<Integer> numbers = Arrays.asList(1, 5, 7, 3, 9);
+        IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
+         
+        System.out.println("列表中最大的数 : " + stats.getMax());
+        System.out.println("列表中最小的数 : " + stats.getMin());
+        System.out.println("所有数之和 : " + stats.getSum());
+        System.out.println("平均数 : " + stats.getAverage());
 
         // min(求最小值)
         Student minS = students.stream().min((stu1, stu2) -> Integer.compare(stu1.getAge(), stu2.getAge())).get();
-        System.out.println(minS.toString());
+        Student maxS = students.stream().max((stu1, stu2) -> Integer.compare(stu1.getAge(), stu2.getAge())).get();
+        int maxLines = list.stream().mapToInt(String::length).max().getAsInt();
+        int minLines = list.stream().mapToInt(String::length).min().getAsInt();
 
-        // anyMatch/allMatch/noneMatch（匹配）
+        //peek对每个元素执行操作并返回一个新的Stream
+        Stream.of("one", "two", "three", "four").filter(e -> e.length() > 3).peek(e -> System.out.println("转换之前: " + e))
+            .map(String::toUpperCase).peek(e -> System.out.println("转换之后: " + e)).collect(Collectors.toList());
+ 
+        //parallelStream 是流并行处理程序的代替方法。
+        List<String> strings = Arrays.asList("a", "", "c", "", "e","", " ");
+        // 获取空字符串的数量
+        long count =  strings.parallelStream().filter(string -> string.isEmpty()).count();
+
+        /**anyMatch/allMatch/noneMatch（匹配）
+         * allMatch：Stream 中全部元素符合则返回 true ;
+         * anyMatch：Stream 中只要有一个元素符合则返回 true;
+         * noneMatch：Stream 中没有一个元素符合则返回 true。
+         */
         Boolean anyMatch = students.stream().anyMatch(s -> "湖北".equals(s.getAddress()));
         if (anyMatch) {System.out.println("有湖北人");}
 
@@ -111,11 +162,6 @@ public class FeatureFromJDK {
         Boolean noneMatch = students.stream().noneMatch(s -> "杨洋".equals(s.getName()));
         if (noneMatch) {System.out.println("没有叫杨洋的同学");}
 
-        /**
-         * anyMatch：Stream 中任意一个元素符合传入的 predicate，返回 true
-         * allMatch：Stream 中全部元素符合传入的 predicate，返回 true
-         * noneMatch：Stream 中没有一个元素符合传入的 predicate，返回 true
-         */
         List<Integer> num = Arrays.asList(1, 2, 3, 4, 5, 6);
         if (num.stream().anyMatch(n -> n % 3 == 0)) {
             System.out.println("集合中有元素是3的整数倍");
@@ -130,29 +176,46 @@ public class FeatureFromJDK {
         num.stream().reduce(Integer::max);
         num.stream().reduce(Integer::min);
 
-        // map(转换)
+        // map(转换)用于映射每个元素到对应的结果，一对一。
         List<String> addresses = students.stream().map(s -> "住址:" + s.getAddress()).collect(Collectors.toList());
-        addresses.forEach(a -> System.out.println(a));
-
-        //将集合中的每一个字符串，全部转换成大写
-        List<String> alpha = Arrays.asList("Monkey", "Lion", "Giraffe", "Lemur");
-        // 使用Stream管道流
+        List<String> alpha = Arrays.asList("Monkey", "Lion", "Giraffe", "Lemur"); //将集合中的每一个字符串，全部转换成大写
         List<String> collect = alpha.stream().map(String::toUpperCase).collect(Collectors.toList());
         //上面使用了方法引用，和下面的lambda表达式语法效果是一样的
         List<String> collectLambda = alpha.stream().map(s -> s.toUpperCase()).collect(Collectors.toList());
+        List<Integer> lengths = alpha.stream().map(String::length).collect(Collectors.toList());// 处理非字符串类型集合元素
 
-        // 处理非字符串类型集合元素
-        List<Integer> lengths = alpha.stream().map(String::length).collect(Collectors.toList());
-
-        System.out.println(lengths); //[6, 4, 7, 5]
-        Stream.of("Monkey", "Lion", "Giraffe", "Lemur").mapToInt(String::length).forEach(System.out::println);
-
-        //flatMap
+        //flatMap用于映射每个元素到对应的结果，一对多。
         List<String> words = Arrays.asList("hello", "word");
         words.stream().map(w -> Arrays.stream(w.split(""))).forEach(System.out::println);//[[h,e,l,l,o],[w,o,r,l,d]]
         words.stream().flatMap(w -> Arrays.stream(w.split(""))).forEach(System.out::println); // [h,e,l,l,o,w,o,r,l,d]
  
+        //构造Stream流的方式
+        Stream.of("Monkey", "Lion", "Giraffe", "Lemur").mapToInt(String::length).forEach(System.out::println);
+        Stream stream = Stream.of("a", "b", "c");
+        String[] strArray = new String[] { "a", "b", "c" };
+        stream = Stream.of(strArray);
+        stream = Arrays.stream(strArray);
+        List<String> list1 = Arrays.asList(strArray);
+        stream = list1.stream();
+        //Stream流的之间的转换
+        //注意:一个Stream流只可以使用一次，这段代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
         
+        try {
+            Stream<String> stream2 = Stream.of("a", "b", "c");
+            // 转换成 Array
+            String[] strArray1 = stream2.toArray(String[]::new);
+          
+            // 转换成 Collection
+            List<String> list3 = stream2.collect(Collectors.toList());
+            List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));   
+            Set set1 = stream2.collect(Collectors.toSet());
+            Stack stack1 = stream2.collect(Collectors.toCollection(Stack::new));
+          
+            // 转换成 String
+            String str = stream.collect(Collectors.joining()).toString();
+           } catch (Exception e) {
+            e.printStackTrace();
+           }
     }
   
 
@@ -223,6 +286,56 @@ public class FeatureFromJDK {
         Student stu = biFunction.apply("mengday", 28);
         System.out.println(stu.toString());
 
+    }
+
+    /**
+     * 分组排序
+     */
+    public void group_order(){
+        class UserSupplier2 implements Supplier<Student> {
+            private int index = 10;
+            private Random random = new Random();
+            
+            @Override
+            public Student get() {
+                return new Student( "pancm" + random.nextInt(10),index % 2 == 0 ? index++ : index);
+            }
+         }
+        System.out.println("通过id进行分组排序:");
+        Map<Integer, List<Student>> personGroups = Stream.generate(new UserSupplier2()).limit(5).collect(Collectors.groupingBy(Student::getAge));
+        Iterator<Map.Entry<Integer,List<Student>>> it = personGroups.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, List<Student>> persons =  it.next();
+            System.out.println("id " + persons.getKey() + " = " + persons.getValue());
+        }
+        
+        // 通过id进行分组排序:
+        // id 10 = [{"id":10,"name":"pancm1"}] 
+        // id 11 = [{"id":11,"name":"pancm3"}, {"id":11,"name":"pancm6"}, {"id":11,"name":"pancm4"}, {"id":11,"name":"pancm7"}]
+
+
+        class UserSupplier3 implements Supplier<Student> {
+            private int index = 16;
+            private Random random = new Random();
+           
+            @Override
+            public Student get() {
+             return new Student( "pancm" + random.nextInt(10),index++);
+            }
+           }
+
+           System.out.println("通过年龄进行分区排序:");
+           Map<Boolean, List<Student>> children = Stream.generate(new UserSupplier3()).limit(5)
+             .collect(Collectors.partitioningBy(p -> p.getId() < 18));
+          
+           System.out.println("小孩: " + children.get(true));
+           System.out.println("成年人: " + children.get(false));
+           
+           // 通过年龄进行分区排序:
+           // 小孩: [{"id":16,"name":"pancm7"}, {"id":17,"name":"pancm2"}]
+           // 成年人: [{"id":18,"name":"pancm4"}, {"id":19,"name":"pancm9"}, {"id":20,"name":"pancm6"}]
+          
+        
     }
 
     public static void main(String[] args) {
