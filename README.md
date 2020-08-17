@@ -10,3 +10,5 @@
 - [超实用的18个Java8日期处理的实践！](https://mp.weixin.qq.com/s/olzpXW6m0qXxJFAQsnjJ9Q)
 - [JDK1.8的Lambda、Stream和日期的使用详解(很详细)](<https://mp.weixin.qq.com/s/84TSGjui1pT4cL1o8vNsTw>)
 
+- [接私活必备的10个开源项目！](https://mp.weixin.qq.com/s/N3L7EOSHcxpyMD3d5lcJ7w)
+
