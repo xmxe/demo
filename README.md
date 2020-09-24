@@ -31,8 +31,9 @@
 - [关于 Java 字符串的全部，都在这份手册里了](https://mp.weixin.qq.com/s/iYO16IddRqAqn3D5VhURQQ)
 - [求求你了，不要再自己实现这些逻辑了，开源工具类不香吗？](https://mp.weixin.qq.com/s/o7dlDYDOENhc-RvEmm__NA)
 - [Java 网络编程 之 socket 的用法与实现](https://blog.csdn.net/a78270528/article/details/80318571)
-
 - [接私活必备的10个开源项目！](https://mp.weixin.qq.com/s/N3L7EOSHcxpyMD3d5lcJ7w)
+- [Shiro整合Web项目及整合后的开发](http://codingxiaxw.cn/2016/11/23/50-Shiro-Integration/)
+- [Shiro安全框架【快速入门】就这一篇！](https://mp.weixin.qq.com/s/eyCRXcnymdLzsmhYkAB1uw)
 
 
 
