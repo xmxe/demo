@@ -11,6 +11,7 @@
 
 <body>
   <div id="app">
+    <input type="text" v-text="datamsgFormSon.name" />
     <!-- 父组件向子组件 传递 方法，使用的是 事件绑定机制； v-on, 当我们自定义了 一个 事件属性之后，那么，子组件就能够，通过某些方式，来调用 传递进去的 这个 方法了 -->
     <com2 @func="show"></com2>
   </div>
@@ -47,7 +48,7 @@
     var vm = new Vue({
       el: '#app',
       data: {
-        datamsgFormSon: null
+        datamsgFormSon: {name:1}
       },
       methods: {
         show(data) {
