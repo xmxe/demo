@@ -8,6 +8,7 @@ import java.util.IntSummaryStatistics;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
@@ -22,6 +23,9 @@ import java.util.stream.Stream;
 
 public class FeatureFromJDK {
 
+    /**
+     * lambda表达式
+     */
     public void lambda() {
         /**
          * Function<T,R> 接受一个输入参数 返回一个结果
@@ -57,6 +61,9 @@ public class FeatureFromJDK {
                 .forEach(x -> methodParam.accept("④---" + x));
     }
 
+    /**
+     * stream流
+     */
     public void stream() {
        /*
          * java.util.Stream表示了某一种元素的序列，在这些元素上可以进行各种操作。Stream操作可以是中间操作，也可以是完结操作。
@@ -218,7 +225,9 @@ public class FeatureFromJDK {
            }
     }
   
-
+    /**
+     * jdk8新增的map方法
+     */
     public void newMapMethod(){
        
         //jdk8新增的map方法
@@ -258,7 +267,9 @@ public class FeatureFromJDK {
         System.out.println(jdk8Map);
     }
 
-    
+    /**
+     * 方法引用
+     */
     public void function(){
         /**
          * Function<T,R> 接受一个输入参数 返回一个结果
@@ -336,6 +347,109 @@ public class FeatureFromJDK {
            // 成年人: [{"id":18,"name":"pancm4"}, {"id":19,"name":"pancm9"}, {"id":20,"name":"pancm6"}]
           
         
+    }
+
+    /**
+     * optional处理NPE异常
+     */
+    public void optional(){
+        // 1、创建包装对象值为空的Optional对象
+        Optional<String> optEmpty = Optional.empty();
+        // 2、创建包装对象值非空的Optional对象
+        Optional<String> optOf = Optional.of("optional");
+        // 3、创建包装对象值允许为空也可以不为空的Optional对象
+        Optional<String> optOfNullable1 = Optional.ofNullable(null);
+        Optional<String> optOfNullable2 = Optional.ofNullable("optional");
+
+        Student person = new Student();
+        person.setAge(5);
+        // 如果 value 不为空则做返回，如果为空则抛出异常 "No value present" 简单实例展示
+        Optional.ofNullable(person).get();
+
+        // isPresent() 方法就是会返回一个 boolean 类型值，如果对象不为空则为真，如果为空则 false
+        if (Optional.ofNullable(person).isPresent()){
+            //写不为空的逻辑
+            System.out.println("不为空");
+        } else{
+            //写为空的逻辑
+            System.out.println("为空");
+        }
+
+        // Optional.ifPresent() 方法 (判读是否为空并返回函数)如果对象非空，则运行函数体如果对象不为空，则会打印这个年龄，因为内部已经做了 NPE（非空判断），所以就不用担心空指针异常了
+        Optional.ofNullable(person).ifPresent(p -> System.out.println("年龄"+p.getAge()));
+
+        // Optional.filter() 方法 (过滤对象)
+        // filter() 方法大致意思是，接受一个对象，然后对他进行条件过滤，如果条件符合则返回 Optional 对象本身，如果不符合则返回空 Optional
+        Optional.ofNullable(person).filter(p -> p.getAge()>50);
+
+        // Optional.map() 方法 (对象进行二次包装) Optional.flatMap()
+        // map() 方法将对应 Funcation 函数式接口中的对象，进行二次运算，封装成新的对象然后返回在 Optional 中
+        String optName = Optional.ofNullable(person).map(p -> person.getName()).orElse("name为空");
+        Optional<Object> optName2 = Optional.ofNullable(person).map(p -> Optional.ofNullable(p.getName()).orElse("name为空"));
+
+        // Optional.orElse() 方法 (为空返回对象)
+        // 常用方法之一，这个方法意思是如果包装对象为空的话，就执行 orElse 方法里的 value，如果非空，则返回写入对象
+
+        // Optional.orElseGet() 方法 (为空返回 Supplier 对象)
+        // 这个与 orElse 很相似，入参不一样，入参为 Supplier 对象，为空返回传入对象的. get() 方法，如果非空则返回当前对象
+        Optional<Supplier<Student>> sup=Optional.ofNullable(Student::new);
+        //调用get()方法，此时才会调用对象的构造方法，即获得到真正对象
+        Optional.ofNullable(person).orElseGet(sup.get());
+
+        // Optional.orElseThrow() 方法 (为空返回异常)
+        // 方法作用的话就是如果为空，就抛出你定义的异常，如果不为空返回当前对象
+        //简单的一个查询
+        //Member member = memberService.selectByPhone(request.getPhone());
+        //Optional.ofNullable(member).orElseThrow(() -> new ServiceException("没有查询的相关数据"));
+
+        /**
+         * orElse() 和 orElseGet() 和 orElseThrow() 的异同点
+         * 方法效果类似，如果对象不为空，则返回对象，如果为空，则返回方法体中的对应参数，所以可以看出这三个方法体中参数是不一样的
+         * orElse（T 对象）
+         * orElseGet（Supplier <T> 对象）
+         * orElseThrow（异常）
+         * map() 和 orElseGet 的异同点
+         * 方法效果类似，对方法参数进行二次包装，并返回, 入参不同
+         * map（function 函数）
+         * flatmap（Optional<function> 函数）
+         */
+
+        // 实战场景
+        // 场景 1：在 service 层中查询一个对象，返回之后判断是否为空并做处理
+        //查询一个对象
+        //Member member = memberService.selectByIdNo(request.getCertificateNo());
+        //使用ofNullable加orElseThrow做判断和操作
+        //Optional.ofNullable(member).orElseThrow(() -> new ServiceException("没有查询的相关数据"));
+        //场景 2：我们可以在 dao 接口层中定义返回值时就加上 Optional 例如：我使用的是 jpa，其他也同理
+
+        // public interface LocationRepository extends JpaRepository<Location, String> {
+        //     Optional<Location> findLocationById(String id);
+        // }
+        // 然在是 Service 中
+
+        // public TerminalVO findById(String id) {
+        // //这个方法在dao层也是用了Optional包装了
+        //         Optional<Terminal> terminalOptional = terminalRepository.findById(id);
+        //         //直接使用isPresent()判断是否为空
+        //         if (terminalOptional.isPresent()) {
+        //         //使用get()方法获取对象值
+        //             Terminal terminal = terminalOptional.get();
+        //             //在实战中，我们已经免去了用set去赋值的繁琐，直接用BeanCopy去赋值
+        //             TerminalVO terminalVO = BeanCopyUtils.copyBean(terminal, TerminalVO.class);
+        //             //调用dao层方法返回包装后的对象
+        //             Optional<Location> location = locationRepository.findLocationById(terminal.getLocationId());
+        //             if (location.isPresent()) {
+        //                 terminalVO.setFullName(location.get().getFullName());
+        //             }
+        //             return terminalVO;
+        //         }
+        //         //不要忘记抛出异常
+        //         throw new ServiceException("该终端不存在");
+        //     }
+
+
+
+
     }
 
     public static void main(String[] args) {
