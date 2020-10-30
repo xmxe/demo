@@ -3,7 +3,7 @@ package com.xmxe.study_demo.thread;
 /**
  * ThreadLocal测试1
  */
-public class SeqCount {
+class SeqCount {
     private static ThreadLocal<Integer> seqCount = new ThreadLocal<Integer>() {
         // 实现initialValue()
         public Integer initialValue() {
@@ -51,7 +51,7 @@ public class SeqCount {
 /**
  * ThreadLocal测试2
  */
-class ThreadLocalTest {
+public class ThreadLocalTest {
     private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 
     public static void main(String[] args) {
@@ -88,4 +88,28 @@ class ThreadLocalTest {
             }
         }, "threadLocal2").start();
     }
+}
+
+class ThreadLocalRemoveTest{
+    public static final ThreadLocal<Integer> threalLocal = new ThreadLocal<>(){
+        @Override
+        protected Integer initialValue(){
+            return 222;
+        }
+    };
+    public static void main(String[] args) {
+        new Thread(()->{
+            threalLocal.set(1111);
+            // 使用完 ThreadLocal 变量后，需要我们手动 remove 掉，防止 ThreadLocalMap 中 Entry 一直保持对 value 的强引用，导致 value 不能被回收导致内存泄漏
+            threalLocal.remove();
+            Integer v = threalLocal.get();
+            System.out.println(Thread.currentThread().getName()+"-------"+v);
+        },"线程1").start();
+
+        new Thread(()->{
+             Integer v = threalLocal.get();
+             System.out.println(Thread.currentThread().getName()+"-------"+v);
+        },"线程2").start();
+    }
+       
 }
