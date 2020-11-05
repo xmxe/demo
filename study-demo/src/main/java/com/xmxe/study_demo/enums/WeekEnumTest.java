@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.enum_;
+package com.xmxe.study_demo.enums;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -100,5 +100,16 @@ public class WeekEnumTest {
 		 * 枚举替代if else if写法 一行代码搞定 如果需要再加判断只需要增加枚举类属性即可 valueOf()获取枚举类型
 		 */
 		WeekEnum.valueOf(str).eval(1, 2);
+	}
+
+	@Test
+	public void test6(){
+		Animal.PEOPLE.count(5);
+		Animal.CAT.count(5);
+		Animal.DOG.count(5);
+	}
+	public static void main(String[] args) {
+		WeekEnumTest wt = new WeekEnumTest();
+		wt.test6();
 	}
 }

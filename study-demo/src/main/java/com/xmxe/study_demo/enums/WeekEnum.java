@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.enum_;
+package com.xmxe.study_demo.enums;
 
 public enum WeekEnum {
 	// MON, TUE, WED, THU, FRI, SAT, SUN;
