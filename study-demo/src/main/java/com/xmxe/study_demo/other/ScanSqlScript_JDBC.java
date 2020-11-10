@@ -31,7 +31,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
-public class ScanSqlScript {
+public class ScanSqlScript_JDBC {
 	private static final String[] column_type = { "int", "bigint", "float", "char", "varchar", "nvarchar", "double","date", "datetime" };
 	private static final String url = "jdbc:sqlserver://10.37.169.200:1433;DatabaseName=gsipV3";
 	private static final String user = "sa";

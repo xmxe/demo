@@ -18,7 +18,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class WebSpiderTest {
+public class WebSpider_Jsoup {
 	public static void main(String[] args) throws Exception {
 		String url = "http://www.nmc.cn/publish/forecast/ASD/taian2.html";
 		// Map<String,Object> map = new HashMap<>();

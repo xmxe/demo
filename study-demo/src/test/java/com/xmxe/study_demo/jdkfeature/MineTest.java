@@ -1,16 +1,10 @@
-package com.xmxe.study_demo.other;
+package com.xmxe.study_demo.jdkfeature;
 
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.TreeSet;
-import java.util.function.Consumer;
 
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
@@ -18,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.cglib.proxy.Enhancer;
 
-import com.xmxe.study_demo.jdkfeature.LambdaService;
 import com.xmxe.study_demo.proxy.dynamicproxy.CglibProxy;
 import com.xmxe.study_demo.proxy.dynamicproxy.Dao;
 import com.xmxe.study_demo.proxy.dynamicproxy.DynamicProxyHandler;
@@ -29,8 +22,6 @@ import com.xmxe.study_demo.proxy.staticproxy.impl.BuyHouseProxy;
 public class MineTest {
 	
 	protected Logger logger = Logger.getLogger(MineTest.class);
-
-	
 
 	@Test
 	public void log() {
@@ -161,20 +152,3 @@ public class MineTest {
 
 }
 
-class Student {
-	int age;
-	String name;
-
-	public Student(int age, String name) {
-		this.age = age;
-		this.name = name;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String toString() {
-		return "age=" + age + " name=" + name;
-	}
-}

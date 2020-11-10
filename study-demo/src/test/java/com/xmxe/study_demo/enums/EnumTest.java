@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 
-public class WeekEnumTest {
+public class EnumTest {
 	
 	@Test
 	public void test1() {
@@ -108,8 +108,5 @@ public class WeekEnumTest {
 		Animal.CAT.count(5);
 		Animal.DOG.count(5);
 	}
-	public static void main(String[] args) {
-		WeekEnumTest wt = new WeekEnumTest();
-		wt.test6();
-	}
+
 }

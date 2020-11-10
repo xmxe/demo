@@ -11,12 +11,14 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 public class OperateString {
 
     /**
      * 多行字符串
      */
+    @Test
     public void multiline_string() throws IOException {
         // 每个操作系统对换行符的定义都不尽相同，所以在拼接多行字符串之前，需要先获取到操作系统的换行符
         String newLine = System.getProperty("line.separator");
@@ -54,9 +56,7 @@ public class OperateString {
         System.out.println(StringUtils.isEmpty(" ")); // false；
         return str == null || str.isEmpty();
 
-    }
-
-   
+    }  
 
     /**
      * 删除最后一个字符串
@@ -64,6 +64,7 @@ public class OperateString {
      * 删除字符串最后一个字符，最简单的方法就是使用 substring() 方法进行截取，0 作为起始下标，length() - 1 作为结束下标。
      * 不管怎么样，substring() 方法不是 null 安全的，需要先判空
      */
+    @Test
     public void removeLastChar(String s) {
         String s1 = (s == null || s.length() == 0) ? null : (s.substring(0, s.length() - 1));
         System.out.println(s1);
@@ -91,7 +92,7 @@ public class OperateString {
     /**
      * 统计字符在字符串中出现的次数
      */
-
+    @Test
     public void countString() {
 
         String someString = "chenmowanger";
@@ -116,6 +117,7 @@ public class OperateString {
     /**
      * 拆分字符串
      */
+    @Test
     public void splitStr() {
         String[] splitted = "沉默王二，一枚有趣的程序员".split("，");
         // 当然了，该方法也不是 null 安全的
@@ -138,6 +140,7 @@ public class OperateString {
     /**
      * 字符串拼接
      */
+    @Test
     public void appendStr() {
 
         // 第一个参数为字符串连接符，比如说：
@@ -191,6 +194,7 @@ public class OperateString {
     /**
      * 字符串固定长度
      */
+    @Test
     public void fleng() {
         // 字符串固定长度 8位，若不足，往左补 0
         System.out.println(StringUtils.leftPad("test", 8, "0"));
@@ -201,7 +205,7 @@ public class OperateString {
     /**
      * 字符串关键字替换
      */
-
+    @Test
     public void wordRep() {
         // 默认替换所有关键字
         System.out.println(StringUtils.replace("aba", "a", "z")); // "zbz";
@@ -214,6 +218,7 @@ public class OperateString {
         // "")); // "ABC123";
     }
 
+    @Test
     public void jdkNewStringOperation(){
         var str = "  woshidage   ";     
         var result1 = str.strip();    //首位空白
@@ -232,10 +237,5 @@ public class OperateString {
         System.out.println(result3);
         System.out.println(copyStr);
         System.out.println(lineCount);
-    }
-
-    public static void main(String[] args) {
-        OperateString s = new OperateString();
-        s.jdkNewStringOperation();
     }
 }

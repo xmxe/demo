@@ -8,7 +8,7 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.ZooKeeper;
 
-public class ZookeeperWatchTest {
+public class ZookeeperWatch {
 
 	public static void main(String[] args) {
 		Thread t = new Thread(new Wa());

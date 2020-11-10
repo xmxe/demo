@@ -51,14 +51,14 @@
 	    	<groupId>junit</groupId>
 	    	<artifactId>junit</artifactId>
 	    	<version>4.13</version>
-	     	<!--  <scope>test</scope> -->
+	     	 <scope>test</scope>
 	    </dependency>
 		
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-core</artifactId>
 			<version>2.2</version>
-			<!-- <scope>test</scope> -->
+			<scope>compile</scope>
 		</dependency>
 
 	    

@@ -20,12 +20,15 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.Test;
+
 
 public class FeatureFromJDK {
 
     /**
      * lambda表达式
      */
+    @Test
     public void lambda() {
         /**
          * Function<T,R> 接受一个输入参数 返回一个结果
@@ -64,6 +67,7 @@ public class FeatureFromJDK {
     /**
      * stream流
      */
+    @Test
     public void stream() {
        /*
          * java.util.Stream表示了某一种元素的序列，在这些元素上可以进行各种操作。Stream操作可以是中间操作，也可以是完结操作。
@@ -125,7 +129,7 @@ public class FeatureFromJDK {
            
             @Override
             public Student get() {
-             return new Student("pancm" + random.nextInt(10),index++);
+             return new Student(index++,"pancm" + random.nextInt(10));
             }
         }
         Stream.generate(new UserSupplier()).limit(2).forEach(u -> System.out.println(u.getId() + ", " + u.getName()));
@@ -228,6 +232,7 @@ public class FeatureFromJDK {
     /**
      * jdk8新增的map方法
      */
+    @Test
     public void newMapMethod(){
        
         //jdk8新增的map方法
@@ -270,6 +275,7 @@ public class FeatureFromJDK {
     /**
      * 方法引用
      */
+    @Test
     public void function(){
         /**
          * Function<T,R> 接受一个输入参数 返回一个结果
@@ -293,8 +299,8 @@ public class FeatureFromJDK {
         /**
          * Bifunction接收两个参数返回一个参数
          */
-        BiFunction<String, Integer, Student> biFunction = Student::new;
-        Student stu = biFunction.apply("mengday", 28);
+        BiFunction<Integer,String,  Student> biFunction = Student::new;
+        Student stu = biFunction.apply(28,"mengday");
         System.out.println(stu.toString());
 
     }
@@ -302,6 +308,7 @@ public class FeatureFromJDK {
     /**
      * 分组排序
      */
+    @Test
     public void group_order(){
         class UserSupplier2 implements Supplier<Student> {
             private int index = 10;
@@ -309,7 +316,7 @@ public class FeatureFromJDK {
             
             @Override
             public Student get() {
-                return new Student( "pancm" + random.nextInt(10),index % 2 == 0 ? index++ : index);
+                return new Student(index % 2 == 0 ? index++ : index, "pancm" + random.nextInt(10));
             }
          }
         System.out.println("通过id进行分组排序:");
@@ -331,7 +338,7 @@ public class FeatureFromJDK {
            
             @Override
             public Student get() {
-             return new Student( "pancm" + random.nextInt(10),index++);
+             return new Student( index++,"pancm" + random.nextInt(10));
             }
            }
 
@@ -352,6 +359,7 @@ public class FeatureFromJDK {
     /**
      * optional处理NPE异常
      */
+    @Test
     public void optional(){
         // 1、创建包装对象值为空的Optional对象
         Optional<String> optEmpty = Optional.empty();
@@ -452,8 +460,4 @@ public class FeatureFromJDK {
 
     }
 
-    public static void main(String[] args) {
-        FeatureFromJDK t = new FeatureFromJDK();
-        t.newMapMethod();
-    }
 }
