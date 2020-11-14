@@ -100,8 +100,6 @@ class ThreadLocalRemoveTest{
     public static void main(String[] args) {
         new Thread(()->{
             threalLocal.set(1111);
-            // 使用完 ThreadLocal 变量后，需要我们手动 remove 掉，防止 ThreadLocalMap 中 Entry 一直保持对 value 的强引用，导致 value 不能被回收导致内存泄漏
-            threalLocal.remove();
             Integer v = threalLocal.get();
             System.out.println(Thread.currentThread().getName()+"-------"+v);
         },"线程1").start();
