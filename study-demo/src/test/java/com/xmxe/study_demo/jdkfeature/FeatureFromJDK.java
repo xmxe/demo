@@ -66,6 +66,7 @@ public class FeatureFromJDK {
 
     /**
      * stream流
+     * https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ(Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合)
      */
     @Test
     public void stream() {
@@ -84,6 +85,43 @@ public class FeatureFromJDK {
         students.add(s2);
         students.add(s3);
         students.add(s4);
+        //构造Stream流的方式
+        Stream.of("Monkey", "Lion", "Giraffe", "Lemur").mapToInt(String::length).forEach(System.out::println);
+        Stream stream = Stream.of("a", "b", "c");
+        String[] strArray = new String[] { "a", "b", "c" };
+        stream = Stream.of(strArray);
+        stream = Arrays.stream(strArray);
+        List<String> list1 = Arrays.asList(strArray);
+        stream = list1.stream();
+        //Stream流的之间的转换
+        //注意:一个Stream流只可以使用一次，这段代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
+        
+        try {
+            Stream<String> stream2 = Stream.of("a", "b", "c");
+            // 转换成 Array
+            String[] strArray1 = stream2.toArray(String[]::new);
+        
+            // 转换成 Collection
+            List<String> list3 = stream2.collect(Collectors.toList());
+            List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));   
+            Set set1 = stream2.collect(Collectors.toSet());
+            Stack stack1 = stream2.collect(Collectors.toCollection(Stack::new));
+        
+            // 转换成 String
+            String str = stream.collect(Collectors.joining()).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /**
+         * stream和parallelStream的简单区分： 
+         * stream是顺序流，由主线程按顺序对流执行操作，而parallelStream是并行流，内部以多线程并行执行的方式对流进行操作，
+         * 但前提是流中的数据处理没有顺序要求
+         * 如果流中的数据量足够大，并行流可以加快处速度。除了直接创建并行流，还可以通过parallel()把顺序流转换成并行流
+         */
+        //parallelStream 是流并行处理程序的代替方法。
+        List<String> strings = Arrays.asList("a", "", "c", "", "e","", " ");
+        // 获取空字符串的数量
+        long count =  strings.parallelStream().filter(string -> string.isEmpty()).count();
 
         // filter（筛选）
         List<Student> streamStudents = students.stream().filter(s -> "浙江".equals(s.getAddress())).collect(Collectors.toList());
@@ -144,7 +182,7 @@ public class FeatureFromJDK {
         System.out.println("所有数之和 : " + stats.getSum());
         System.out.println("平均数 : " + stats.getAverage());
 
-        // min(求最小值)
+        // min() max()
         Student minS = students.stream().min((stu1, stu2) -> Integer.compare(stu1.getAge(), stu2.getAge())).get();
         Student maxS = students.stream().max((stu1, stu2) -> Integer.compare(stu1.getAge(), stu2.getAge())).get();
         int maxLines = list.stream().mapToInt(String::length).max().getAsInt();
@@ -153,11 +191,6 @@ public class FeatureFromJDK {
         //peek对每个元素执行操作并返回一个新的Stream
         Stream.of("one", "two", "three", "four").filter(e -> e.length() > 3).peek(e -> System.out.println("转换之前: " + e))
             .map(String::toUpperCase).peek(e -> System.out.println("转换之后: " + e)).collect(Collectors.toList());
- 
-        //parallelStream 是流并行处理程序的代替方法。
-        List<String> strings = Arrays.asList("a", "", "c", "", "e","", " ");
-        // 获取空字符串的数量
-        long count =  strings.parallelStream().filter(string -> string.isEmpty()).count();
 
         /**anyMatch/allMatch/noneMatch（匹配）
          * allMatch：Stream 中全部元素符合则返回 true ;
@@ -199,34 +232,6 @@ public class FeatureFromJDK {
         List<String> words = Arrays.asList("hello", "word");
         words.stream().map(w -> Arrays.stream(w.split(""))).forEach(System.out::println);//[[h,e,l,l,o],[w,o,r,l,d]]
         words.stream().flatMap(w -> Arrays.stream(w.split(""))).forEach(System.out::println); // [h,e,l,l,o,w,o,r,l,d]
- 
-        //构造Stream流的方式
-        Stream.of("Monkey", "Lion", "Giraffe", "Lemur").mapToInt(String::length).forEach(System.out::println);
-        Stream stream = Stream.of("a", "b", "c");
-        String[] strArray = new String[] { "a", "b", "c" };
-        stream = Stream.of(strArray);
-        stream = Arrays.stream(strArray);
-        List<String> list1 = Arrays.asList(strArray);
-        stream = list1.stream();
-        //Stream流的之间的转换
-        //注意:一个Stream流只可以使用一次，这段代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
-        
-        try {
-            Stream<String> stream2 = Stream.of("a", "b", "c");
-            // 转换成 Array
-            String[] strArray1 = stream2.toArray(String[]::new);
-          
-            // 转换成 Collection
-            List<String> list3 = stream2.collect(Collectors.toList());
-            List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));   
-            Set set1 = stream2.collect(Collectors.toSet());
-            Stack stack1 = stream2.collect(Collectors.toCollection(Stack::new));
-          
-            // 转换成 String
-            String str = stream.collect(Collectors.joining()).toString();
-           } catch (Exception e) {
-            e.printStackTrace();
-           }
     }
   
     /**
@@ -273,7 +278,7 @@ public class FeatureFromJDK {
     }
 
     /**
-     * 方法引用
+     * 方法引用(::)
      */
     @Test
     public void function(){
