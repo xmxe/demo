@@ -1,6 +1,4 @@
-package com.xmxe.study_demo.proxy.staticproxy.impl;
-
-import com.xmxe.study_demo.proxy.staticproxy.BuyHouse;
+package com.xmxe.study_demo.proxy.staticproxy;
 
 public class BuyHouseProxy implements BuyHouse {
 	
@@ -15,3 +13,16 @@ public class BuyHouseProxy implements BuyHouse {
 	}
 
 }
+class BuyHouseImpl implements BuyHouse {
+
+	@Override
+	public void buyHouse() {
+		
+		System.out.println("BuyHouseImpl:");
+	}
+
+}
+interface BuyHouse {
+	void buyHouse();
+}
+

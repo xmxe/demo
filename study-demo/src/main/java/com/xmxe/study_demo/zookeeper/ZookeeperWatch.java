@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.kafka;
+package com.xmxe.study_demo.zookeeper;
 
 import java.io.IOException;
 
@@ -11,13 +11,13 @@ import org.apache.zookeeper.ZooKeeper;
 public class ZookeeperWatch {
 
 	public static void main(String[] args) {
-		Thread t = new Thread(new Wa());
+		Thread t = new Thread(new CustomWatch());
 		t.start();
 	}
 
 }
 
-class Wa implements Runnable {
+class CustomWatch implements Runnable {
 
 	@Override
 	public void run() {

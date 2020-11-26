@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-// 什么是序列化 怎么序列化 为什么序列化 反序列化会遇到什么问题，如何解决(https://mp.weixin.qq.com/s/iIqQeQNeDKimTT5nvye-ow)
 public class SerializableTest {
     public static void main(String[] args) throws Exception {
         serializeFlyPig();
@@ -69,3 +68,9 @@ public class SerializableTest {
     }
 
 }
+
+/**
+ * Java Serializable：明明就一个空的接口嘛(https://mp.weixin.qq.com/s/7ojBbuJ4For2VvgcpqIuVw)
+ * 什么是序列化 怎么序列化 为什么序列化 反序列化会遇到什么问题，如何解决(https://mp.weixin.qq.com/s/iIqQeQNeDKimTT5nvye-ow)
+ * 
+ */

@@ -3,11 +3,11 @@ package com.xmxe.study_demo.proxy.dynamicproxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class DynamicProxyHandler implements InvocationHandler{
+public class JDKProxy implements InvocationHandler{
 	
 	private Object object; 
 	
-	public DynamicProxyHandler(final Object object) {
+	public JDKProxy(final Object object) {
 		this.object = object;
 	}
 

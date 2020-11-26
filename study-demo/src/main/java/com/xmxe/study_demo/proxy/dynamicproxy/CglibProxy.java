@@ -16,3 +16,4 @@ public class CglibProxy implements MethodInterceptor {
 	}
 
 }
+

@@ -1,6 +1,5 @@
 package com.xmxe.study_demo.jdkfeature;
 
-import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -10,14 +9,6 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import org.springframework.cglib.proxy.Enhancer;
-
-import com.xmxe.study_demo.proxy.dynamicproxy.CglibProxy;
-import com.xmxe.study_demo.proxy.dynamicproxy.Dao;
-import com.xmxe.study_demo.proxy.dynamicproxy.DynamicProxyHandler;
-import com.xmxe.study_demo.proxy.staticproxy.BuyHouse;
-import com.xmxe.study_demo.proxy.staticproxy.impl.BuyHouseImpl;
-import com.xmxe.study_demo.proxy.staticproxy.impl.BuyHouseProxy;
 
 public class MineTest {
 	
@@ -100,32 +91,7 @@ public class MineTest {
 		}
 		return -1;
 	}
-
-	@Test
-	public void staticProxy() {
-		BuyHouse bh = new BuyHouseProxy();
-		bh.buyHouse();
-	}
-
-	@Test
-	public void dynamicProxy() {
-		BuyHouse buyHouse = new BuyHouseImpl();
-		BuyHouse proxyBuyHouse = (BuyHouse) Proxy.newProxyInstance(BuyHouse.class.getClassLoader(),
-				new Class[] { BuyHouse.class }, new DynamicProxyHandler(buyHouse));
-		proxyBuyHouse.buyHouse();
-	}
-
-	@Test
-	public void cglibProxy() {
-		CglibProxy daoProxy = new CglibProxy();
-		Enhancer enhancer = new Enhancer();
-		enhancer.setSuperclass(Dao.class);
-		enhancer.setCallback(daoProxy);
-		Dao dao = (Dao) enhancer.create();
-		dao.update();
-		dao.select();
-	}
-
+	
 	@Test
 	public void memory() {
 		Student a = new Student(1, "a");
@@ -151,4 +117,5 @@ public class MineTest {
 	}
 
 }
+
 
