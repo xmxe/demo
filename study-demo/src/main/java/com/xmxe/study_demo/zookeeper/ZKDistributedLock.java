@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ZKDistributedLock implements Watcher {
 
@@ -22,9 +23,9 @@ public class ZKDistributedLock implements Watcher {
     private ZooKeeper zk = null;
 
     // 分布式锁相关父节点路径
-    private static final String GROUP_PATH = "/shared";
+    private static final String ROOT_PATH = "/lock";
     // 分布式锁相关的子节点路径
-    private static final String SUB_PATH = "/shared/node";
+    private static final String CHILD_PATH = "/lock/node";
 
     // 当前临时顺序子节点
     private String currentEphemeralNode;
@@ -41,6 +42,7 @@ public class ZKDistributedLock implements Watcher {
     public static final CountDownLatch threadCountDownLatch = new CountDownLatch(5);
 
     // 记录process方法使用次数
+    // private AtomicInteger countProcess = new AtomicInteger();
     private int countProcess = 0;
 
     /**
@@ -90,6 +92,7 @@ public class ZKDistributedLock implements Watcher {
             logger.info(THREAD_FLAG + "与zookeeper服务器会话失效");
         }
 
+        // System.out.println(THREAD_FLAG + "执行" + (countProcess.incrementAndGet()) + "次process方法");
         System.out.println(THREAD_FLAG + "执行" + (++countProcess) + "次process方法");
 
     }
@@ -113,9 +116,21 @@ public class ZKDistributedLock implements Watcher {
      */
     public void createGroupPath() throws KeeperException, InterruptedException {
         // zookeeper中不存在就创建
-        if (zk.exists(GROUP_PATH, true) == null) {
-            String createdPath = zk.create(GROUP_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        if (zk.exists(ROOT_PATH, true) == null) {
+            String createdPath = zk.create(ROOT_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             logger.warn(THREAD_FLAG + "创建" + createdPath + "成功");
+            /**ZooDefs.Ids
+             * OPEN_ACL_UNSAFE  : 完全开放的ACL，任何连接的客户端都可以操作该属性znode
+             * CREATOR_ALL_ACL : 只有创建者才有ACL权限
+             * READ_ACL_UNSAFE：只能读取ACL
+             */
+
+             /**CreateMode
+              * PERSISTENT 持久化目录节点, 会话结束存储数据不会丢失
+              * PERSISTENT_SEQUENTIAL 顺序自动编号持久化目录节点, 存储数据不会丢失, 会根据当前已存在节点数自动加1, 然后返回给客户端已经创建成功的节点名
+              * EPHEMERAL 临时目录节点, 一旦创建这个节点当会话结束, 这个节点会被自动删除
+              * EPHEMERAL_SEQUENTIAL 临时自动编号节点, 一旦创建这个节点,当回话结束, 节点会被删除, 并且根据当前已经存在的节点数自动加1, 然后返回给客户端已经成功创建的目录节点名 .
+              */
         }
 
     }
@@ -125,7 +140,7 @@ public class ZKDistributedLock implements Watcher {
      */
     public void grabLock() throws KeeperException, InterruptedException {
         // 先创建临时节点
-        currentEphemeralNode = zk.create(SUB_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+        currentEphemeralNode = zk.create(CHILD_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
         logger.info(THREAD_FLAG + "创建" + currentEphemeralNode + "临时顺序节点");
         // 检查是否可以获取锁
         if (isMinPath()) {
@@ -141,10 +156,10 @@ public class ZKDistributedLock implements Watcher {
      */
     private boolean isMinPath() throws KeeperException, InterruptedException {
         // 获取所有节点，并且排序
-        List<String> nodes = zk.getChildren(GROUP_PATH, false);
+        List<String> nodes = zk.getChildren(ROOT_PATH, false);
         Collections.sort(nodes);
         // 判断当前创建的临时顺序节点是否是序号为0的，是0就是最小，可以获取锁
-        String node = currentEphemeralNode.substring(GROUP_PATH.length() + 1);// 形如node0000?
+        String node = currentEphemeralNode.substring(ROOT_PATH.length() + 1);// 形如node0000?
         int index = nodes.indexOf(node);
         switch (index) {
             case -1:
@@ -156,7 +171,7 @@ public class ZKDistributedLock implements Watcher {
             default:
                 try {
                     // 找到比自己序号小1的临时节点
-                    preEphemeralNode = GROUP_PATH + "/" + nodes.get(index - 1);
+                    preEphemeralNode = ROOT_PATH + "/" + nodes.get(index - 1);
                     logger.info(THREAD_FLAG + currentEphemeralNode + "前面的节点是" + preEphemeralNode);
                     // 通过查询节点数据来设置监听
                     zk.getData(preEphemeralNode, true, new Stat());

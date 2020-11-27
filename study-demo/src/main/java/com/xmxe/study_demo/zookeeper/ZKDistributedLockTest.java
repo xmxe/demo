@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 public class ZKDistributedLockTest {
     private int threadId;
     // 连接zookeeper的地址
-    private static final String CONNECT_ADDRESS = "192.168.236.130:2181,192.168.236.130:2181,192.168.236.130:2181";
+    private static final String CONNECT_ADDRESS = "192.168.236.133:2182";
     private static final int SESSION_TIMEOUT = 30000;
 
     // 打印日志相关
