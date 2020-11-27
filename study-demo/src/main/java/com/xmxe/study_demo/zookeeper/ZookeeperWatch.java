@@ -3,6 +3,7 @@ package com.xmxe.study_demo.zookeeper;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.zookeeper.CreateMode;
@@ -16,7 +17,7 @@ import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.ZooKeeper;
 
 public class ZookeeperWatch {
-
+	private static final CountDownLatch COUNT_DOWN_LATCH = new CountDownLatch(1);
 	public static void main(String[] args) {
 		Thread t = new Thread(() -> {
 			// 连接启动zk
@@ -26,6 +27,7 @@ public class ZookeeperWatch {
 					public void process(WatchedEvent event) {
 						System.out.println("changing...");
 						System.out.println("state-->"+event.getState()+"  type-->"+event.getType());
+						// 测试在连接zookeeper的时候想要执行监听器需要在连接后的代码加上await()阻塞一会，否则不会打印上面的语句,不知什么原理
 					}
 				});
 				// 设置监听器 (before jdk1.8)
@@ -45,7 +47,7 @@ public class ZookeeperWatch {
 				 
 				};
 				 */
-
+				COUNT_DOWN_LATCH.await(2,TimeUnit.SECONDS);
 				Watcher wc = (event) -> {
 					if (event.getType() == EventType.NodeDataChanged) {
 						System.out.println("change");
