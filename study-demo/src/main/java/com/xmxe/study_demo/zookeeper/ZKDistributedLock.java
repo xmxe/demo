@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ZKDistributedLock implements Watcher {
 
@@ -42,7 +41,6 @@ public class ZKDistributedLock implements Watcher {
     public static final CountDownLatch threadCountDownLatch = new CountDownLatch(5);
 
     // 记录process方法使用次数
-    // private AtomicInteger countProcess = new AtomicInteger();
     private int countProcess = 0;
 
     /**
@@ -92,7 +90,6 @@ public class ZKDistributedLock implements Watcher {
             logger.info(THREAD_FLAG + "与zookeeper服务器会话失效");
         }
 
-        // System.out.println(THREAD_FLAG + "执行" + (countProcess.incrementAndGet()) + "次process方法");
         System.out.println(THREAD_FLAG + "执行" + (++countProcess) + "次process方法");
 
     }
@@ -117,6 +114,7 @@ public class ZKDistributedLock implements Watcher {
     public void createGroupPath() throws KeeperException, InterruptedException {
         // zookeeper中不存在就创建
         if (zk.exists(ROOT_PATH, true) == null) {
+            // 父节点一定是永久节点 如果使用临时节点的话创建节点的线程与zookeeper失去连接后会删除父节点导致其他线程无法访问
             String createdPath = zk.create(ROOT_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             logger.warn(THREAD_FLAG + "创建" + createdPath + "成功");
             /**ZooDefs.Ids

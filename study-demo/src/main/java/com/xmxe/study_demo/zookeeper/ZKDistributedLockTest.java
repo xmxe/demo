@@ -28,10 +28,11 @@ public class ZKDistributedLockTest {
                 public void run() {
                     try {
                         // 创建跟zookeeper服务器的连接
+                        // 每个线程一个ZKDistributedLock示例 所以不用考虑currentEphemeralNode等属性的并发修改问题
                         ZKDistributedLock lock = new ZKDistributedLock(threadId);
                         lock.createConnection(CONNECT_ADDRESS, SESSION_TIMEOUT);
                         System.out.println("[第" + threadId + "个线程]连接成功，准备开始创建临时有序节点和抢占锁");
-                        // 首先确认是否创建父节点/Shared,只能有一个线程创建成功,zookeeper只会让一个线程创建成功
+                        // 首先确认是否创建父节点/lock,只能有一个线程创建成功,zookeeper只会让一个线程创建成功
                         // 哪个线程先执行到这里，哪个线程就创建父节点
                         synchronized (ZKDistributedLock.threadCountDownLatch) {
                             lock.createGroupPath();
@@ -43,7 +44,7 @@ public class ZKDistributedLockTest {
                         e.printStackTrace();
                     }
                 }
-            }).start();
+            },"第"+i+"个线程").start();
         }
         // 循环结束，提示所有线程执行完成
         try {
