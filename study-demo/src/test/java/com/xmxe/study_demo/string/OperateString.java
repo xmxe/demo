@@ -239,3 +239,7 @@ public class OperateString {
         System.out.println(lineCount);
     }
 }
+
+/**
+ * [关于 Java 字符串的全部，都在这份手册里了](https://mp.weixin.qq.com/s/iYO16IddRqAqn3D5VhURQQ)
+ */
