@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.xmxe.study_demo.jdkfeature.Student;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -238,6 +241,29 @@ public class OperateString {
         System.out.println(copyStr);
         System.out.println(lineCount);
     }
+    @Test
+	public void memory() {
+		Student a = new Student(1, "a");
+		Student b = a;
+		System.out.println(b.toString());// age=1 name=a
+		a.setAge(2);
+		System.out.println(b.toString());// age=2 name=a 内存地址引用的a a发生改变，b也改变
+		a = new Student(3, "b");
+		System.out.println(a.toString());// age=3 name=b
+		System.out.println(b);// age=2 name=a a是一个新的内存地址 b还是原来的内存地址，b不变
+
+		Student c = new Student(4, "c");
+		Map<String, Student> map = new HashMap<>();
+		map.put("a", a);
+		map.put("c", c);
+		Map<String, Student> m = map;
+		System.out.println(m);// {a=age=3 name=b, c=age=4 name=c}
+		map.remove("a");
+		System.out.println(m);// {c=age=4 name=c} 内存地址引用的map map发生改变 m也跟着改变
+		map = new HashMap<>();
+		System.out.println(map);// {} map是一个新的内存地址
+		System.out.println(m);// {c=age=4 name=c} 原来的内存地址引用没有变化
+	}
 }
 
 /**

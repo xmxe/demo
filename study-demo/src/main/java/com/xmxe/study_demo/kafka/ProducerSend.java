@@ -6,7 +6,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-public class ProducerDemo {
+public class ProducerSend {
 	public static void main(String[] args) {
 		Properties properties = new Properties();
         properties.put("bootstrap.servers", "192.168.236.128:9092");

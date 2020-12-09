@@ -6,7 +6,53 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
-public class BeanFactory {
+public class OrderServiceTest {
+    public static void main(String[] args) {
+        Order order = new Order();
+        // order.setSource("default");
+        // order.setSource("pc");
+        order.setSource("mobile");
+        orderService(order);
+    }
+
+    private static Map<String,Object> handMap = new HashMap<>();
+    static {       
+        try {
+            // 实例化com.xmxe.study_demo.strategy.annotation下的所有@OrderHandlerType标记的类
+            // 注解标记的source的值作为map中key,作用在注解的类作为map中的value
+            BeanFactory.init("com.xmxe.study_demo.strategy.annotation");
+            handMap = BeanFactory.beanContainer;
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        // MobileOrderHandler mobile = BeanFactory.getBean("mobile", MobileOrderHandler.class);
+        // PCOrderHandler pc = BeanFactory.getBean("pc", PCOrderHandler.class);
+        // handMap.put("mobile",mobile);
+        // handMap.put("pc",pc);
+
+      
+    }
+    
+
+    /**
+     * 真正处理业务逻辑的函数
+     */
+    public static void orderService(Order order) {
+        // ...一些前置处理
+        
+        // 通过订单来源确定对应的handler
+        OrderHandler orderHandler = (OrderHandler) handMap.get(order.getSource());
+        orderHandler.handle(order);
+
+        // ...一些后置处理
+    }
+
+}
+
+class BeanFactory {
     
     /**
      *获取注解标记的实现类，将实现类放到map里面 key为source中的值 value为注解标记的实现类

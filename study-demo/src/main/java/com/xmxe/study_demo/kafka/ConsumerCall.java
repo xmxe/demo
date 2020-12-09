@@ -7,7 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-public class ConsumerDemo {
+public class ConsumerCall {
  
     public static void main(String[] args) {
     	 Properties properties = new Properties();

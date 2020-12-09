@@ -5,11 +5,17 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import org.junit.Test;
 
 public class EnumTest {
-	
-	@Test
+	public static void main(String[] args) {
+		EnumTest t = new EnumTest();
+		t.test1();
+		// t.test2();
+		// t.test3();
+		// t.test4();
+		// t.test5();
+		// t.test6();
+	}
 	public void test1() {
 		for (WeekEnum e : WeekEnum.values()) {
 			System.out.println("枚举.values()返回数组遍历后的为" + e.toString());
@@ -29,7 +35,6 @@ public class EnumTest {
 		}
 	}
 
-	@Test
 	public void test2() {
 		WeekEnum test = WeekEnum.TUE;
 		// compareTo(E o) 比较此枚举与指定对象的顺序。
@@ -57,14 +62,14 @@ public class EnumTest {
 		System.out.println("ordinal(): " + test.ordinal());
 	}
 
-	@Test
+	
 	public void test3() {
 		System.out.println("EnumTest.FRI getValue() = " + WeekEnum.FRI.getValue());
 		System.out.println("EnumTest.FRI isResr() = " + WeekEnum.SUN.isRest());
 		System.out.println("枚举valueOf()返回的是enum " + WeekEnum.valueOf("SUN").getValue());
 	}
 
-	@Test
+	
 	public void test4() {
 		EnumSet<WeekEnum> weekSet = EnumSet.allOf(WeekEnum.class);
 		for (WeekEnum day : weekSet) {
@@ -82,7 +87,7 @@ public class EnumTest {
 		}
 	}
 
-	@Test
+	
 	public void test5() {
 		/**
 		 * 以前写法
@@ -102,7 +107,7 @@ public class EnumTest {
 		WeekEnum.valueOf(str).eval(1, 2);
 	}
 
-	@Test
+	
 	public void test6(){
 		Animal.PEOPLE.count(5);
 		Animal.CAT.count(5);

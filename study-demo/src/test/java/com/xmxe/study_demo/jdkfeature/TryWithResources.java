@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.other;
+package com.xmxe.study_demo.jdkfeature;
 
 public class TryWithResources {
    public static void main(String[] args) {

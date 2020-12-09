@@ -16,7 +16,7 @@ class DealSina implements DealStrategy{
 
     @Override
     public void dealMythod(String option) {
-        System.out.println("新浪~~~");
+        System.out.println("新浪分享~~~");
     }
 
 }
@@ -24,7 +24,15 @@ class DealQQ implements DealStrategy{
 
     @Override
     public void dealMythod(String option) {
-        System.out.println("QQ~~~");
+        System.out.println("QQ分享~~~");
     }
 
+}
+/**
+ * 定义通用'分享'的业务接口
+ * 
+ */
+interface DealStrategy {
+    
+    void dealMythod(String option);
 }

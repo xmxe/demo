@@ -28,3 +28,9 @@ class PCOrderHandler implements OrderHandler {
         System.out.println("处理PC端订单");
     }
 }
+/**
+ * 业务总接口
+ */
+interface OrderHandler {
+    void handle(Order order);
+}
