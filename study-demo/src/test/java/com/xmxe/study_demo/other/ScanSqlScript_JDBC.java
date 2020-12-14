@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +47,19 @@ public class ScanSqlScript_JDBC {
 			e.printStackTrace();
 		}
 		return conn;
+	}
+	public static String getProperties(String key){
+		Properties pe = new Properties();
+		InputStream is = ScanSqlScript_JDBC.class.getClassLoader().getResourceAsStream("db.properties");
+		String value = "";
+		try {
+			pe.load(is);
+			value = pe.getProperty(key);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return value;
 	}
 
 	public static Map<String,List<String>> getColumnData() {
