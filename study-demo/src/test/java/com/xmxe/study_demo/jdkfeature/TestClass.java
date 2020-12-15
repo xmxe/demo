@@ -1,7 +1,5 @@
 package com.xmxe.study_demo.jdkfeature;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
@@ -31,22 +29,6 @@ public class TestClass {
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Test
-	public void createTimer() {
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				System.out.println("---");
-			}
-		}, 0, 60000);
-		// 三个参数
-		// 第一个执行内容：内容是定时任务的执行内容，通过实现抽象类来完成这个动作
-		// 第二个参数内容：是在第多少时间之后开始执行定时任务内容，该参数不能小于0
-		// 第三个参数内容：是在两个任务之间的执行时间间隔，该参数不能小于等于0
 	}
 
 	// 定义一个整数数组，如何找出一个整数是否在这个数组里并获得整数的下标
