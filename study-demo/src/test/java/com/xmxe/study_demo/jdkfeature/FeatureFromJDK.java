@@ -1,7 +1,9 @@
 package com.xmxe.study_demo.jdkfeature;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
@@ -59,6 +61,7 @@ public class FeatureFromJDK {
         set1.forEach(x -> methodParam.accept("③---" + x));
 
         List<Integer> list = List.of(5,16,41,10);//JDK9新增of方法 只能用在list set map接口上不能用在实现类上，且长度固定 无法使用add put等方法
+        var copyList = List.copyOf(list);// jdk10新增静态方法copyof 返回不可修改的副本
         /* stream().map()可以看作对象转换 */
         list.stream().sorted((x, y) -> (x - y)).map(String::valueOf).filter(x -> x.startsWith("1"))
                 .forEach(x -> methodParam.accept("④---" + x));
@@ -323,7 +326,7 @@ public class FeatureFromJDK {
             public Student get() {
                 return new Student(index % 2 == 0 ? index++ : index, "pancm" + random.nextInt(10));
             }
-         }
+        }
         System.out.println("通过id进行分组排序:");
         Map<Integer, List<Student>> personGroups = Stream.generate(new UserSupplier2()).limit(5).collect(Collectors.groupingBy(Student::getAge));
         Iterator<Map.Entry<Integer,List<Student>>> it = personGroups.entrySet().iterator();
@@ -345,20 +348,19 @@ public class FeatureFromJDK {
             public Student get() {
              return new Student( index++,"pancm" + random.nextInt(10));
             }
-           }
+        }
 
-           System.out.println("通过年龄进行分区排序:");
-           Map<Boolean, List<Student>> children = Stream.generate(new UserSupplier3()).limit(5)
-             .collect(Collectors.partitioningBy(p -> p.getId() < 18));
-          
-           System.out.println("小孩: " + children.get(true));
-           System.out.println("成年人: " + children.get(false));
-           
-           // 通过年龄进行分区排序:
-           // 小孩: [{"id":16,"name":"pancm7"}, {"id":17,"name":"pancm2"}]
-           // 成年人: [{"id":18,"name":"pancm4"}, {"id":19,"name":"pancm9"}, {"id":20,"name":"pancm6"}]
-          
+        System.out.println("通过年龄进行分区排序:");
+        Map<Boolean, List<Student>> children = Stream.generate(new UserSupplier3()).limit(5)
+            .collect(Collectors.partitioningBy(p -> p.getId() < 18));
         
+        System.out.println("小孩: " + children.get(true));
+        System.out.println("成年人: " + children.get(false));
+        
+        // 通过年龄进行分区排序:
+        // 小孩: [{"id":16,"name":"pancm7"}, {"id":17,"name":"pancm2"}]
+        // 成年人: [{"id":18,"name":"pancm4"}, {"id":19,"name":"pancm9"}, {"id":20,"name":"pancm6"}]
+          
     }
 
     /**
@@ -460,9 +462,36 @@ public class FeatureFromJDK {
         //         throw new ServiceException("该终端不存在");
         //     }
 
+        // jdk8 Base64
+        String str = "公众号:捡田螺的小男孩";
+        String encoded = Base64.getEncoder().encodeToString(str.getBytes( StandardCharsets.UTF_8));
+        String decoded = new String(Base64.getDecoder().decode(encoded), StandardCharsets.UTF_8);
+    }
 
 
+    /**
+     * jdk11 新增的string方法
+     */
+    @Test
+    public void jdk11StringMethod(){
+        // isBank()
+        System.out.println("abc".isBlank()); // false
+        System.out.println("".isBlank()); // true
+        System.out.println("\t \t".isBlank()); // true
+        // 去除首尾空格
+        System.out.println(" jay ".strip());  // "jay"
+        // 去除首部空格 
+        System.out.println(" jay ".stripLeading());   // "jay "
+        // 去除字符串尾部空格
+        System.out.println(" jay ".stripLeading());   // " jay"
+        // 行数统计
+        System.out.println("a\nb\nc".lines().count());    // 3
+        // 复制字符串
+        System.out.println("jay".repeat(3));   // "jayjayjay"
 
     }
 
 }
+/**
+ * JDK 5-15都有哪些经典新特性(https://mp.weixin.qq.com/s/1_pbYNskgTxjecZmpvVG0g)
+ */
