@@ -1,3 +1,4 @@
+// canvas 倒计时
 function showTime(a) {
   var b = {
     id: "showtime", //canvasid
