@@ -3,62 +3,13 @@ package com.xmxe.study_demo.thread;
 /**
  * ThreadLocal测试1
  */
-class SeqCount {
-    private static ThreadLocal<Integer> seqCount = new ThreadLocal<Integer>() {
-        // 实现initialValue()
-        public Integer initialValue() {
-            return 0;
-        }
-    };
-
-    public int nextSeq() {
-        seqCount.set(seqCount.get() + 1);
-        return seqCount.get();
-    }
-
-    public void removeSeq() {
-        seqCount.remove();
-    }
-
-    public static void main(String[] args) {
-        SeqCount seqCount = new SeqCount();
-        SeqThread thread1 = new SeqThread(seqCount);
-        SeqThread thread2 = new SeqThread(seqCount);
-        SeqThread thread3 = new SeqThread(seqCount);
-        SeqThread thread4 = new SeqThread(seqCount);
-        thread1.start();
-        thread2.start();
-        thread3.start();
-        thread4.start();
-    }
-
-    private static class SeqThread extends Thread {
-        private SeqCount seqCount;
-
-        SeqThread(SeqCount seqCount) {
-            this.seqCount = seqCount;
-        }
-
-        public void run() {
-            for (int i = 0; i < 3; i++) {
-                System.out.println(Thread.currentThread().getName() + " seqCount :" + seqCount.nextSeq());
-            }
-            seqCount.removeSeq();
-        }
-    }
-}
-
-/**
- * ThreadLocal测试2
- */
 public class ThreadLocalTest {
     private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 
     public static void main(String[] args) {
-
         new Thread(() -> {
             try {
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 10; i++) {
                     threadLocal.set(i);
                     System.out.println(Thread.currentThread().getName() + "====" + threadLocal.get());
                     try {
@@ -75,7 +26,7 @@ public class ThreadLocalTest {
 
         new Thread(() -> {
             try {
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 10; i++) {
                     System.out.println(Thread.currentThread().getName() + "====" + threadLocal.get());
                     try {
                         Thread.sleep(200);
@@ -90,7 +41,57 @@ public class ThreadLocalTest {
     }
 }
 
-class ThreadLocalRemoveTest{
+
+/**
+ * ThreadLocal测试2
+ */
+class ThreadLocalTest2 {
+    private static ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>() {
+        // 实现initialValue()
+        public Integer initialValue() {
+            return 0;
+        }
+    };
+
+    public static void main(String[] args) {
+        ThreadLocalTest2 threadLocalTest2 = new ThreadLocalTest2();
+        new ThreadOne(threadLocalTest2,"线程1").start();
+        new ThreadOne(threadLocalTest2,"线程2").start();
+        new ThreadOne(threadLocalTest2,"线程3").start();
+        new ThreadOne(threadLocalTest2,"线程4").start();
+    }
+
+    public int next() {
+        threadLocal.set(threadLocal.get() + 1);
+        return threadLocal.get();
+    }
+    public void remove() {
+        threadLocal.remove();
+    }
+
+    static class ThreadOne extends Thread {
+        private ThreadLocalTest2 count;
+        private String threadName;
+
+        ThreadOne(ThreadLocalTest2 count,String threadName) {
+            this.count = count;
+            this.threadName = threadName;
+        }
+        public void run() {
+            for (int i = 0; i < 3; i++) {
+                System.out.println(Thread.currentThread().getName() + threadName + " count :" + count.next());
+            }
+            count.remove();
+        }
+    }
+}
+
+
+
+/**
+ * ThreadLocal测试3
+ */
+class ThreadLocalTest3{
     public static final ThreadLocal<Integer> threalLocal = new ThreadLocal<>(){
         @Override
         protected Integer initialValue(){
