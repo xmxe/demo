@@ -1,19 +1,19 @@
 package com.xmxe.study_demo.redis.lock_demo3;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
+import com.xmxe.study_demo.redis.RedisUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Transaction;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.jedis.params.SetParams;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-
-import com.xmxe.study_demo.util.RedisUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DistributedLock {
     private final JedisPool jedisPool;

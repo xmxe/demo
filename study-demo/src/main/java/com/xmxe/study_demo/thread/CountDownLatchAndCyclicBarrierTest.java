@@ -8,7 +8,7 @@ import java.util.concurrent.CyclicBarrier;
  * 是通过一个计数器来实现的，计数器的初始值是线程的数量。每当一个线程执行完毕后，计数器的值就-1，
  * 当计数器的值为0时，表示所有线程都执行完毕，然后在闭锁上等待的线程就可以恢复工作了。
  */
-public class CountDownLatchTest {
+public class CountDownLatchAndCyclicBarrierTest {
 	public static void main(String[] args) throws InterruptedException{
 		CountDownLatch countDown = new CountDownLatch(1);
 		CountDownLatch await = new CountDownLatch(4);

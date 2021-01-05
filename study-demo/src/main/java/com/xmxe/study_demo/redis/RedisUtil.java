@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.redis;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
