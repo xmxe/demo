@@ -233,7 +233,67 @@
 			<version>3.6.1</version>
 		</dependency>
 	</dependencies>
+
 	<build>
+		<!-- maven模块化的话最好从父类继成取，打成包的命名 -->
+        <finalName>${artifactId}-${version}</finalName>
+
+		<!-- 使用指定的filter进行过滤，在执行mvn命令的时候带上-Ppro就代表生产环境，就会加载生产环境的properties，-Pdev就代表开发环境（默认） -->
+        <!-- 根据此标签下的配置文件的key匹配resources标签下的filtering标签下为true的directory标签目录下的内容为${key}来替换 看下编译后的log4j.propertied ${jdbc_url}-->
+		<filters>
+            <filter>src/main/resources/multiEnv/filter-${profiles.active}-env.properties</filter>
+        </filters>
+
+		<!--Maven中会按照标准目录结构，将src/main/resources目录下的资源文件打包到jar或war中。
+		但有时为了方便文件的组织管理，有些资源文件可能并不在上述标准目录下。典型地有MaBatis的sql映射文件。
+		为此，可通过resources标签实现对资源文件的打包-->
+		
+        <!-- 配置需要被替换的资源文件路径, jdbc.properties -->
+        <resources>
+
+			<!--这里将Animal.java添加到class目录下(测试resource标签的作用)-->
+			<resource>
+				<directory>src/main/java/com/xmxe/study_demo/enums</directory>
+                <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
+                <filtering>false</filtering>
+				<includes>
+					<include>Animal.java</include>
+				</includes>
+			</resource>
+
+            <resource>
+                <!-- 
+                    资源文件位置src/main/resources/,这下面的资源文件的${}会全部被替换成filter中的标签内容。
+                    directory指定的value会作为classes的资源跟目录，
+                    比如指定:src/main/resources/，则classes下会出现jdbc等包，
+                    若指定:src/main/resources/jdbc/，则classes下直接出现jdbc包下的文件，不会额外出现jdbc等其他包结构。因为他把jdbc作为了根目录
+                -->
+                <directory>src/main/resources/</directory>
+                <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
+				<!--这里会将上面filter标签配置的文件替换掉-->
+                <filtering>true</filtering>
+                <!-- 排除标签 -->
+                <excludes>
+                    <!--
+                        exclude可以排除指定文件，支持通配符 ,匹配项不会生成到classes目录下，路径是以directory开始的
+                        在这里就是directory（src/main/resources/）/multiEnv/filter-*-env.properties
+                    -->
+                    <exclude>multiEnv/filter-*-env.properties</exclude>
+                    <!-- **/*.xml 代表 directory(src/main/resources/)目录以及所有子目录的xml文件-->
+                    <!-- 
+                    <exclude>**/*.xml</exclude>
+                    <exclude>**/*.properties</exclude> 
+                    -->
+                </excludes>
+                <!-- 包含标签 -->
+                <!-- 
+                <includes>
+                    <include></include>
+                </includes> 
+                -->
+            </resource>
+        </resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -246,4 +306,40 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<!--
+		打本地开发环境包：mvn clean package -Pdev
+		打部署上线环境包：mvn clean package -Ppro
+		打测试环境包：mvn clean package -Ptest
+		
+		执行结果：
+		通过命令指定<filter>下的文件,然后查看<filtering>为true的<directory>目录 ，如果此目录下的文件内容有${},则匹配替换
+	-->
+	<profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <!-- 默认是本地开发环境 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 测试环境 -->
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>pro</id>
+            <properties>
+                <profiles.active>pro</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>
