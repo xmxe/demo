@@ -4,7 +4,7 @@ package com.xmxe.study_demo.enums;
  * see jdk java.util.concurrent.TimeUnit details
  * imitate TineUnit sample
  */
-public enum Animal {
+public enum AnimalEnum {
     PEOPLE{
         public long hands(long h){return h+1;}
         public long foots(long f){return f+1;}

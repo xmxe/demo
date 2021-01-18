@@ -16,6 +16,10 @@ public class EnumTest {
 		// t.test5();
 		// t.test6();
 	}
+
+	/**
+	 * values()
+	 */
 	public void test1() {
 		for (WeekEnum e : WeekEnum.values()) {
 			System.out.println("枚举.values()返回数组遍历后的为" + e.toString());
@@ -35,6 +39,9 @@ public class EnumTest {
 		}
 	}
 
+	/**
+	 * compareTo()
+	 */
 	public void test2() {
 		WeekEnum test = WeekEnum.TUE;
 		// compareTo(E o) 比较此枚举与指定对象的顺序。
@@ -49,27 +56,31 @@ public class EnumTest {
 				System.out.println("TUE 与 MON 在同一位置");
 				break;
 		}
+	}
 
+	/**
+	 * enum methods
+	 */
+	public void test3() {
+		WeekEnum test = WeekEnum.TUE;
 		// getDeclaringClass()返回与此枚举常量的枚举类型相对应的 Class 对象
 		System.out.println("getDeclaringClass(): " + test.getDeclaringClass().getName());
 
 		// name() 返回此枚举常量的名称，在其枚举声明中对其进行声明。
-		// toString()返回枚举常量的名称，它包含在声明中。
 		System.out.println("name(): " + test.name());
+		// toString()返回枚举常量的名称，它包含在声明中。
 		System.out.println("toString(): " + test.toString());
 
 		// ordinal()， 返回值是从 0 开始 返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）
 		System.out.println("ordinal(): " + test.ordinal());
-	}
-
-	
-	public void test3() {
 		System.out.println("EnumTest.FRI getValue() = " + WeekEnum.FRI.getValue());
 		System.out.println("EnumTest.FRI isResr() = " + WeekEnum.SUN.isRest());
 		System.out.println("枚举valueOf()返回的是enum " + WeekEnum.valueOf("SUN").getValue());
 	}
 
-	
+	/**
+	 * EnumSet and EnumMap
+	 */
 	public void test4() {
 		EnumSet<WeekEnum> weekSet = EnumSet.allOf(WeekEnum.class);
 		for (WeekEnum day : weekSet) {
@@ -86,8 +97,9 @@ public class EnumTest {
 			System.out.println(entry.getKey().name() + ":" + entry.getValue());
 		}
 	}
-
-	
+	/**
+	 * 使用枚举替代if else
+	 */
 	public void test5() {
 		/**
 		 * 以前写法
@@ -107,11 +119,13 @@ public class EnumTest {
 		WeekEnum.valueOf(str).eval(1, 2);
 	}
 
-	
+	/**
+	 * 提供一个方法 根据枚举属性提供不同的实现
+	 */
 	public void test6(){
-		Animal.PEOPLE.count(5);
-		Animal.CAT.count(5);
-		Animal.DOG.count(5);
+		AnimalEnum.PEOPLE.count(5);
+		AnimalEnum.CAT.count(5);
+		AnimalEnum.DOG.count(5);
 	}
 
 }

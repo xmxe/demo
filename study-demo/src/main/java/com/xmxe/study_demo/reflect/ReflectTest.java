@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.xmxe.study_demo.strategy.annotation.OrderHandlerType;
+import com.xmxe.study_demo.strategy.annotation.OrderHandlerTypeAnnotation;
 
 
 public class ReflectTest {
@@ -55,7 +55,7 @@ public class ReflectTest {
             System.out.println(annotation);
         }
 
-        OrderHandlerType orderHandlerType = method.getAnnotation(OrderHandlerType.class);
+        OrderHandlerTypeAnnotation orderHandlerType = method.getAnnotation(OrderHandlerTypeAnnotation.class);
         System.out.println(orderHandlerType.source()+"---"+orderHandlerType.annotationType());
     }
     

@@ -25,7 +25,6 @@ class BuyHouseImpl implements BuyHouse {
 
 	@Override
 	public void buyHouse() {
-		
 		System.out.println("BuyHouseImpl:");
 	}
 

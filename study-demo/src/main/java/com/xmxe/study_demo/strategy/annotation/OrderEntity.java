@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * 实体封装类
  */
-public class Order {
+public class OrderEntity {
     /**
      * 订单来源
      */
@@ -54,7 +54,5 @@ public class Order {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-
-
     
 }

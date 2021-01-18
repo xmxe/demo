@@ -1,6 +1,6 @@
 package com.xmxe.study_demo.reflect;
 
-import com.xmxe.study_demo.strategy.annotation.OrderHandlerType;
+import com.xmxe.study_demo.strategy.annotation.OrderHandlerTypeAnnotation;
 
 public class Student {
     private Integer age;
@@ -16,7 +16,7 @@ public class Student {
         this.age = age;
     }
     
-    @OrderHandlerType(source = "ddd")
+    @OrderHandlerTypeAnnotation(source = "ddd")
     public void method1(String name,Integer age){
         System.out.println(1);
     }
