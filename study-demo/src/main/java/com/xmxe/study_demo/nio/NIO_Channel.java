@@ -31,34 +31,6 @@ import java.util.concurrent.TimeUnit;
  * ServerSocketChannel(可以监听新进来的TCP连接，像Web服务器那样。对每一个新进来的连接都会创建一个SocketChannel)
  */
 public class NIO_Channel {
-
-    /**
-     * 传统io操作读取文件
-     */
-    public void traditionIORead() {
-        InputStream in = null;
-        try {
-            in = new BufferedInputStream(new FileInputStream("src/nomal_io.txt"));
-            byte[] buf = new byte[1024];
-            int bytesRead = in.read(buf);
-            while (bytesRead != -1) {
-                for (int i = 0; i < bytesRead; i++)
-                    System.out.print((char) buf[i]);
-                bytesRead = in.read(buf);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * NIO读取文件 RandomAccessFile进行操作，也可以通过FileInputStream.getChannel()获取channel进行操作
      * 
@@ -125,6 +97,7 @@ public class NIO_Channel {
             // 读取缓冲区数据写入到通道。
             fc.write(byteBuffer);
             fc.close();
+            accessFile.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,6 +119,8 @@ public class NIO_Channel {
             long count = fromChannel.size();
             toChannel.transferFrom(fromChannel, position, count);
 
+            fromFile.close();
+            toFile.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,10 +139,14 @@ public class NIO_Channel {
             long position = 0;
             long count = fromChannel.size();
             fromChannel.transferTo(position, count, toChannel);
+            fromFile.close();
+            toFile.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    //-----------------------nio socket-------------------------------------
 
     /**
      * NIO新建socket client
@@ -202,43 +181,6 @@ public class NIO_Channel {
             try {
                 if (socketChannel != null) {
                     socketChannel.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 传统方式新建socket服务端
-     */
-    public void traditionIOReadSocketServer() {
-        ServerSocket serverSocket = null;
-        InputStream in = null;
-        try {
-            serverSocket = new ServerSocket(8080);
-            int recvMsgSize = 0;
-            byte[] recvBuf = new byte[1024];
-            while (true) {
-                Socket clntSocket = serverSocket.accept();
-                SocketAddress clientAddress = clntSocket.getRemoteSocketAddress();
-                System.out.println("Handling client at " + clientAddress);
-                in = clntSocket.getInputStream();
-                while ((recvMsgSize = in.read(recvBuf)) != -1) {
-                    byte[] temp = new byte[recvMsgSize];
-                    System.arraycopy(recvBuf, 0, temp, 0, recvMsgSize);
-                    System.out.println(new String(temp));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (serverSocket != null) {
-                    serverSocket.close();
-                }
-                if (in != null) {
-                    in.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
