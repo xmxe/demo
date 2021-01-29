@@ -1,6 +1,10 @@
 package com.xmxe.study_demo.socket;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -16,6 +20,8 @@ public class SocketServer {
 		twoWayCommunicationServer();
 		// 多线程
 		twoWayCommunicationServerUseThread();
+		
+		bufferSocketServer();
 	}
 
 	/**
@@ -104,6 +110,9 @@ public class SocketServer {
 				sb.append(new String(bytes, 0, len, "UTF-8"));
 			}
 			System.out.println("get message from client: " + sb);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			bw.write("mess"+"\n");
+			bw.flush();
 			inputStream.close();
 			socket.close();
 		}	 
@@ -136,6 +145,9 @@ public class SocketServer {
 						sb.append(new String(bytes, 0, len, "UTF-8"));
 					}
 					System.out.println("get message from client: " + sb);
+					BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+					bw.write("mess"+"\n");
+					bw.flush();
 					inputStream.close();
 					socket.close();
 				} catch (Exception e) {
@@ -145,6 +157,29 @@ public class SocketServer {
 			threadPool.submit(runnable);
 		}
 	 
+	}
+
+	/**
+	 * buffer socket
+	 */
+	public static void bufferSocketServer(){
+		try {
+			ServerSocket ss = new ServerSocket(8888);
+			System.out.println("启动服务器....");
+			Socket s = ss.accept();
+			System.out.println("客户端:"+s.getInetAddress().getLocalHost()+"已连接到服务器");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			//读取客户端发送来的消息
+			String mess = br.readLine();
+			System.out.println("客户端："+mess);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+			bw.write(mess+"\n");
+			bw.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
 /**
