@@ -1,13 +1,8 @@
 package com.xmxe.study_demo.nio;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -21,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * 传统IO基于字节流和字符流进行操作，而NIO基于Channel和Buffer进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中
  * Selector(选择区)用于监听多个通道的事件（比如：连接打开，数据到达）因此，单个线程可以监听多个数据通道。
  * 
- * Java NIO？看这一篇就够了！(https://blog.csdn.net/forezp/article/details/88414741) Java
+ * Java NIO？看这一篇就够了！(https://blog.csdn.net/forezp/article/details/88414741)
  * NIO系列教程(https://ifeve.com/overview/)
  */
 
