@@ -2,6 +2,7 @@ package com.xmxe.study_demo.thread.juc;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * 使用AomicInteger实现限流
@@ -53,5 +54,14 @@ public class LimitingByAomicInteger {
                 count.decrementAndGet();
             }
         }
+    }
+
+    /**
+     * LongAdder相比AtomicInteger拥有更高的性能 
+     * since jdk1.8
+     */
+    public static void longAdder(){
+        LongAdder longAdder = new LongAdder();
+        longAdder.increment();
     }
 }
