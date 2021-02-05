@@ -232,6 +232,12 @@
 			<artifactId>commons-math3</artifactId>
 			<version>3.6.1</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.49.Final</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -248,29 +254,26 @@
 		但有时为了方便文件的组织管理，有些资源文件可能并不在上述标准目录下。典型地有MaBatis的sql映射文件。
 		为此，可通过resources标签实现对资源文件的打包-->
 		
-        <!-- 配置需要被替换的资源文件路径, jdbc.properties -->
         <resources>
-
 			<!--这里将Animal.java添加到class目录下(测试resource标签的作用)-->
 			<resource>
 				<directory>src/main/java/com/xmxe/study_demo/enums</directory>
                 <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
                 <filtering>false</filtering>
 				<includes>
-					<include>Animal.java</include>
+					<include>AnimalEnum.java</include>
 				</includes>
 			</resource>
 
+			<!-- 
+				资源文件位置src/main/resources/,这下面的资源文件的${}会全部被替换成filter中的标签内容。
+				directory指定的value会作为classes的资源跟目录，
+				比如指定:src/main/resources/，则classes下会出现jdbc等包，
+				若指定:src/main/resources/jdbc/，则classes下直接出现jdbc包下的文件，不会额外出现jdbc等其他包结构。因为他把jdbc作为了根目录
+			-->
             <resource>
-                <!-- 
-                    资源文件位置src/main/resources/,这下面的资源文件的${}会全部被替换成filter中的标签内容。
-                    directory指定的value会作为classes的资源跟目录，
-                    比如指定:src/main/resources/，则classes下会出现jdbc等包，
-                    若指定:src/main/resources/jdbc/，则classes下直接出现jdbc包下的文件，不会额外出现jdbc等其他包结构。因为他把jdbc作为了根目录
-                -->
                 <directory>src/main/resources/</directory>
                 <!-- 在某个resource中如果设置filtering为true，将会根据输入参数动态修改相关内容。 -->
-				<!--这里会将上面filter标签配置的文件替换掉-->
                 <filtering>true</filtering>
                 <!-- 排除标签 -->
                 <excludes>
@@ -285,12 +288,6 @@
                     <exclude>**/*.properties</exclude> 
                     -->
                 </excludes>
-                <!-- 包含标签 -->
-                <!-- 
-                <includes>
-                    <include></include>
-                </includes> 
-                -->
             </resource>
         </resources>
 
@@ -333,6 +330,12 @@
             <properties>
                 <profiles.active>test</profiles.active>
             </properties>
+			<!--除了使用filter标签也可使用下面配置方式指定不同环境的配置文件-->
+			<!-- <build>
+				<filters>
+					<filter>src/main/java/com/aaron/SpringBoot1/ProfileFile/mysql-profile-dev.properties</filter>
+				</filters>
+        	</build> -->
         </profile>
         <profile>
             <!-- 生产环境 -->
