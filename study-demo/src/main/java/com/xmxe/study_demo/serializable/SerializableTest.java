@@ -72,5 +72,5 @@ public class SerializableTest {
 /**
  * Java Serializable：明明就一个空的接口嘛(https://mp.weixin.qq.com/s/7ojBbuJ4For2VvgcpqIuVw)
  * 什么是序列化 怎么序列化 为什么序列化 反序列化会遇到什么问题，如何解决(https://mp.weixin.qq.com/s/iIqQeQNeDKimTT5nvye-ow)
- * 
+ * Java序列化和反序列化为什么要实现Serializable接口(https://mp.weixin.qq.com/s/RLzpPOlKv5omoqRv-5ckPQ)
  */
