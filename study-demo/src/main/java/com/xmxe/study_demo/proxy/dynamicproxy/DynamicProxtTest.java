@@ -34,8 +34,9 @@ interface BuyHouse {
 }
 /**
  * 终于有人把 java代理 讲清楚了，万字详解！(https://mp.weixin.qq.com/s/C9Vpfcgl3NB_0rBpLh2yCA)
- * 【Spring基础】JDK和CGLIB动态代理区别(https://blog.csdn.net/yhl_jxy/article/details/80635012)
+ * JDK和CGLIB动态代理区别(https://blog.csdn.net/yhl_jxy/article/details/80635012)
  * [设计模式---代理模式](https://www.cnblogs.com/daniels/p/8242592.html)
+ * [一文读懂Java动态代理](https://mp.weixin.qq.com/s/1Jxxrbi8nk4pcD8I1ts5lQ)
  * 
  * JDK代理是不需要第三方库支持，只需要JDK环境就可以进行代理，使用条件:
  * 1）实现InvocationHandler 
