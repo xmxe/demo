@@ -24,7 +24,9 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-
+/**
+ * JDK 5-15都有哪些经典新特性(https://mp.weixin.qq.com/s/1_pbYNskgTxjecZmpvVG0g)
+ */
 public class FeatureFromJDK {
 
     /**
@@ -43,6 +45,7 @@ public class FeatureFromJDK {
         LambdaService lambdaservice = (a, b) -> {
             return a + b;
         };// 相当于LambdaService的实现类
+
         int c = lambdaservice.lambdaTest(3, 4);
         methodParam.accept("①---" + c);
  
@@ -51,17 +54,24 @@ public class FeatureFromJDK {
         set.stream().filter(x -> x > 30).sorted((x, y) -> (y - x)).forEach(x -> methodParam.accept("②---" + x));
 
         /*
-         * jdk7写法 Set<Integer> set1 = new TreeSet<>(new Comparator<Integer>() {
-         * 
-         * @Override public int compare(Integer i,Integer o) { return i - o; } });
+         * jdk7写法 
+         * Set<Integer> set1 = new TreeSet<>(new Comparator<Integer>() {
+         *      @Override public int compare(Integer i,Integer o) { 
+         *          return i - o; 
+         *      } 
+         * });
          */
         // jdk8写法
         Set<Integer> set1 = new TreeSet<>((x, y) -> (x - y));
         Collections.addAll(set1, 22, 3, 51, 44, 20, 6);
         set1.forEach(x -> methodParam.accept("③---" + x));
 
-        List<Integer> list = List.of(5,16,41,10);//JDK9新增of方法 只能用在list set map接口上不能用在实现类上，且长度固定 无法使用add put等方法
-        var copyList = List.copyOf(list);// jdk10新增静态方法copyof 返回不可修改的副本
+        // JDK9新增of方法 只能用在list set map接口上不能用在实现类上，且长度固定 无法使用add put等方法
+        List<Integer> list = List.of(5,16,41,10);
+        // jdk10新增静态方法copyof 返回不可修改的副本
+        var copyList = List.copyOf(list);
+        System.out.println(copyList);
+
         /* stream().map()可以看作对象转换 */
         list.stream().sorted((x, y) -> (x - y)).map(String::valueOf).filter(x -> x.startsWith("1"))
                 .forEach(x -> methodParam.accept("④---" + x));
@@ -88,27 +98,28 @@ public class FeatureFromJDK {
         students.add(s2);
         students.add(s3);
         students.add(s4);
+
         //构造Stream流的方式
         Stream.of("Monkey", "Lion", "Giraffe", "Lemur").mapToInt(String::length).forEach(System.out::println);
-        Stream stream = Stream.of("a", "b", "c");
+        Stream<String> stream = Stream.of("a", "b", "c");
         String[] strArray = new String[] { "a", "b", "c" };
         stream = Stream.of(strArray);
         stream = Arrays.stream(strArray);
         List<String> list1 = Arrays.asList(strArray);
         stream = list1.stream();
-        //Stream流的之间的转换
-        //注意:一个Stream流只可以使用一次，这段代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
+        //注意:一个Stream流只可以使用一次，上面代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
         
+        //Stream流的之间的转换
         try {
             Stream<String> stream2 = Stream.of("a", "b", "c");
-            // 转换成 Array
+            // stream转换成 Array
             String[] strArray1 = stream2.toArray(String[]::new);
         
-            // 转换成 Collection
+            // stream转换成 Collection
             List<String> list3 = stream2.collect(Collectors.toList());
             List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));   
-            Set set1 = stream2.collect(Collectors.toSet());
-            Stack stack1 = stream2.collect(Collectors.toCollection(Stack::new));
+            Set<String> set1 = stream2.collect(Collectors.toSet());
+            Stack<String> stack1 = stream2.collect(Collectors.toCollection(Stack::new));
         
             // 转换成 String
             String str = stream.collect(Collectors.joining()).toString();
@@ -244,40 +255,62 @@ public class FeatureFromJDK {
     public void newMapMethod(){
        
         //jdk8新增的map方法
-        Map<String,Object> jdk8Map = new HashMap<>();
-        jdk8Map.put("a", 1);jdk8Map.put("b", 2);
+        Map<String,Object> newMap = new HashMap<>();
+        newMap.put("a", 1);newMap.put("b", 2);
+
         //remove 方法 接收2个参数，key和value，只有当Map中键值对同时等于参数Key和Value时才执行删除
-        jdk8Map.remove("a", 1);jdk8Map.remove("b", 3);
+        newMap.remove("a", 1);newMap.remove("b", 3);
+
         //replace(K key, V value) 方法
-        jdk8Map.replace("b", 3);
+        newMap.replace("b", 3);
         //replace(K key, V oldValue, V newValue) 方法 如果key关联的值与指定的oldValue的值相等，则替换成新的newValue
-        jdk8Map.replace("b", 2, 4);
-        //getOrDefault方法 如果指定的key存在，返回value，不存在，返回指定的值 不会往map里面put数据
-        System.out.println(jdk8Map.getOrDefault("c", 3));
-        //forEach方法 遍历Map中的所有Entry, 对key, value进行处理
-        jdk8Map.forEach((key, value) -> System.out.println(key +"--->"+ value));//输出b--->3
+        newMap.replace("b", 2, 4);
         //replaceAll方法 替换Map中所有Entry的value值，这个值由旧的key和value计算得出，接收参数 (K, V) -> V
-        jdk8Map.replaceAll((key, value) -> (key + "z") + value);
-        jdk8Map.forEach((key, value) -> System.out.println(key +"--->"+ value));// 输出 b--->bz3
+        newMap.replaceAll((key, value) -> (key + "z") + value);
+        
+        //getOrDefault方法 根据key得到value 如果value存在，返回value，不存在，返回指定的值 不会往map里面put数据
+        newMap.getOrDefault("c", 3);
+        //forEach方法 遍历Map中的所有Entry, 对key, value进行处理
+        newMap.forEach((key, value) -> System.out.println(key +"--->"+ value));//输出b--->3
+        newMap.forEach((key, value) -> System.out.println(key +"--->"+ value));// 输出 b--->bz3
 
         //putIfAbsent方法 如果传入key对应的value已经存在，就返回存在的value，不进行替换。如果不存在，就添加key和value，返回null
         //与put区别在于put在放入数据时，如果放入数据的key已经存在与Map中，最后放入的数据会覆盖之前存在的数据，而putIfAbsent在放入数据时，如果存在重复的key，那么putIfAbsent不会放入值。       
-        jdk8Map.putIfAbsent("a", "3");jdk8Map.putIfAbsent("b",4);
+        newMap.putIfAbsent("a", "3");newMap.putIfAbsent("b",4);
 
         //computeIfAbsent方法 如果Key不存在，则Put这个Key和将Key带入函数运算后的结果为Value的键值对；如果Key存在，则忽略Put操作
-        jdk8Map.computeIfAbsent("a", key -> key + " computed");
-        jdk8Map.computeIfAbsent("c", key -> key + " computed");
+        // 以前写法
+        Object value = newMap.get("b");
+        if(value == null){
+            value = new Object();
+            newMap.put("b", value);
+        }
+        // 使用computeIfAbsent
+        newMap.computeIfAbsent("b", key -> new Object());
 
-        //computeIfPresent方法 如果Key存在，则将函数的运算结果作为这个Key对应的Value的新值Put进去 即根据旧的key和value计算新的值newValue, 如果newValue不为null，则设置key新的值为newValue，如果newValue为null,则删除该key的值
-        jdk8Map.computeIfPresent("b", (k, v) -> k + v);
+        // computeIfPresent方法 如果key存在，则将函数的运算结果作为这个Key对应的Value的新值Put进去 即根据旧的key和value计算新的值newValue, 如果newValue不为null，则设置key新的值为newValue，如果newValue为null,则删除该key的值
+        // 如果key不存在 则不进行操作返回null
+        newMap.computeIfPresent("b", (k, v) -> new Object());
 
-        //compute=computeIfAbsent+computeIfPresent 不判断存在不存在，直接按逻辑替换值
-        jdk8Map.compute("3", (k,v) -> String.valueOf(v)+"1" );
-        jdk8Map.compute("c", (k,v) -> String.valueOf(v)+"1" );
-        //merge() 适用于两种情况。如果给定的key不存在，它就变成了put(key, value)。但是，如果key已经存在一些值，我们 remappingFunction 可以选择合并的方式
-        //下面的参数2 = paramValue
-        jdk8Map.merge("a", 2, (mapValue,paramValue)->String.valueOf(paramValue)+String.valueOf(mapValue));
-        System.out.println(jdk8Map);
+        //不判断key存在不存在，直接按逻辑替换值
+        newMap.compute("3", (k,v) -> String.valueOf(v)+"1" );
+        newMap.compute("c", (k,v) -> String.valueOf(v)+"1" );
+
+        //merge() 适用于两种情况。如果给定的key不存在，它就变成了put(key, value)即newMap.get("a")==null的话merge操作就变成了传统的put操作。但是，如果key已经存在一些值，我们 remappingFunction 可以选择合并的方式
+        // 以前写法
+        // BiFunction第一个参数代表以前newMap.get("a")的值 
+        // BiFunction第二个参数代表输入的第二个参数
+        // BiFunction第三个参数代表返回类型
+        newMap.merge("a", 2, new BiFunction<Object, Object, Object>() {
+            @Override
+            public Object apply(Object mapValue, Object paramValue) {
+                // return Integer.sum(oldValue,newValue);
+                return String.valueOf(mapValue)+String.valueOf(paramValue);
+            }
+        });
+        //下面的参数mapValue是newMap.get("a")以前的值 参数paramValue是merge输入的第二个参数2
+        newMap.merge("a", 2, (mapValue,paramValue)->String.valueOf(paramValue)+String.valueOf(mapValue));
+      
     }
 
     /**
@@ -492,6 +525,3 @@ public class FeatureFromJDK {
     }
 
 }
-/**
- * JDK 5-15都有哪些经典新特性(https://mp.weixin.qq.com/s/1_pbYNskgTxjecZmpvVG0g)
- */
