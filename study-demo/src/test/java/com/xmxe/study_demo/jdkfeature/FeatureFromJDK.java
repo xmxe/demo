@@ -22,6 +22,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 import org.junit.Test;
 
 /**
@@ -79,7 +82,8 @@ public class FeatureFromJDK {
 
     /**
      * stream流
-     * https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ(Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合)
+     * https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ
+     * (Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合)
      */
     @Test
     public void stream() {
@@ -400,12 +404,12 @@ public class FeatureFromJDK {
      * optional处理NPE异常
      */
     @Test
-    public void optional(){
+    public void optional() throws Exception{
         // 1、创建包装对象值为空的Optional对象
         Optional<String> optEmpty = Optional.empty();
         // 2、创建包装对象值非空的Optional对象
         Optional<String> optOf = Optional.of("optional");
-        // 3、创建包装对象值允许为空也可以不为空的Optional对象
+        // 3、创建包装对象值允许为空也可以不为空的Optional对象 传null就得到 Optional.empty(), 非null就调用 Optional.of(obj).
         Optional<String> optOfNullable1 = Optional.ofNullable(null);
         Optional<String> optOfNullable2 = Optional.ofNullable("optional");
 
@@ -437,6 +441,7 @@ public class FeatureFromJDK {
 
         // Optional.orElse() 方法 (为空返回对象)
         // 常用方法之一，这个方法意思是如果包装对象为空的话，就执行 orElse 方法里的 value，如果非空，则返回写入对象
+        optEmpty.orElse("100");//optEmpty为null返回100 不为null返回optEmpty的值
 
         // Optional.orElseGet() 方法 (为空返回 Supplier 对象)
         // 这个与 orElse 很相似，入参不一样，入参为 Supplier 对象，为空返回传入对象的. get() 方法，如果非空则返回当前对象
@@ -446,9 +451,7 @@ public class FeatureFromJDK {
 
         // Optional.orElseThrow() 方法 (为空返回异常)
         // 方法作用的话就是如果为空，就抛出你定义的异常，如果不为空返回当前对象
-        //简单的一个查询
-        //Member member = memberService.selectByPhone(request.getPhone());
-        //Optional.ofNullable(member).orElseThrow(() -> new ServiceException("没有查询的相关数据"));
+        Optional.ofNullable(person).orElseThrow(() -> new RuntimeException("person为null"));
 
         /**
          * orElse() 和 orElseGet() 和 orElseThrow() 的异同点
@@ -456,52 +459,40 @@ public class FeatureFromJDK {
          * orElse（T 对象）
          * orElseGet（Supplier <T> 对象）
          * orElseThrow（异常）
+         * 
          * map() 和 orElseGet 的异同点
          * 方法效果类似，对方法参数进行二次包装，并返回, 入参不同
          * map（function 函数）
          * flatmap（Optional<function> 函数）
-         */
+         */  
+    }
 
-        // 实战场景
-        // 场景 1：在 service 层中查询一个对象，返回之后判断是否为空并做处理
-        //查询一个对象
-        //Member member = memberService.selectByIdNo(request.getCertificateNo());
-        //使用ofNullable加orElseThrow做判断和操作
-        //Optional.ofNullable(member).orElseThrow(() -> new ServiceException("没有查询的相关数据"));
-        //场景 2：我们可以在 dao 接口层中定义返回值时就加上 Optional 例如：我使用的是 jpa，其他也同理
-
-        // public interface LocationRepository extends JpaRepository<Location, String> {
-        //     Optional<Location> findLocationById(String id);
-        // }
-        // 然在是 Service 中
-
-        // public TerminalVO findById(String id) {
-        // //这个方法在dao层也是用了Optional包装了
-        //         Optional<Terminal> terminalOptional = terminalRepository.findById(id);
-        //         //直接使用isPresent()判断是否为空
-        //         if (terminalOptional.isPresent()) {
-        //         //使用get()方法获取对象值
-        //             Terminal terminal = terminalOptional.get();
-        //             //在实战中，我们已经免去了用set去赋值的繁琐，直接用BeanCopy去赋值
-        //             TerminalVO terminalVO = BeanCopyUtils.copyBean(terminal, TerminalVO.class);
-        //             //调用dao层方法返回包装后的对象
-        //             Optional<Location> location = locationRepository.findLocationById(terminal.getLocationId());
-        //             if (location.isPresent()) {
-        //                 terminalVO.setFullName(location.get().getFullName());
-        //             }
-        //             return terminalVO;
-        //         }
-        //         //不要忘记抛出异常
-        //         throw new ServiceException("该终端不存在");
-        //     }
-
-        // jdk8 Base64
-        String str = "公众号:捡田螺的小男孩";
+    /**
+     * jdk8自带Base64 无需再使用第三方Base64
+     */
+    @Test
+    public void jdk8Base64(){
+        String str = "str";
         String encoded = Base64.getEncoder().encodeToString(str.getBytes( StandardCharsets.UTF_8));
         String decoded = new String(Base64.getDecoder().decode(encoded), StandardCharsets.UTF_8);
     }
 
+    /**
+     * 从 JDK 1.8 开始，Nashorn 取代 Rhino(JDK 1.6, JDK1.7) 成为 Java 的嵌入式 JavaScript 引擎。
+     * 它使用基于 JSR 292 的新语言特性，将 JavaScript 编译成 Java 字节码
+     */
+    @Test
+    public void jsEngine(){
+        ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+        ScriptEngine nashorn = scriptEngineManager.getEngineByName("nashorn");
 
+        String name = "Hello World";
+        try {
+            nashorn.eval("print('" + name + "')");
+        }catch(Exception e){
+            System.out.println("执行脚本错误: "+ e.getMessage());
+        }
+    }
     /**
      * jdk11 新增的string方法
      */
