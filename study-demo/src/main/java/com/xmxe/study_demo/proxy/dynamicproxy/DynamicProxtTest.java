@@ -37,6 +37,7 @@ interface BuyHouse {
  * JDK和CGLIB动态代理区别(https://blog.csdn.net/yhl_jxy/article/details/80635012)
  * [设计模式---代理模式](https://www.cnblogs.com/daniels/p/8242592.html)
  * [一文读懂Java动态代理](https://mp.weixin.qq.com/s/1Jxxrbi8nk4pcD8I1ts5lQ)
+ * [一文读懂 Java 动态代理，那些面试中你容易忽略的细节](https://mp.weixin.qq.com/s/FehKQzdgXfM2556v8TNNqg)
  * 
  * JDK代理是不需要第三方库支持，只需要JDK环境就可以进行代理，使用条件:
  * 1）实现InvocationHandler 
