@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.annotation;
+package com.xmxe.study_demo.designpattern.strategy.annotation;
 
 import java.util.HashMap;
 import java.util.Map;

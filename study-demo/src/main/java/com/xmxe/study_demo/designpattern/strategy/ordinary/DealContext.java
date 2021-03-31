@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.ordinary;
+package com.xmxe.study_demo.designpattern.strategy.ordinary;
 
 /**
  * 封装实体类 

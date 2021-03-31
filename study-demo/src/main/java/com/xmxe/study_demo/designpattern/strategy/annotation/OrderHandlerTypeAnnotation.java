@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.strategy.annotation;
+package com.xmxe.study_demo.designpattern.strategy.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

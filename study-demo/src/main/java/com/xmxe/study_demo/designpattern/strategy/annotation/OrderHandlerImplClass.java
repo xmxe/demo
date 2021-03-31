@@ -1,7 +1,7 @@
-package com.xmxe.study_demo.strategy.annotation;
+package com.xmxe.study_demo.designpattern.strategy.annotation;
 
 /**
- * 业务实现类
+ * 策略模式：业务实现类
  */
 @OrderHandlerTypeAnnotation(source = "default")
 public class OrderHandlerImplClass implements OrderHandler{

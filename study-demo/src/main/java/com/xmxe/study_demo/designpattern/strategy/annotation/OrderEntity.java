@@ -1,9 +1,9 @@
-package com.xmxe.study_demo.strategy.annotation;
+package com.xmxe.study_demo.designpattern.strategy.annotation;
 
 import java.math.BigDecimal;
 
 /**
- * 实体封装类
+ * 策略模式：实体封装类
  */
 public class OrderEntity {
     /**

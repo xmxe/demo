@@ -1,8 +1,9 @@
-package com.xmxe.study_demo.strategy.ordinary;
+package com.xmxe.study_demo.designpattern.strategy.ordinary;
 
 /**
-* 统一业务接口实现类（策略类） 业务逻辑越多（if else越多） 策略类越多 
-*/
+ * 策略模式优化if else
+ * 统一业务接口实现类（策略类） 业务逻辑越多（if else越多） 策略类越多 
+ */
 public class DealPlatForm implements DealStrategy{
 
     @Override
