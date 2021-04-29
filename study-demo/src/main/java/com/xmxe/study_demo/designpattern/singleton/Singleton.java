@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.singleton;
+package com.xmxe.study_demo.designpattern.singleton;
 
 /**
  * 单例模式8种写法
