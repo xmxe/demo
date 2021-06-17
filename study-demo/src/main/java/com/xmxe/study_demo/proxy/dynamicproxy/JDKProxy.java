@@ -22,9 +22,9 @@ public class JDKProxy implements InvocationHandler{
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		// 一般先写业务逻辑处理
-		System.out.println("买房前准备");
+		System.out.println("JDKProxy before invoke");
 		Object result = method.invoke(object, args);
-		System.out.println("买房后装修");
+		System.out.println("JDKProxy after invoke");
 		return result;
 	}
 

@@ -25,7 +25,7 @@ class BuyHouseImpl implements BuyHouse {
 
 	@Override
 	public void buyHouse() {
-		System.out.println("BuyHouseImpl:");
+		System.out.println("this is dynamicproxy BuyHouseImpl");
 	}
 
 }
@@ -34,8 +34,6 @@ interface BuyHouse {
 }
 /**
  * 终于有人把 java代理 讲清楚了，万字详解！(https://mp.weixin.qq.com/s/C9Vpfcgl3NB_0rBpLh2yCA)
- * JDK和CGLIB动态代理区别(https://blog.csdn.net/yhl_jxy/article/details/80635012)
- * 再次重温下Cglib与JDK动态代理(https://mp.weixin.qq.com/s/uR7-EaKyGPw0P_r9sO5AOg)
  * [设计模式---代理模式](https://www.cnblogs.com/daniels/p/8242592.html)
  * [一文读懂Java动态代理](https://mp.weixin.qq.com/s/1Jxxrbi8nk4pcD8I1ts5lQ)
  * [一文读懂 Java 动态代理，那些面试中你容易忽略的细节](https://mp.weixin.qq.com/s/FehKQzdgXfM2556v8TNNqg)

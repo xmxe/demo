@@ -7,14 +7,19 @@ import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.cglib.proxy.Enhancer;
 
 public class CglibProxy implements MethodInterceptor {
+
 	/** CGLib需要代理的目标对象 */
 	private Object targetObject;
 	
 	public Object createProxyObject(Object obj) {
         this.targetObject = obj;
+        // 创建Enhancer对象，类似于JDK动态代理的Proxy类
         Enhancer enhancer = new Enhancer();
+        // 设置目标类的字节码文件
         enhancer.setSuperclass(obj.getClass());
+        // 设置回调函数
         enhancer.setCallback(this);
+        // 创建代理类
         Object proxyObj = enhancer.create();
         // 返回代理对象
         return proxyObj;
@@ -28,9 +33,9 @@ public class CglibProxy implements MethodInterceptor {
 			//业务逻辑 ...
 			System.out.println("do something...");
 		}
-		System.out.println("Before Method Invoke");
+		System.out.println("Before CglibProxy Method Invoke");
 		obj = method.invoke(targetObject, objects);
-		System.out.println("After Method Invoke");
+		System.out.println("After CglibProxy Method Invoke");
 		return obj;
 	}
 
