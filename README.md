@@ -8,7 +8,7 @@
 
 ### study-demo
 
-- 涉及到平常基本开发所用的技术，有jdk新特性，kafka，zookeeper，爬虫，代理模式，单例模式，socket，策略模式，String字符串，线程，util工具类等相关demo
+- 设计模式(构建模式，监听模式，观察者模式，单例模式，策略模式，代理模式（静态代理\动态代理）)、枚举、Kafka、NIO（jdk\netty）、Redis（分布式锁）、反射、RMI、序列化、socket、JUC并发包、Zookeeper（分布式锁）、util、jdk feature、js...
 
 ---
 

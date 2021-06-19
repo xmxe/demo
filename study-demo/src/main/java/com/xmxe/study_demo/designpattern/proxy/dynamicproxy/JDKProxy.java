@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.proxy.dynamicproxy;
+package com.xmxe.study_demo.designpattern.proxy.dynamicproxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.proxy.staticproxy;
+package com.xmxe.study_demo.designpattern.proxy.staticproxy;
 
 public class BuyHouseProxy implements BuyHouse {
 	
