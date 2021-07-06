@@ -10,8 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-// 7c0a5b757ac26eb1845c9ff8c1fe4ac54d56fd2b
-
 /**
  * 使用场景
  * 任务需要中断，获取返回结果，将原来十个接口的活用一个接口搞定
