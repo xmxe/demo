@@ -220,6 +220,12 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.1.49.Final</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.54</version>
+		</dependency>
 	</dependencies>
 
 	<build>
