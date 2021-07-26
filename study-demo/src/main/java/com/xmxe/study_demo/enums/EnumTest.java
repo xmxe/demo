@@ -5,7 +5,10 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-
+/**
+ * 用好 Java 中的枚举，让你的工作效率飞起来(https://mp.weixin.qq.com/s/hX_9Dkg9612KLHQ1oPr4qA)
+ * 
+ * */
 public class EnumTest {
 	public static void main(String[] args) {
 		EnumTest t = new EnumTest();

@@ -34,6 +34,7 @@ public class FeatureFromJDK {
 
     /**
      * lambda表达式
+     * 函数式接口原理(https://mp.weixin.qq.com/s/DGR4kbwnY7LIJoYoGfKcRg)
      */
     @Test
     public void lambda() {
