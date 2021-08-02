@@ -403,6 +403,7 @@ public class FeatureFromJDK {
 
     /**
      * optional处理NPE异常
+     * Java8 Optional最佳实践 https://mp.weixin.qq.com/s/QMY9H2iMQGGRRORKc1COdw
      */
     @Test
     public void optional() throws Exception{
