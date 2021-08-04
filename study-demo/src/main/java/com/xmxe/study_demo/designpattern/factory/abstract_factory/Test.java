@@ -2,6 +2,9 @@ package com.xmxe.study_demo.designpattern.factory.abstract_factory;
 
 import com.xmxe.study_demo.designpattern.factory.simple_factory.Customer;
 
+/**
+ * 最全工厂设计模式案例详解，不服来辩！(https://mp.weixin.qq.com/s/uPl3MpA38ZwOwk6VWtdipA)
+ */
 public class Test {
     public static void main(String[] args) {
         System.out.println("------工厂模式-抽象工厂------");

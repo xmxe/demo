@@ -1,5 +1,9 @@
 package com.xmxe.study_demo.thread;
 
+/**
+ * wait 和 notify 有坑(https://mp.weixin.qq.com/s/KCu3iEG1xbqQVw1GviXOjA)
+ * 
+ */
 public class WaitNotify {
     public static void main(String[] args) {
         WaitNotify w = new WaitNotify();
