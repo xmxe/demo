@@ -443,6 +443,7 @@ public class FeatureFromJDK {
 
         // Optional.orElse() 方法 (为空返回对象)
         // 常用方法之一，这个方法意思是如果包装对象为空的话，就执行 orElse 方法里的 value，如果非空，则返回写入对象
+        // 注意：不管Optional是不是null, orElse都会执行里面的方法，orElseGet不会执行里面的方法，这也是orElse和orElseGet的区别
         optEmpty.orElse("100");//optEmpty为null返回100 不为null返回optEmpty的值
 
         // Optional.orElseGet() 方法 (为空返回 Supplier 对象)
