@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+/**
+ * 关于序列化/反序列化，我梭哈(https://mp.weixin.qq.com/s/uTrNn_C-wnKPQieUcQ9z5g)
+ * */
 public class SerializableTest {
     public static void main(String[] args) throws Exception {
         serializeFlyPig();
