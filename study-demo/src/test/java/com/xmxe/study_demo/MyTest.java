@@ -239,6 +239,39 @@ public class MyTest {
             e.printStackTrace();
         }
     }
+
+
+    @Test
+    public void 断言(){
+        /*
+         * 语法1：assert expression; //expression代表一个布尔类型的表达式，如果为真，就继续正常运行，如果为假，程序退出
+         * 
+         * 语法2：assert expression1 : expression2; //expression1是一个布尔表达式，expression2错误信息，
+         * 如果expression1为真，则程序忽略expression2继续运行；如果expression1为假，则程序抛出java.lang.AssertionError，并输入expression2。
+         * */
+        // demo1
+        int z = 6;
+        assert z==6; 
+        System.out.println("如果断言正常，我就被打印");
+
+        assert 5==z : "断言失败，此表达式的信息将会在抛出异常的时候输出！"; 
+        System.out.println("断言2没有问题，Go！");
+        
+        // demo2
+        int i = 3;  
+        switch (i) {  
+        case 1:  
+            System.out.println("正常");  
+            break;  
+        case 2:  
+            System.out.println("正常");  
+            break;  
+        default:  
+            assert false:"i的值无效";       //如果i的值不是你想要的，程序就警告退出  
+        }  
+        System.out.println("如果断言正常，我就被打印");  
+    }  
+    
 }
 
 
