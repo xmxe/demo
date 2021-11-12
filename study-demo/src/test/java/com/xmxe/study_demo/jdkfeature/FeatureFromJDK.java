@@ -83,8 +83,8 @@ public class FeatureFromJDK {
 
     /**
      * stream流
-     * https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ
-     * (Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合)
+     * [Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合](https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ)
+     * [Java8中Stream详细用法大全](https://mp.weixin.qq.com/s/0F_CBDlav8X4-CfE0hzjWQ)
      */
     @Test
     public void stream() {
