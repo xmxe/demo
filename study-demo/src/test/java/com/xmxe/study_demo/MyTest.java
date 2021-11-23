@@ -20,8 +20,7 @@ public class MyTest {
         Client client = dcf.createClient("http://localhost:8080/jn/ws/user?wsdl");
 
         // 需要密码的情况需要加上用户名和密码
-        // client.getOutInterceptors().add(new
-        // ClientLoginInterceptor(USER_NAME,PASS_WORD));
+        // client.getOutInterceptors().add(new ClientLoginInterceptor(USER_NAME,PASS_WORD));
         Object[] objects = new Object[0];
         try {
 
