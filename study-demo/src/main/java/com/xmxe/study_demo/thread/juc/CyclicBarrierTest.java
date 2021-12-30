@@ -99,6 +99,7 @@ public class CyclicBarrierTest{
 
 /**
  * CyclicBarrier与CountDownLatch的区别
+ * countDownLatch这个类使一个线程等待其他线程各自执行完毕后再执行。CyclicBarrier线程会互相等待
  * 这两个类都可以实现一组线程在到达某个条件之前进行等待，它们内部都有一个计数器，当计数器的值不断的减为0的时候所有阻塞的线程将会被唤醒。
  * 有区别的是CyclicBarrier的计数器由自己控制，而CountDownLatch的计数器则由使用者来控制，
  * 在CyclicBarrier中线程调用await方法不仅会将自己阻塞还会将计数器减1，而在CountDownLatch中线程调用await方法只是将自己阻塞而不会减少计数器的值。

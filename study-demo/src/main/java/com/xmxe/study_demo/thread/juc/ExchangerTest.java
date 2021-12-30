@@ -20,64 +20,14 @@ import java.util.concurrent.TimeUnit;
  * String exchange(V x,long timeout,TimeUnit unit)：用于交换，启动交换并等待另一个线程调用exchange，并且设置最大等待时间，当等待时间超过timeout便停止等待。
  */
 public class ExchangerTest {
-  static class Producer extends Thread {
-    private Exchanger<Integer> exchanger;
-    private static int data = 0;
-
-    Producer(String name, Exchanger<Integer> exchanger) {
-      super("Producer-" + name);
-      this.exchanger = exchanger;
-    }
-
-    @Override
-    public void run() {
-      for (int i = 1; i < 5; i++) {
-        try {
-          TimeUnit.SECONDS.sleep(1);
-          data = i;
-          System.out.println(getName() + " 交换前:" + data);
-          data = exchanger.exchange(data);
-          System.out.println(getName() + " 交换后:" + data);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-    }
-  }
-
-  static class Consumer extends Thread {
-    private Exchanger<Integer> exchanger;
-    private static int data = 0;
-
-    Consumer(String name, Exchanger<Integer> exchanger) {
-      super("Consumer-" + name);
-      this.exchanger = exchanger;
-    }
-
-    @Override
-    public void run() {
-      while (true) {
-        data = 0;
-        System.out.println(getName() + " 交换前:" + data);
-        try {
-          TimeUnit.SECONDS.sleep(1);
-          data = exchanger.exchange(data);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-        System.out.println(getName() + " 交换后:" + data);
-      }
-    }
-  }
-
   public static void main(String[] args) throws InterruptedException {
-    // demo1();
-    demo2();
+    demo1();
+    // demo2();
 
   }
 
   public static void demo1() throws InterruptedException {
-    Exchanger<Integer> exchanger = new Exchanger<Integer>();
+    Exchanger<String> exchanger = new Exchanger<>();
     new Producer("", exchanger).start();
     new Consumer("", exchanger).start();
     TimeUnit.SECONDS.sleep(7);
@@ -87,7 +37,7 @@ public class ExchangerTest {
   public static void demo2() {
     ExecutorService executor = Executors.newCachedThreadPool();
 
-    final Exchanger exchanger = new Exchanger();
+    final Exchanger<String> exchanger = new Exchanger<>();
     executor.execute(new Runnable() {
       String data1 = "克拉克森，小拉里南斯";
 
@@ -127,7 +77,7 @@ public class ExchangerTest {
     executor.shutdown();
   }
 
-  private static void nbaTrade(String data1, Exchanger exchanger) {
+  private static void nbaTrade(String data1, Exchanger<String> exchanger) {
     try {
       System.out.println(Thread.currentThread().getName() + "在交易截止之前把 " + data1 + " 交易出去");
       Thread.sleep((long) (Math.random() * 1000));
@@ -136,6 +86,55 @@ public class ExchangerTest {
       System.out.println(Thread.currentThread().getName() + "交易得到" + data2);
     } catch (InterruptedException e) {
       e.printStackTrace();
+    }
+  }
+}
+class Producer extends Thread {
+  private Exchanger<String> exchanger;
+  private static String data = "0";
+
+  Producer(String name, Exchanger<String> exchanger) {
+    super("Producer-" + name);
+    this.exchanger = exchanger;
+  }
+
+  @Override
+  public void run() {
+    for (int i = 1; i < 5; i++) {
+      try {
+        TimeUnit.SECONDS.sleep(1);
+        data = String.valueOf(i);
+        System.out.println(getName() + " 交换前:" + data);
+        data = exchanger.exchange(data);
+        System.out.println(getName() + " 交换后:" + data);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+}
+
+class Consumer extends Thread {
+  private Exchanger<String> exchanger;
+  private static String data = "0";
+
+  Consumer(String name, Exchanger<String> exchanger) {
+    super("Consumer-" + name);
+    this.exchanger = exchanger;
+  }
+
+  @Override
+  public void run() {
+    while (true) {
+      data = "0";
+      System.out.println(getName() + " 交换前:" + data);
+      try {
+        TimeUnit.SECONDS.sleep(1);
+        data = exchanger.exchange(data);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println(getName() + " 交换后:" + data);
     }
   }
 }
