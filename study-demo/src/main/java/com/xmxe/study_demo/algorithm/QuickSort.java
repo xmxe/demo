@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * 快速排序
+ * https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653195042&idx=1&sn=2b0915cd2298be9f2163cc90a3d464da&chksm=8c99f9f8bbee70eef627d0f5e5b80a604221abb3a1b5617b397fa178582dcb063c9fb6f904b3&scene=21#wechat_redirect
  */
 public class QuickSort {
     //四个步骤：
