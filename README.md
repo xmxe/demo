@@ -8,7 +8,7 @@
 
 ### study-demo
 
-- 设计模式(构建模式，监听模式，观察者模式，单例模式，策略模式，代理模式（静态代理\动态代理）)、枚举、Kafka、NIO（jdk\netty）、Redis（分布式锁）、反射、RMI、序列化、socket、JUC并发包、Zookeeper（分布式锁）、util、jdk feature、js...
+- 排序算法、设计模式、枚举、NIO、反射、RMI、序列化、socket、JUC、Zookeeper、util...
 
 ---
 
