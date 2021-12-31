@@ -11,6 +11,9 @@ import java.net.SocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * [Java 网络编程 之 socket 的用法与实现](https://blog.csdn.net/a78270528/article/details/80318571)
+ */
 public class SocketServer {
 
 	public static void main(String[] args) throws Exception {
@@ -182,6 +185,3 @@ public class SocketServer {
 
 	}
 }
-/**
- * [Java 网络编程 之 socket 的用法与实现](https://blog.csdn.net/a78270528/article/details/80318571)
- */

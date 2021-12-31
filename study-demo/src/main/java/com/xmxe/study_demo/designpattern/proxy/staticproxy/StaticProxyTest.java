@@ -4,6 +4,5 @@ public class StaticProxyTest {
     public static void main(String[] args) {
         BuyHouseProxy bh = new BuyHouseProxy();
         bh.buyHouse();
-        
     }
 }

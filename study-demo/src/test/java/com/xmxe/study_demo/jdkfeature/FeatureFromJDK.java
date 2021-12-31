@@ -25,6 +25,8 @@ import java.util.stream.Stream;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import com.xmxe.study_demo.entity.Student;
+
 import org.junit.Test;
 
 /**

@@ -15,10 +15,8 @@ public class InsertSort {
             for (; j >= 0 && insertValue < array[j]; j--) {
                 array[j + 1] = array[j];
             }
-
             // insertValue的值插入适当位置
             array[j + 1] = insertValue;
-
         }
 
     }
@@ -27,6 +25,5 @@ public class InsertSort {
         int array[] = {12,1,3,46,5,0,-3,12,35,16};
         sort(array);
         System.out.println(Arrays.toString(array));
-
     }
 }

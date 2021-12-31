@@ -91,6 +91,7 @@ public class TaskBuilderPattern {
     }
 
 }
+
 class Builder{
     TaskBuilderPattern task = new TaskBuilderPattern.TaskBuilder(99, "紧急任务")
             .type(1)

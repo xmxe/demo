@@ -12,12 +12,14 @@ public class DecoratorMode {
         System.out.println("成品已经完成！");
     }
 }
+
 /**
  * 建立基本骨架
  */
 interface Clothes {
     void makeClothes();
 }
+
 /**
  * 被装饰类
  */
@@ -28,6 +30,7 @@ class MakeClothes implements Clothes {
         System.out.println("制作一件衣服");
     }
 }
+
 /**
  * 装饰类
  */
@@ -44,12 +47,11 @@ class Decorator implements Clothes {
         clothes.makeClothes();
     }
 }
+
 /**
  * 具体的装饰类
  */
 class EmbroideryDecorator extends Decorator {
-
-
     public EmbroideryDecorator(Clothes clothes) {
         super(clothes);
     }

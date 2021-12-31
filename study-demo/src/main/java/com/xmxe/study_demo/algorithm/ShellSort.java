@@ -18,8 +18,7 @@ public class ShellSort {
                 for (int i = x + d; i < array.length; i = i + d) {
                     int temp = array[i];
                     int j;
-                    for (j = i - d; j >= 0
-                            && array[j] > temp; j = j - d) {
+                    for (j = i - d; j >= 0 && array[j] > temp; j = j - d) {
                         array[j + d] = array[j];
                     }
                     array[j + d] = temp;
@@ -30,7 +29,6 @@ public class ShellSort {
 
     public static void main(String[] args){
         int[] array = {5,3,9,12,6,1,7,2,4,11,8,10};
-
         sort(array);
         System.out.println(Arrays.toString(array));
 

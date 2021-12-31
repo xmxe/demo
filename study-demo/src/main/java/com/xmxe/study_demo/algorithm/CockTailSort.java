@@ -8,7 +8,6 @@ import java.util.Arrays;
  */
 public class CockTailSort {
     private static void sort(int array[]) {
-
         int tmp = 0;
         for (int i = 0; i < array.length / 2; i++) {
             // 有序标记，每一轮的初始是true

@@ -1,4 +1,4 @@
-package com.xmxe.study_demo;
+package com.xmxe.study_demo.test;
 
 import java.awt.Font;
 import java.awt.Rectangle;

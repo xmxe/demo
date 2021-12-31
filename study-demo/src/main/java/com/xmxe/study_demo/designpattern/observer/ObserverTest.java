@@ -3,7 +3,7 @@ package com.xmxe.study_demo.designpattern.observer;
 import java.util.Observable;
 import java.util.Observable;
 import java.util.Observer;
-
+// jdk9之后过时 原因1、不能序列化 2、不是线程安全 3、支持事件模型的功能简单
 public class ObserverTest {
     public static void main(String[] args) {
         TheObserved theObserved = new TheObserved();
@@ -39,19 +39,6 @@ class TheObserved extends Observable{
         System.out.println(args);
     }
 }
-/**
- * void addObserver(Observer o)  如果观察者与集合中已有的观察者不同，则向对象的观察者集中添加此观察者。 
- * protected void clearChanged()  指示对象不再改变，或者它已对其所有的观察者通知了最近的改变，所以 hasChanged 方法将返回 false。 
- * int countObservers()  返回 Observable 对象的观察者数目。 
- * void deleteObserver(Observer o) 从对象的观察者集合中删除某个观察者。 
- * void deleteObservers()  清除观察者列表，使此对象不再有任何观察者。 
- * boolean hasChanged()  测试对象是否改变。 
- * void notifyObservers()  如果 hasChanged 方法指示对象已改变，则通知其所有观察者，并调用 clearChanged 方法来指示此对象不再改变。 
- * void notifyObservers(Object arg)  如果 hasChanged 方法指示对象已改变，则通知其所有观察者，并调用 clearChanged 方法来指示此对象不再改变。 
- * protected void setChanged()  标记此 Observable 对象为已改变的对象；现在执行 hasChanged 方法将返回 true。hasChanged()为true才会通知观察者数据有变化，并且在通知完成之后调用clearChanged()修改hasChanged()为false，所以当主题数据改变时，需要先调用setChanged()方法使hasChanged为true
- */
-
-
 
 /**
  * 观察者模式 ：观察者
@@ -81,3 +68,15 @@ class ObserverImpl implements Observer{
     }
     
 }
+
+/**
+ * void addObserver(Observer o)  如果观察者与集合中已有的观察者不同，则向对象的观察者集中添加此观察者。 
+ * protected void clearChanged()  指示对象不再改变，或者它已对其所有的观察者通知了最近的改变，所以 hasChanged 方法将返回 false。 
+ * int countObservers()  返回 Observable 对象的观察者数目。 
+ * void deleteObserver(Observer o) 从对象的观察者集合中删除某个观察者。 
+ * void deleteObservers()  清除观察者列表，使此对象不再有任何观察者。 
+ * boolean hasChanged()  测试对象是否改变。 
+ * void notifyObservers()  如果 hasChanged 方法指示对象已改变，则通知其所有观察者，并调用 clearChanged 方法来指示此对象不再改变。 
+ * void notifyObservers(Object arg)  如果 hasChanged 方法指示对象已改变，则通知其所有观察者，并调用 clearChanged 方法来指示此对象不再改变。 
+ * protected void setChanged()  标记此 Observable 对象为已改变的对象；现在执行 hasChanged 方法将返回 true。hasChanged()为true才会通知观察者数据有变化，并且在通知完成之后调用clearChanged()修改hasChanged()为false，所以当主题数据改变时，需要先调用setChanged()方法使hasChanged为true
+ */

@@ -122,12 +122,14 @@ public class FileUtils {
         try {
             reader = new BufferedReader(new FileReader(filePath));
             String tempString = null;
-            int line = 1;
+            // 行数
+            // int line = 1;
             // 一次读入一行，直到读入null为文件结束
             while ((tempString = reader.readLine()) != null) {
                 listContent.add(tempString);
-                line++;
+                // line++;
             }
+    
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -182,9 +184,10 @@ public class FileUtils {
      */
     public static List<String> readLinesContent(String filePath, int beginLineNumber, int endLineNumber) {
         List<String> listContent = new ArrayList<>();
+        BufferedReader reader = null;
         try {
             int count = 0;
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            reader = new BufferedReader(new FileReader(filePath));
             String content = reader.readLine();
             while (content != null) {
                 if (count >= beginLineNumber && count <= endLineNumber) {
@@ -194,6 +197,14 @@ public class FileUtils {
                 count++;
             }
         } catch (Exception e) {
+        }finally{
+            if(reader != null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listContent;
     }
@@ -211,11 +222,12 @@ public class FileUtils {
             try {
                 reader = new BufferedReader(new FileReader(file));
                 String tempString = null;
-                int line = 1;
+                // 行数
+                // int line = 1;
                 // 一次读入一行，直到读入null为文件结束
                 while ((tempString = reader.readLine()) != null) {
                     listContent.add(tempString);
-                    line++;
+                    // line++;
                 }
                 reader.close();
             } catch (IOException e) {
@@ -492,11 +504,12 @@ public class FileUtils {
             reader = new InputStreamReader(new FileInputStream(file), code);
             br = new BufferedReader(reader);
             String tempString = null;
-            int line = 1;
+            // 行数
+            // int line = 1;
             // 一次读入一行，直到读入null为文件结束
             while ((tempString = br.readLine()) != null) {
                 listContent.add(tempString);
-                line++;
+                // line++;
             }
             reader.close();
         } catch (IOException e) {

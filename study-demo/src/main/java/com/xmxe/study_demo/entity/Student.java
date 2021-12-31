@@ -1,18 +1,27 @@
-package com.xmxe.study_demo.jdkfeature;
+package com.xmxe.study_demo.entity;
 
 import java.util.Objects;
 
+import com.xmxe.study_demo.designpattern.strategy.annotation.OrderHandlerTypeAnnotation;
+
 public class Student {
-
     private Long id;
-
-    private String name;
-
-    private int age;
-
     private String address;
+    private Integer age;
+    public String name;
+    protected String gender;
+
 
     public Student() {}
+
+    public Student(Integer age,String name){
+        this(name, age);
+    }
+
+    private Student(String name,Integer age){
+        this.name = name;
+        this.age = age;
+    }
 
     public Student(Long id, String name, int age, String address) {
         this.id = id;
@@ -20,9 +29,11 @@ public class Student {
         this.age = age;
         this.address = address;
     }
-    public Student(int age,String name){
-        this.name = name;
-        this.age = age;
+   
+    
+    @OrderHandlerTypeAnnotation(source = "ddd")
+    public void method1(String name,Integer age){
+        System.out.println(1);
     }
 
     @Override
@@ -82,5 +93,4 @@ public class Student {
     public void setAddress(String address) {
         this.address = address;
     }
-
 }

@@ -7,9 +7,10 @@ public class ShareTest {
     public static void main(String[] args) {
         shareOptions("Sina");
     }
+
     private static List<DealContext> algs = new ArrayList<>();
    //静态代码块,先加载所有的策略
-   static {
+    static {
        algs.add(new DealContext("Sina",new DealSina()));
        algs.add(new DealContext("QQ",new DealQQ()));
     }

@@ -29,11 +29,8 @@ public class CustomFilter {
 class Person{
 
     private String name;//姓名
-
     private String gender;//性别
-
     private int age;//年龄
-
 
     public String getName() {
         return name;

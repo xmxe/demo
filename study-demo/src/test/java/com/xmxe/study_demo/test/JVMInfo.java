@@ -1,4 +1,4 @@
-package com.xmxe.study_demo;
+package com.xmxe.study_demo.test;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;

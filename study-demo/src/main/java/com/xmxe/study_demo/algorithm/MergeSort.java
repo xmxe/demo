@@ -8,7 +8,6 @@ import java.util.Arrays;
  */
 public class MergeSort {
     public static void mergeSort(int[] array,int start,int end) {
-
         if (start < end) {
             // 折半成两个小集合，分别进行递归
             int mid = (start + end) / 2;
@@ -16,7 +15,6 @@ public class MergeSort {
             mergeSort(array,mid + 1,end);
             // 把两个有序小集合，归并成一个大集合
             merge(array,start,mid,end);
-
         }
 
     }
@@ -49,6 +47,5 @@ public class MergeSort {
         int[] array ={5,8,6,3,9,2,1,7};
         mergeSort(array,0,array.length - 1);
         System.out.println(Arrays.toString(array));
-
     }
 }

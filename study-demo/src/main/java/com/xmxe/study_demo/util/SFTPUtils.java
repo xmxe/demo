@@ -14,7 +14,6 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-//import com.cmread.cmu.portal.web.util.config.ConfigManageUtil;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;

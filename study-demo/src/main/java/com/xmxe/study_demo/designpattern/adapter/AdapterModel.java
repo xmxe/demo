@@ -16,17 +16,19 @@ public class AdapterModel {
 interface Phone {
     void productPhone();
 }
-class HuaweiPhone implements Phone{
 
+class HuaweiPhone implements Phone{
     @Override
     public void productPhone() {
         System.out.println("生产一部华为手机");        
     }
     
 }
+
 interface Player{
     void action();
 }
+
 class ExpensiveAdapter implements Player{
 
     private Phone phone;
@@ -34,11 +36,8 @@ class ExpensiveAdapter implements Player{
     public ExpensiveAdapter(Phone phone) {
         this.phone = phone;
     }
-
-
     @Override
     public void action() {
-        
         //调用HuaweiPhone中的productPhone方法
         phone.productPhone();
         System.out.println("用手机播放音乐");

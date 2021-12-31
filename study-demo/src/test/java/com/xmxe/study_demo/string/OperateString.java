@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
-import com.xmxe.study_demo.jdkfeature.Student;
+import com.xmxe.study_demo.entity.Student;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;

@@ -10,8 +10,8 @@ public class RadixSort {
 
     // ascii码的取值范围
     public static final int ASCII_RANGE = 128;
-    public static String[] radixSort( String[] array, int maxLength){
 
+    public static String[] radixSort( String[] array, int maxLength){
         // 排序结果数组，用于存储每一次按位排序的临时结果
         String[] sortedArray = new String[array.length];
         // 从个位开始比较，一直比较到最高位

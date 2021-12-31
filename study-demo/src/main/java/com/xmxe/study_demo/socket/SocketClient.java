@@ -2,6 +2,7 @@ package com.xmxe.study_demo.socket;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -72,12 +73,12 @@ public class SocketClient {
 	 * buffer socket client
 	 */
 	public static void bufferSocketClient(){
+		Socket socket = null;
 		try {
-			Socket s = new Socket("127.0.0.1",8888);
-			
+			socket = new Socket("127.0.0.1",8888);
 			//构建IO
-			InputStream is = s.getInputStream();
-			OutputStream os = s.getOutputStream();
+			InputStream is = socket.getInputStream();
+			OutputStream os = socket.getOutputStream();
 			
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
 			//向服务器端发送一条消息
@@ -90,6 +91,14 @@ public class SocketClient {
 			System.out.println("服务器："+mess);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			if(socket != null){
+				try {
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}

@@ -10,9 +10,7 @@ public class CountSort {
     public static int[] countSort(int[] array){
 
         // 1.得到数列的最大值和最小值，并算出差值d
-
         int max = array[0];
-
         int min = array[0];
 
         for (int i = 1; i < array.length; i++){
@@ -56,6 +54,5 @@ public class CountSort {
         int[] array = new int[] {95,94,91,98,99,90,99,93,91,92};
         int[] sortedArray = countSort(array);
         System.out.println(Arrays.toString(sortedArray));
-
     }
 }

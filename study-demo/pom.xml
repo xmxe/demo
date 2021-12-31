@@ -114,12 +114,32 @@
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
 			<version>3.4.10</version>
+			<exclusions>
+				<exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- 对zookeeper的底层api的一些封装 -->
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
+			<exclusions>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
+				<exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+				<exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
             <version>4.0.0</version>
         </dependency>
         <!-- 封装了一些高级特性，如：Cache事件监听、选举、分布式锁、分布式Barrier -->
@@ -138,6 +158,16 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
+			<exclusions>
+				<exclusion>
+                    <groupId>javax.xml.soap</groupId>
+                    <artifactId>javax.xml.soap-api</artifactId>
+                </exclusion>
+				<exclusion>
+                    <groupId>org.jvnet.staxex</groupId>
+                    <artifactId>stax-ex</artifactId>
+                </exclusion>
+			</exclusions>
 			<version>3.3.3</version>
 		</dependency>
 
@@ -154,15 +184,15 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-core</artifactId>
 			<version>2.2</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency> -->
 
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>${poi.version}</version>
@@ -184,7 +214,7 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>${poi.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -208,12 +238,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.10</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.4</version>
 		</dependency>
 
 		<dependency>
@@ -255,7 +279,17 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>easyexcel</artifactId>
-			<version>2.2.11</version>
+			<exclusions>
+				<exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+				<exclusion>
+					<groupId>org.glassfish.jaxb</groupId>
+					<artifactId>jaxb-runtime</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>3.0.5</version>
 		</dependency>
 
 		<dependency>
@@ -264,6 +298,7 @@
 			<version>5.7.16</version>
 		</dependency>
 
+		<!-- OSHI 是基于 JNA 的（本地）操作系统和硬件信息库 获取系统/服务器资源相关信息 -->
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>

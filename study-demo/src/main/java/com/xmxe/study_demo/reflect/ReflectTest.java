@@ -10,49 +10,51 @@ import com.xmxe.study_demo.designpattern.strategy.annotation.OrderHandlerTypeAnn
 
 public class ReflectTest {
     public static void main(String[] args) throws Exception{
-        Class<?> clazz = Class.forName("com.xmxe.study_demo.reflect.Student");
+        Class<?> clazz = Class.forName("com.xmxe.study_demo.entity.Student");
 
         // 获取所有pubic修饰的成员变量
         Field[] fields = clazz.getFields();
         for (Field field : fields) {
-            System.out.println(field); 
+            System.out.println("获取所有pubic修饰的成员变量==="+field); 
         }
         // 获取指定的pulic成员变量
         Field field = clazz.getField("name"); 
-        System.out.println("成员变量name:" + field);
+        System.out.println("获取指定的pulic成员变量name===" + field);
         // 获取所有成员变量
         Field[] fields2 =  clazz.getDeclaredFields();
         for (Field field1 : fields2) {
-            System.out.println(field1);
+            System.out.println("获取所有成员变量==="+field1);
         }       
         // 获取指定成员变量，不考虑修饰符
         Field field3 = clazz.getDeclaredField("age");
-        System.out.println(field3);
+        System.out.println("获取指定成员变量，不考虑修饰符==="+field3);
 
         // 获取所有public 修饰的构造方法，返回一个含有所有public修饰的构造函数对象的数组。
         Constructor<?>[] constructors = clazz.getConstructors();
         for(Constructor<?> constructor : constructors){
-            System.out.println(constructor);
+            System.out.println("获取所有public 修饰的构造方法==="+constructor);
         }
         // 获取所有构造函数，不考虑修饰符，参数是构造器中参数类型对应的Class对象。
-        Constructor<?> con =  clazz.getDeclaredConstructor(String.class, int.class);
-        System.out.println(con);
+        Constructor<?> con =  clazz.getDeclaredConstructor(String.class, Integer.class);
+        System.out.println("获取所有构造函数，不考虑修饰符，参数是构造器中参数类型对应的Class对象==="+con);
         
         // 获取所有方法，不考虑修饰符
         Method[] methods = clazz.getDeclaredMethods();
         for(Method method : methods){
-            System.out.println(method);
+            System.out.println("获取所有方法，不考虑修饰符==="+method);
         }
         // 根据方法名获取
-        Method method = clazz.getMethod("method1", String.class,int.class);
-        System.out.println(method);
+        Method method = clazz.getMethod("method1", String.class,Integer.class);
+        System.out.println("根据方法名获取==="+method);
 
         // 获取类的全路径名
         String getName = clazz.getName();
-        System.out.println(getName);
+        System.out.println("获取类的全路径名==="+getName);
+
+        // 获取方法注解
         Annotation[] annotations = method.getAnnotations();
         for(Annotation annotation : annotations){
-            System.out.println(annotation);
+            System.out.println("获取方法注解==="+annotation);
         }
 
         OrderHandlerTypeAnnotation orderHandlerType = method.getAnnotation(OrderHandlerTypeAnnotation.class);
