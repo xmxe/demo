@@ -8,7 +8,8 @@ import java.util.stream.IntStream;
 /**
  * Phaser表示“阶段器”，用来解决控制多个线程分阶段共同完成任务的情景问题。其作用相比CountDownLatch和CyclicBarrier更加灵活
  * 
- * int register() 动态添加一个parties int bulkRegister(int parties) 动态添加多个parties parties：需要添加的个数 
+ * int register() 动态添加一个parties 
+ * int bulkRegister(int parties) 动态添加多个parties parties：需要添加的个数 
  * int getRegisteredParties() 获取当前注册的parties数 
  * int arriveAndAwaitAdvance() 到达并等待其他线程到达 会阻塞 
  * int arriveAndDeregister() 到达并注销该parties，这个方法不会使线程阻塞 
