@@ -13,7 +13,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
-//https://mp.weixin.qq.com/s/W-KZFn40FnwIksP1zQP4RQ
 public class HelloWorldServer {
     private int port;
 

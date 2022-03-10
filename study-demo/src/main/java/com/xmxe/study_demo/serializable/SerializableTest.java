@@ -12,9 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-/**
- * 关于序列化/反序列化，我梭哈(https://mp.weixin.qq.com/s/uTrNn_C-wnKPQieUcQ9z5g)
- * */
 public class SerializableTest {
     public static void main(String[] args) throws Exception {
         serializeFlyPig();
@@ -129,4 +126,5 @@ class FlyPig implements Serializable {
  * Java Serializable：明明就一个空的接口嘛(https://mp.weixin.qq.com/s/7ojBbuJ4For2VvgcpqIuVw)
  * 什么是序列化 怎么序列化 为什么序列化 反序列化会遇到什么问题，如何解决(https://mp.weixin.qq.com/s/iIqQeQNeDKimTT5nvye-ow)
  * Java序列化和反序列化为什么要实现Serializable接口(https://mp.weixin.qq.com/s/RLzpPOlKv5omoqRv-5ckPQ)
+ * 关于序列化/反序列化，我梭哈(https://mp.weixin.qq.com/s/uTrNn_C-wnKPQieUcQ9z5g)
  */
