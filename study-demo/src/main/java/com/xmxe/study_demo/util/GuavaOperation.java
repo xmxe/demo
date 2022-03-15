@@ -25,8 +25,12 @@ import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.Range;
+import com.google.common.collect.RangeMap;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
+import com.google.common.collect.Tables;
+import com.google.common.collect.TreeRangeMap;
 import com.google.common.collect.Sets.SetView;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -124,7 +128,7 @@ public class GuavaOperation {
         BiMap<Integer,String> biMap = HashBiMap.create();
         biMap.put(1,"lwl");
         biMap.put(2,"csc");
-        BiMap<String, Integer> map = biMap.inverse(); // value和key互转
+        BiMap<String, Integer> map = biMap.inverse(); // value和key互转 反转后的BiMap并不是一个新的对象，它实现了一种视图的关联，所以对反转后的BiMap执行的所有操作会作用于原先的BiMap上。
         map.forEach((v, k) -> System.out.println(v + "-" + k)); // lwl-1  csc-2
 
         // BiMap 一种连value也不能重复的HashMap
@@ -151,6 +155,36 @@ public class GuavaOperation {
         tables.put("csc", "lwl", 1);
         //row+column对应的value
         System.out.println(tables.get("csc","lwl"));// 1
+
+        // 获得key或value的集合
+        //rowKey或columnKey的集合
+        Set<String> rowKeys = tables.rowKeySet();
+        Set<String> columnKeys = tables.columnKeySet();
+
+        //value集合
+        Collection<Integer> values = tables.values();
+        // 计算key对应的所有value的和
+        for (String key : tables.rowKeySet()) {
+            Set<Map.Entry<String, Integer>> rows = tables.row(key).entrySet();
+            int total = 0;
+            for (Map.Entry<String, Integer> row : rows) {
+                total += row.getValue();
+            }
+            System.out.println(key + ": " + total);
+        }
+
+        // 转换rowKey和columnKey
+        // 这一操作也可以理解为行和列的转置，直接调用Tables的静态方法transpose：
+
+        Table<String, String, Integer> table2 = Tables.transpose(tables);
+        Set<Table.Cell<String, String, Integer>> cells = table2.cellSet();
+        cells.forEach(cell->
+            System.out.println(cell.getRowKey()+","+cell.getColumnKey()+":"+cell.getValue())
+        );
+
+        Map<String, Map<String, Integer>> rowMap = tables.rowMap();
+        Map<String, Map<String, Integer>> columnMap = tables.columnMap();
+
 
 
         // Table 一种有两个key的HashMap
@@ -308,5 +342,18 @@ public class GuavaOperation {
             e.printStackTrace();
         }
         
+    }
+
+    public static void doRangeMap(){
+        RangeMap<Integer, String> rangeMap = TreeRangeMap.create();
+        rangeMap.put(Range.closedOpen(0,60),"fail");
+        rangeMap.put(Range.closed(60,90),"satisfactory");
+        rangeMap.put(Range.openClosed(90,100),"excellent");
+
+        System.out.println(rangeMap.get(59));// fail
+        System.out.println(rangeMap.get(60));// satisfactory
+        System.out.println(rangeMap.get(90));// satisfactory
+        System.out.println(rangeMap.get(91));// excellent
+
     }
 }
