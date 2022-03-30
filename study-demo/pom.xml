@@ -176,6 +176,12 @@
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
 			<version>3.3.3</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.12</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
