@@ -54,17 +54,17 @@ public class FeatureFromJDK {
 
         int c = lambdaservice.lambdaTest(3, 4);
         methodParam.accept("①---" + c);
- 
+
         Set<Integer> set = new TreeSet<>();
         Collections.addAll(set, 22, 3, 51, 44, 20, 6);
         set.stream().filter(x -> x > 30).sorted((x, y) -> (y - x)).forEach(x -> methodParam.accept("②---" + x));
 
         /*
-         * jdk7写法 
+         * jdk7写法
          * Set<Integer> set1 = new TreeSet<>(new Comparator<Integer>() {
-         *      @Override public int compare(Integer i,Integer o) { 
-         *          return i - o; 
-         *      } 
+         *      @Override public int compare(Integer i,Integer o) {
+         *          return i - o;
+         *      }
          * });
          */
         // jdk8写法
@@ -85,8 +85,9 @@ public class FeatureFromJDK {
 
     /**
      * stream流
-     * [Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合](https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ)
-     * [Java8中Stream详细用法大全](https://mp.weixin.qq.com/s/0F_CBDlav8X4-CfE0hzjWQ)
+     * Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合(https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ)
+     * Java8中Stream详细用法大全(https://mp.weixin.qq.com/s/0F_CBDlav8X4-CfE0hzjWQ)
+     * 玩转 Java8 Stream，常用方法大合集(https://mp.weixin.qq.com/s/owDtfi-UUI7uL1dIjPOtMw)
      */
     @Test
     public void stream() {
@@ -115,26 +116,26 @@ public class FeatureFromJDK {
         List<String> list1 = Arrays.asList(strArray);
         stream = list1.stream();
         //注意:一个Stream流只可以使用一次，上面代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
-        
+
         //Stream流的之间的转换
         try {
             Stream<String> stream2 = Stream.of("a", "b", "c");
             // stream转换成 Array
             String[] strArray1 = stream2.toArray(String[]::new);
-        
+
             // stream转换成 Collection
             List<String> list3 = stream2.collect(Collectors.toList());
-            List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));   
+            List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));
             Set<String> set1 = stream2.collect(Collectors.toSet());
             Stack<String> stack1 = stream2.collect(Collectors.toCollection(Stack::new));
-        
+
             // 转换成 String
             String str = stream.collect(Collectors.joining()).toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
         /**
-         * stream和parallelStream的简单区分： 
+         * stream和parallelStream的简单区分：
          * stream是顺序流，由主线程按顺序对流执行操作，而parallelStream是并行流，内部以多线程并行执行的方式对流进行操作，
          * 但前提是流中的数据处理没有顺序要求
          * 如果流中的数据量足够大，并行流可以加快处速度。除了直接创建并行流，还可以通过parallel()把顺序流转换成并行流
@@ -146,7 +147,7 @@ public class FeatureFromJDK {
 
         // filter（筛选）
         List<Student> streamStudents = students.stream().filter(s -> "浙江".equals(s.getAddress())).collect(Collectors.toList());
-        streamStudents.forEach(System.out::println);   
+        streamStudents.forEach(System.out::println);
         Student stuOrelse = students.stream().filter(s -> "李四".equals(s.getName())).findAny().orElse(s1);
         int sum = students.stream().filter(u -> "张三".equals(u.getName())).mapToInt(u -> u.getAge()).sum();
 
@@ -179,25 +180,25 @@ public class FeatureFromJDK {
 
         //iterate 与reduce很像 使用时管道必须有 limit 这样的操作来限制 Stream 大小。
         Stream.iterate(2, n -> n + 2).limit(5).forEach(x -> System.out.print(x + " "));//从2开始生成一个等差数列
-       
+
         //通过实现Supplier类的方法可以自定义流计算规则。
         //随机获取两条学生信息
         class UserSupplier implements Supplier<Student> {
             private int index = 10;
             private Random random = new Random();
-           
+
             @Override
             public Student get() {
              return new Student(index++,"pancm" + random.nextInt(10));
             }
         }
         Stream.generate(new UserSupplier()).limit(2).forEach(u -> System.out.println(u.getId() + ", " + u.getName()));
-        
+
         //summaryStatistics使用
         //得到最大、最小、之和以及平均数。
         List<Integer> numbers = Arrays.asList(1, 5, 7, 3, 9);
         IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
-         
+
         System.out.println("列表中最大的数 : " + stats.getMax());
         System.out.println("列表中最小的数 : " + stats.getMin());
         System.out.println("所有数之和 : " + stats.getSum());
@@ -209,7 +210,7 @@ public class FeatureFromJDK {
         int maxLines = list.stream().mapToInt(String::length).max().getAsInt();
         int minLines = list.stream().mapToInt(String::length).min().getAsInt();
 
-        //peek对每个元素执行操作并返回一个新的Stream
+        //peek对每个元素执行操作并返回一个新的Stream,如同于map，能得到流中的每一个元素。但map接收的是一个Function表达式，有返回值；而peek接收的是Consumer表达式，没有返回值
         Stream.of("one", "two", "three", "four").filter(e -> e.length() > 3).peek(e -> System.out.println("转换之前: " + e))
             .map(String::toUpperCase).peek(e -> System.out.println("转换之后: " + e)).collect(Collectors.toList());
 
@@ -233,7 +234,7 @@ public class FeatureFromJDK {
         }
         /**
          * findAny() 该方法返回当前流中的任意元素,可以和其他流操作结合使用,这里需要注意 findAny() 返回的结果
-         * 被 Optional 所包裹，Optional 是 Java8 为优雅的避免 NPE 所采用的新 API，这里需要说明的就是 
+         * 被 Optional 所包裹，Optional 是 Java8 为优雅的避免 NPE 所采用的新 API，这里需要说明的就是
          * Optional.ifPresent(Consumer<? super T> consumer) 表示当 Optional 包裹的元素不为空时，执行 consumer
          */
         num.stream().filter(n -> n > 2).findAny().ifPresent(System.out::println);
@@ -254,13 +255,13 @@ public class FeatureFromJDK {
         words.stream().map(w -> Arrays.stream(w.split(""))).forEach(System.out::println);//[[h,e,l,l,o],[w,o,r,l,d]]
         words.stream().flatMap(w -> Arrays.stream(w.split(""))).forEach(System.out::println); // [h,e,l,l,o,w,o,r,l,d]
     }
-  
+
     /**
      * jdk8新增的map方法
      */
     @Test
     public void newMapMethod(){
-       
+
         //jdk8新增的map方法
         Map<String,Object> newMap = new HashMap<>();
         newMap.put("a", 1);newMap.put("b", 2);
@@ -274,7 +275,7 @@ public class FeatureFromJDK {
         newMap.replace("b", 2, 4);
         //replaceAll方法 替换Map中所有Entry的value值，这个值由旧的key和value计算得出，接收参数 (K, V) -> V
         newMap.replaceAll((key, value) -> (key + "z") + value);
-        
+
         //getOrDefault方法 根据key得到value 如果value存在，返回value，不存在，返回指定的值 不会往map里面put数据
         newMap.getOrDefault("c", 3);
         //forEach方法 遍历Map中的所有Entry, 对key, value进行处理
@@ -282,7 +283,7 @@ public class FeatureFromJDK {
         newMap.forEach((key, value) -> System.out.println(key +"--->"+ value));// 输出 b--->bz3
 
         //putIfAbsent方法 如果传入key对应的value已经存在，就返回存在的value，不进行替换。如果不存在，就添加key和value，返回null
-        //与put区别在于put在放入数据时，如果放入数据的key已经存在与Map中，最后放入的数据会覆盖之前存在的数据，而putIfAbsent在放入数据时，如果存在重复的key，那么putIfAbsent不会放入值。       
+        //与put区别在于put在放入数据时，如果放入数据的key已经存在与Map中，最后放入的数据会覆盖之前存在的数据，而putIfAbsent在放入数据时，如果存在重复的key，那么putIfAbsent不会放入值。
         newMap.putIfAbsent("a", "3");newMap.putIfAbsent("b",4);
 
         //computeIfAbsent方法 如果Key不存在，则Put这个Key和将Key带入函数运算后的结果为Value的键值对；如果Key存在，则忽略Put操作
@@ -305,7 +306,7 @@ public class FeatureFromJDK {
 
         //merge() 适用于两种情况。如果给定的key不存在，它就变成了put(key, value)即newMap.get("a")==null的话merge操作就变成了传统的put操作。但是，如果key已经存在一些值，我们 remappingFunction 可以选择合并的方式
         // 以前写法
-        // BiFunction第一个参数代表以前newMap.get("a")的值 
+        // BiFunction第一个参数代表以前newMap.get("a")的值
         // BiFunction第二个参数代表输入的第二个参数
         // BiFunction第三个参数代表返回类型
         newMap.merge("a", 2, new BiFunction<Object, Object, Object>() {
@@ -317,7 +318,7 @@ public class FeatureFromJDK {
         });
         //下面的参数mapValue是newMap.get("a")以前的值 参数paramValue是merge输入的第二个参数2
         newMap.merge("a", 2, (mapValue,paramValue)->String.valueOf(paramValue)+String.valueOf(mapValue));
-      
+
     }
 
     /**
@@ -361,7 +362,7 @@ public class FeatureFromJDK {
         class UserSupplier2 implements Supplier<Student> {
             private int index = 10;
             private Random random = new Random();
-            
+
             @Override
             public Student get() {
                 return new Student(index % 2 == 0 ? index++ : index, "pancm" + random.nextInt(10));
@@ -374,16 +375,16 @@ public class FeatureFromJDK {
             Map.Entry<Integer, List<Student>> persons =  it.next();
             System.out.println("id " + persons.getKey() + " = " + persons.getValue());
         }
-        
+
         // 通过id进行分组排序:
-        // id 10 = [{"id":10,"name":"pancm1"}] 
+        // id 10 = [{"id":10,"name":"pancm1"}]
         // id 11 = [{"id":11,"name":"pancm3"}, {"id":11,"name":"pancm6"}, {"id":11,"name":"pancm4"}, {"id":11,"name":"pancm7"}]
 
 
         class UserSupplier3 implements Supplier<Student> {
             private int index = 16;
             private Random random = new Random();
-           
+
             @Override
             public Student get() {
              return new Student( index++,"pancm" + random.nextInt(10));
@@ -393,14 +394,14 @@ public class FeatureFromJDK {
         System.out.println("通过年龄进行分区排序:");
         Map<Boolean, List<Student>> children = Stream.generate(new UserSupplier3()).limit(5)
             .collect(Collectors.partitioningBy(p -> p.getId() < 18));
-        
+
         System.out.println("小孩: " + children.get(true));
         System.out.println("成年人: " + children.get(false));
-        
+
         // 通过年龄进行分区排序:
         // 小孩: [{"id":16,"name":"pancm7"}, {"id":17,"name":"pancm2"}]
         // 成年人: [{"id":18,"name":"pancm4"}, {"id":19,"name":"pancm9"}, {"id":20,"name":"pancm6"}]
-          
+
     }
 
     /**
@@ -464,12 +465,12 @@ public class FeatureFromJDK {
          * orElse（T 对象）
          * orElseGet（Supplier <T> 对象）
          * orElseThrow（异常）
-         * 
+         *
          * map() 和 orElseGet 的异同点
          * 方法效果类似，对方法参数进行二次包装，并返回, 入参不同
          * map（function 函数）
          * flatmap（Optional<function> 函数）
-         */  
+         */
     }
 
     /**
@@ -509,7 +510,7 @@ public class FeatureFromJDK {
         System.out.println("\t \t".isBlank()); // true
         // 去除首尾空格
         System.out.println(" jay ".strip());  // "jay"
-        // 去除首部空格 
+        // 去除首部空格
         System.out.println(" jay ".stripLeading());   // "jay "
         // 去除字符串尾部空格
         System.out.println(" jay ".stripLeading());   // " jay"

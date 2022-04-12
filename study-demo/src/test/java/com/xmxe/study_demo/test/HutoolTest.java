@@ -33,9 +33,9 @@ import cn.hutool.core.util.ZipUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
 
-// [不要再重复造轮子了，这款开源工具类库贼好使！](https://mp.weixin.qq.com/s/ZQV_hx_sbxCA8QXoC05wQQ)
+// 不要再重复造轮子了，这款开源工具类库贼好使！(https://mp.weixin.qq.com/s/ZQV_hx_sbxCA8QXoC05wQQ)
 public class HutoolTest {
- 
+
     @Test
     public void convert(){
         String param = "10";
@@ -46,7 +46,7 @@ public class HutoolTest {
 
         String dateStr = "2020年09月29日";
         Date date = Convert.toDate(dateStr);
-        
+
         // 把字符串转成 Unicode：
         String unicodeStr = "沉默王二";
         String unicode = Convert.strToUnicode(unicodeStr);
@@ -59,7 +59,7 @@ public class HutoolTest {
         Date date = DateUtil.date();
         //DateUtil.date() 返回的其实是 DateTime，它继承自 Date 对象，重写了 toString() 方法，返回 yyyy-MM-dd HH:mm:ss 格式的字符串。
         System.out.println(date);// 2020-09-29 04:28:02
-        
+
         // 字符串转日期：
 
         String dateStr = "2020-09-29";
@@ -84,7 +84,7 @@ public class HutoolTest {
 
         // 输出：2天1小时1分4秒
         // String formatBetween = DateUtil.formatBetween(betweenDay, BetweenFormater.Level.SECOND);
-        
+
         // 星座和属相：
 
         // 射手座
@@ -110,42 +110,42 @@ public class HutoolTest {
     public void reflect(){
         class ReflectDemo {
             private int id;
-        
+
             public ReflectDemo() {
                 System.out.println("构造方法");
             }
-        
+
             public void print() {
                 System.out.println("我是沉默王二");
             }
-        
+
             public void main(String[] args) throws IllegalAccessException {
                 // 构建对象
                 ReflectDemo reflectDemo = ReflectUtil.newInstance(ReflectDemo.class);
-        
+
                 // 获取构造方法
                 Constructor[] constructors = ReflectUtil.getConstructors(ReflectDemo.class);
                 for (Constructor constructor : constructors) {
                     System.out.println(constructor.getName());
                 }
-        
+
                 // 获取字段
                 Field field = ReflectUtil.getField(ReflectDemo.class, "id");
                 field.setInt(reflectDemo, 10);
                 // 获取字段值
                 System.out.println(ReflectUtil.getFieldValue(reflectDemo, field));
-        
+
                 // 获取所有方法
                 Method[] methods = ReflectUtil.getMethods(ReflectDemo.class);
                 for (Method m : methods) {
                     System.out.println(m.getName());
                 }
-        
+
                 // 获取指定方法
                 Method method = ReflectUtil.getMethod(ReflectDemo.class, "print");
                 System.out.println(method.getName());
-        
-        
+
+
                 // 执行方法
                 ReflectUtil.invoke(reflectDemo, "print");
             }
@@ -255,7 +255,7 @@ public class HutoolTest {
         String value1 = fifoCache.get("key1");
 
         // LFUCache，最少使用，根据使用次数来判定对象是否被持续缓存，当缓存满时清理过期对象，清理后依旧满的情况下清除最少访问的对象并将其他对象的访问数减去这个最少访问数，以便新对象进入后可以公平计数。
-        
+
         Cache<String, String> lfuCache = CacheUtil.newLFUCache(3);
 
         lfuCache.put("key1", "沉默王一");

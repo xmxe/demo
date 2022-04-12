@@ -13,7 +13,7 @@ public class DynamicProxtTest {
 		BuyHouse proxyBuyHouse = (BuyHouse)jdkProxy.newProxy(new BuyHouseImpl());
 		proxyBuyHouse.buyHouse();
     }
-    
+
     public static void cglibDynamicProxy() {
 		CglibProxy cglibProxy = new CglibProxy();
 		BuyHouse buyHouse = (BuyHouse) cglibProxy.createProxyObject(new BuyHouseImpl());
@@ -34,12 +34,12 @@ interface BuyHouse {
 }
 /**
  * 终于有人把 java代理 讲清楚了，万字详解！(https://mp.weixin.qq.com/s/C9Vpfcgl3NB_0rBpLh2yCA)
- * [设计模式---代理模式](https://www.cnblogs.com/daniels/p/8242592.html)
- * [一文读懂Java动态代理](https://mp.weixin.qq.com/s/1Jxxrbi8nk4pcD8I1ts5lQ)
- * [一文读懂 Java 动态代理，那些面试中你容易忽略的细节](https://mp.weixin.qq.com/s/FehKQzdgXfM2556v8TNNqg)
- * 
+ * 设计模式---代理模式(https://www.cnblogs.com/daniels/p/8242592.html)
+ * 一文读懂Java动态代理(https://mp.weixin.qq.com/s/1Jxxrbi8nk4pcD8I1ts5lQ)
+ * 一文读懂 Java 动态代理，那些面试中你容易忽略的细节(https://mp.weixin.qq.com/s/FehKQzdgXfM2556v8TNNqg)
+ *
  * JDK代理是不需要第三方库支持，只需要JDK环境就可以进行代理，使用条件:
- * 1）实现InvocationHandler 
+ * 1）实现InvocationHandler
  * 2）使用Proxy.newProxyInstance产生代理对象
  * 3）被代理的对象必须要实现接口
  * CGLib必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，
