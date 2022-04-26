@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.Iterator;
@@ -256,6 +257,37 @@ public class FeatureFromJDK {
         words.stream().flatMap(w -> Arrays.stream(w.split(""))).forEach(System.out::println); // [h,e,l,l,o,w,o,r,l,d]
     }
 
+
+    /**
+     * [Java8 stream 排序以及自定义比较器，很实用！](https://mp.weixin.qq.com/s/NCJ0_sF0RVIeZdkQveNHmQ)
+     */
+    @Test
+    public void sort(){
+        List<String> sList = List.of("t","a","4","yu");
+
+        // 1.使用Stream sorted()完成自然排序、比较器和反向排序
+        // sorted(Comparator<? super T> comparator)：这里我们使用lambda表达式创建一个Comparator实例。
+        // 我们可以按升序和降序对流元素进行排序。
+
+        // sorted()：它使用自然顺序对流中的元素进行排序。元素类必须实现Comparable接口。
+        sList.stream().sorted().forEach(System.out::println);// 同list.stream(Comparator.naturalOrder()).sorted()
+        // 要反转自然顺序，Comparator提供reverseOrder()方法。
+        sList.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+
+        List<Student> studentList = List.of(new Student(1,"name1"),new Student(2,"name2"));
+        studentList.stream().sorted(Comparator.comparing(Student::getName)).forEach(System.out::println);
+        // 反转
+        studentList.stream().sorted(Comparator.comparing(Student::getAge).reversed()).forEach(System.out::println);
+
+        Map<String, String> map = Map.of("k1", "v1","k2","v2");
+        map.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue))
+            .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
+        map.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
+            .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
+
+
+        
+    }
     /**
      * jdk8新增的map方法
      */
