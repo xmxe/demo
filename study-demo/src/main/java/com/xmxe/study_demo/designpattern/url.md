@@ -1,0 +1,1 @@
+- [利用Java8新特征，重构传统设计模式，你学会了吗？](https://mp.weixin.qq.com/s/xAxX9UBaSeoMTSGLbCPg7A)
