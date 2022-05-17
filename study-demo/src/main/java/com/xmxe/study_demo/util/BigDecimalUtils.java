@@ -4,9 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
+ * BigDecimal工具类
  * 用于高精确处理常用的数学运算
  */
-public class ArithmeticUtils {
+public class BigDecimalUtils {
     //默认除法运算精度
     private static final int DEF_DIV_SCALE = 10;
 

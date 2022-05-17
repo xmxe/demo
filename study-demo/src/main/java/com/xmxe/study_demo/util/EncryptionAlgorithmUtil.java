@@ -29,7 +29,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- * 各种加密算法
+ * 实现各种加密算法的工具类
  */
 public class EncryptionAlgorithmUtil {
 

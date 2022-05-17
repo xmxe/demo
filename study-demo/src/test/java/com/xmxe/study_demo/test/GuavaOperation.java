@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.test;
 
 import java.io.File;
 import java.util.Collection;
@@ -64,7 +64,7 @@ public class GuavaOperation {
         Map<String, String> map = Maps.newHashMap();
         Set<String> set = Sets.newHashSet();
     }
-    
+
 
     /**
      * Multimap的特点其实就是可以包含有几个重复Key的value，可以put进入多个不同value但是相同的key，但是又不会覆盖前面的内容
@@ -144,13 +144,13 @@ public class GuavaOperation {
 
     /**
      * Table<R,C,V> table = HashBasedTable.create();，由泛型可以看出，table由双主键R（行）,C（列）共同决定，V是存储值
-     * 
+     *
      * 新增数据：table.put(R,C,V)
      * 获取数据：V v = table.get(R,C)
      * 遍历数据: Set<R> set = table.rowKeySet(); Set<C> set = table.columnKeySet();
      */
     public static void doTable(){
-        // 双键的Map Map--> Table-->rowKey+columnKey+value  
+        // 双键的Map Map--> Table-->rowKey+columnKey+value
         Table<String, String, Integer> tables = HashBasedTable.create();
         tables.put("csc", "lwl", 1);
         //row+column对应的value
@@ -208,14 +208,14 @@ public class GuavaOperation {
         ImmutableMap<String, String> iMap = ImmutableMap.of("csc", "hello", "lwl", "world");
 
         // set的交集, 并集, 差集
-        HashSet<Integer> setA = Sets.newHashSet(1, 2, 3, 4, 5);  
-        HashSet<Integer> setB = Sets.newHashSet(4, 5, 6, 7, 8); 
+        HashSet<Integer> setA = Sets.newHashSet(1, 2, 3, 4, 5);
+        HashSet<Integer> setB = Sets.newHashSet(4, 5, 6, 7, 8);
         //并集
-        SetView<Integer> union = Sets.union(setA, setB);   
+        SetView<Integer> union = Sets.union(setA, setB);
         //差集 setA-setB
-        SetView<Integer> difference = Sets.difference(setA, setB);  
+        SetView<Integer> difference = Sets.difference(setA, setB);
         //交集
-        SetView<Integer> intersection = Sets.intersection(setA, setB);  
+        SetView<Integer> intersection = Sets.intersection(setA, setB);
 
 
         // map的交集，并集，差集
@@ -255,7 +255,7 @@ public class GuavaOperation {
                 return message;
             }
         }
-        
+
         //使用 @Subscribe 注解,表明使用dealWithEvent 方法处理 OrderMessage类型对应的消息
         //可以注解多个方法,不同的方法 处理不同的对象消息
         class OrderEventListener {
@@ -266,7 +266,7 @@ public class GuavaOperation {
         }
 
         // new AsyncEventBus(String identifier, Executor executor);
-        EventBus eventBus = new EventBus("lwl"); 
+        EventBus eventBus = new EventBus("lwl");
         eventBus.register(new OrderEventListener());
         // 发布消息
         eventBus.post(new OrderMessage("csc"));
@@ -327,11 +327,11 @@ public class GuavaOperation {
             // 一次将文件中内容全部读出来
             String allContent = Files.asCharSource(newFile, Charset.defaultCharset()).read();
             System.out.println(allContent);
-            
+
             // Files.copy(from, to);// 复制文件
             // Files.move(from, to);//移动文件
             // Files.touch(file);//更新文件时间戳
-            // Files.equals(File file1,File file2);// 比较两个文件之间的内容是不是完全一致的 
+            // Files.equals(File file1,File file2);// 比较两个文件之间的内容是不是完全一致的
             // Files.createTempDir();// 方法创建临时目录
             // Files.createParentDirs(File);// 创建父级目录（只是递归创建父级记录，不会把这个文件也移动）
             // Files.hash(File);//获得文件的hash
@@ -341,7 +341,7 @@ public class GuavaOperation {
         }catch(Exception e){
             e.printStackTrace();
         }
-        
+
     }
 
     public static void doRangeMap(){

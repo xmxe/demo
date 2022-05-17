@@ -8,12 +8,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-/**
- * [手把手教你如何给图像加水印](https://mp.weixin.qq.com/s/90iqGsDpUmFNhn1jdhmDjw)
- */
 
 /**
- * 给图像添加水印
+ * [手把手教你如何给图像加水印](https://mp.weixin.qq.com/s/90iqGsDpUmFNhn1jdhmDjw)
+ * java实现给图像添加水印
  */
 public class ImageWaterMarkUtil {
 
