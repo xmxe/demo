@@ -2,6 +2,8 @@
 <web-app id="WebApp_ID" version="3.0"
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name>SSM</display-name>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
@@ -12,10 +14,20 @@
 		<param-value>classpath:spring/applicationContext.xml</param-value>
 	</context-param>
 
+	<!-- HiddenHttpMethodFilter在DispatcherServlet之前 -->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+
 	<servlet>
 		<servlet-name>dispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:spring/spring-mvc.xml</param-value>
@@ -23,11 +35,29 @@
 		<load-on-startup>2</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>dispatcherServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+
+
+	 <!--嵌入Druid的统计信息-->
+    <!-- <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <param-name>loginUsername</param-name>
+            <param-value>db_admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginPassword</param-name>
+            <param-value>q1w2e3r5!</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping> -->
 
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -51,11 +81,11 @@
 	</filter-mapping>
 
 	<filter>
-		<filter-name>HiddenHttpMethodFilter</filter-name>
-		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+		<filter-name>customFilter</filter-name>
+		<filter-class>com.example.config.filter.CustomFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-name>customFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
@@ -75,4 +105,21 @@
 	<session-config>
 		<session-timeout>15</session-timeout>
 	</session-config>
+
+	<error-page>
+		<exception-type>java.lang.NullPointerException</exception-type>
+		<location>error.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>404.jsp</location>
+	</error-page>
+
+	<jsp-config>
+        <taglib>
+            <taglib-uri>/priveliege</taglib-uri>
+            <taglib-location>/WEB-INF/privilege.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>

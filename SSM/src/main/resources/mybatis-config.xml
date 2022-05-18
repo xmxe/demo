@@ -6,8 +6,13 @@
 	<settings>
 		<!-- 驼峰命名规则 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 当字段为null时也返回 -->
+		<setting name="callSettersOnNulls" value="true" />
+		<!--控制台生成sql日志-->
+		<!-- <setting name="logImpl" value="STDOUT_LOGGING" /> -->
+		<setting name="jdbcTypeForNull" value="NULL"></setting>
 	</settings>
-	
+
 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageInterceptor">
 		</plugin>
