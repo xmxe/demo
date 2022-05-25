@@ -286,7 +286,7 @@ public class FeatureFromJDK {
             .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
 
 
-        
+
     }
     /**
      * jdk8新增的map方法
@@ -439,6 +439,7 @@ public class FeatureFromJDK {
     /**
      * optional处理NPE异常
      * Java8 Optional最佳实践 https://mp.weixin.qq.com/s/QMY9H2iMQGGRRORKc1COdw
+     * 不要再用 if (obj != null) 判空了！！！ https://mp.weixin.qq.com/s/0AeETDJtKCiJV_rSPaNwTQ
      */
     @Test
     public void optional() throws Exception{
