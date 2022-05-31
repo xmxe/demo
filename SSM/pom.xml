@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
@@ -13,19 +13,22 @@
 		<java.version>11</java.version>
 	</properties>
 	<!-- nexus私服配置 -->
-	<!-- <repositories> 
-			<repository> 
-				<id>nexus</id> 
-				<name>Nexus Repository</name> 
+	<!-- <repositories>
+			<repository>
+				<id>nexus</id>
+				<name>Nexus Repository</name>
 				<url>http://192.168.236.130:8081/nexus/content/groups/public/</url>
-				<releases> 
-					<enabled>true</enabled> 
-				</releases> -->
-				<!-- snapshots默认是关闭的,需要开启 -->
-				<!-- <snapshots> 
-					<enabled>true</enabled> 
-				</snapshots> 
-			</repository> 
+				<releases>// 发行版
+					<enabled>true</enabled>
+					<updatePolicy>never</updatePolicy>
+            		<checksumPolicy>warn</checksumPolicy>
+				</releases>
+				<snapshots>// 快照版
+					<enabled>true</enabled>// 检索私服仓库实时更新版本
+					<updatePolicy>always</updatePolicy>// 检查周期 always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）
+            		<checksumPolicy>warn</checksumPolicy> // 在下载构件的时候，Maven会验证校验和文件，如果校验和验证失败,当checksumPolicy的值为默认的warn时(默认)，Maven会在执行构建时输出警告信息 fail:Maven遇到校验和错误就让构建失败；ignore:使Maven完全忽略校验和错误。
+				</snapshots>
+			</repository>
 		</repositories> -->
 	<build>
 		<finalName>SSM</finalName>
@@ -110,7 +113,7 @@
 			<artifactId>spring-aop</artifactId>
 			<version>5.2.6.RELEASE</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -141,13 +144,13 @@
 			<artifactId>druid</artifactId>
 			<version>1.1.23</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.13.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>

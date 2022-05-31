@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.other;
 
 import java.util.stream.Stream;
 

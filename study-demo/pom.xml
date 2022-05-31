@@ -109,7 +109,7 @@
 			<artifactId>druid</artifactId>
 			<version>1.1.23</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
@@ -142,6 +142,7 @@
             </exclusions>
             <version>4.0.0</version>
         </dependency>
+
         <!-- 封装了一些高级特性，如：Cache事件监听、选举、分布式锁、分布式Barrier -->
         <dependency>
             <groupId>org.apache.curator</groupId>
@@ -176,7 +177,7 @@
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
 			<version>3.3.3</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -263,7 +264,7 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -326,7 +327,7 @@
 		<!--Maven中会按照标准目录结构，将src/main/resources目录下的资源文件打包到jar或war中。
 		但有时为了方便文件的组织管理，有些资源文件可能并不在上述标准目录下。典型地有MaBatis的sql映射文件。
 		为此，可通过resources标签实现对资源文件的打包-->
-		
+
         <resources>
 			<!--这里将Animal.java添加到class目录下(测试resource标签的作用)-->
 			<resource>
@@ -338,7 +339,7 @@
 				</includes>
 			</resource>
 
-			<!-- 
+			<!--
 				资源文件位置src/main/resources/,这下面的资源文件的${}会全部被替换成filter中的标签内容。
 				directory指定的value会作为classes的资源跟目录，
 				比如指定:src/main/resources/，则classes下会出现jdbc等包，
@@ -356,9 +357,9 @@
                     -->
                     <exclude>multiEnv/filter-*-env.properties</exclude>
                     <!-- **/*.xml 代表 directory(src/main/resources/)目录以及所有子目录的xml文件-->
-                    <!-- 
+                    <!--
                     <exclude>**/*.xml</exclude>
-                    <exclude>**/*.properties</exclude> 
+                    <exclude>**/*.properties</exclude>
                     -->
                 </excludes>
             </resource>
@@ -381,7 +382,7 @@
 		打本地开发环境包：mvn clean package -Pdev
 		打部署上线环境包：mvn clean package -Ppro
 		打测试环境包：mvn clean package -Ptest
-		
+
 		执行结果：
 		通过命令指定<filter>下的文件,然后查看<filtering>为true的<directory>目录 ，如果此目录下的文件内容有${},则匹配替换
 	-->
