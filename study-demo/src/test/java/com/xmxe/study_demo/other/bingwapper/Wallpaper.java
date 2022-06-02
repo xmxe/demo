@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
+// 爬虫获取bing壁纸，并写入到README.md https://github.com/niumoo/bing-wallpaper
 public class Wallpaper {
     // BING API
     private static String BING_API = "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=10&nc=1612409408851&pid=hp&FORM=BEHPTB&uhd=1&uhdwidth=3840&uhdheight=2160";
