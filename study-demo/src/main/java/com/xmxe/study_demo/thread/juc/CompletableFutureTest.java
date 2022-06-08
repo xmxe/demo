@@ -7,8 +7,9 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 
 /**
- * Java8 CompletableFuture 用法全解 https://blog.csdn.net/qq_31865983/article/details/106137777
- * 
+ * Java8 CompletableFuture 用法全解 
+ * https://blog.csdn.net/qq_31865983/article/details/106137777
+ * https://mp.weixin.qq.com/s/ZN-UgWGVx-LgjlCU8z36xg
  * CompletableFuture实现了CompletionStage接口和Future接口，前者是对后者的一个扩展，增加了异步回调、流式处理、
  * 多个Future组合处理的能力，使Java在处理多任务的协同工作时更加顺畅便利
  */
