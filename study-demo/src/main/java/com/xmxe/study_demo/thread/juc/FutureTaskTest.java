@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.thread;
+package com.xmxe.study_demo.thread.juc;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -30,13 +30,13 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  */
 public class FutureTaskTest {
     /**
-     * 核心线程8,最大线程20,保活时间30s,存储队列10,有守护线程 拒绝策略:将超负荷任务回退到调用者 
+     * 核心线程8,最大线程20,保活时间30s,存储队列10,有守护线程 拒绝策略:将超负荷任务回退到调用者
      * 说明 : 默认使用核心线程(8)数执行任务,任务数量超过核心线程数就丢到队列,队列(10)满了就再开启新的线程,新的线程数最大为20,当任务执行完,新开启的线程将存活30s,若没有任务就消亡,线程池回到核心线程数量。
      */
     private static ExecutorService executor = new ThreadPoolExecutor(8, 20,30L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(10),
             new ThreadFactoryBuilder().setNameFormat("User_Async_FutureTask-%d").setDaemon(true).build(),
             new ThreadPoolExecutor.CallerRunsPolicy());
-    
+
     public static void main(String[] args) throws Exception{
         Callable<String> callable = new Callable<String>(){
             @Override
@@ -55,18 +55,18 @@ public class FutureTaskTest {
          * mayInterruptIfRunning:是否允许取消正在执行却没有执行完毕的任务，如果设置true，则表示可以取消正在执行过程中的任务
          * 如果任务正在执行，若mayInterruptIfRunning为true，则会立即中断执行任务的线程并返回true，若mayInterruptIfRunning为false，则会返回true且不会中断任务执行线程
          * 如果任务还没有执行，则无论mayInterruptIfRunning为true还是false，返回true,并且任务不会执行
-         * 如果任务已经完成或取消，则无论mayInterruptIfRunning为true还是false，返回false  
+         * 如果任务已经完成或取消，则无论mayInterruptIfRunning为true还是false，返回false
          * boolean cancel(boolean mayInterruptIfRunning);
-         * 
+         *
          * 任务是否被取消成功，如果在任务正常完成前被取消成功，则返回 true
          * boolean isCancelled();
-         * 
+         *
          * 任务是否完成
          * boolean isDone();
-         * 
+         *
          * 通过阻塞获取执行结果
          * T get() throws InterruptedException, ExecutionException;
-         * 
+         *
          * 通过阻塞获取执行结果。如果在指定的时间内没有返回，则返回null
          * T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException;
          * }
@@ -91,7 +91,7 @@ public class FutureTaskTest {
          * CANCELLED:任务已取消 4
          * INTERRUPTING:正在中断执行任务的线程 5
          * INTERRUPTED:任务被中断 6
-         */       
+         */
         // futuretask测试
         FutureTask<String> task = new FutureTask<String>(callable){
             // 异步任务执行完成，回调
@@ -105,7 +105,7 @@ public class FutureTaskTest {
 				}
 			}
         };
-        
+
         // 普通线程启动(Futuretask实现了Runnable)
         // new Thread(task).start();
         // 线程池启动
@@ -126,15 +126,15 @@ public class FutureTaskTest {
         TimeUnit.SECONDS.sleep(1);
 
         System.out.println("任务是否结束--->"+task.isDone());
-        
+
         System.out.println("尝试中断--->"+task.cancel(false));
-        
+
         System.out.println("task.isCancelled()"+task.isCancelled());
         String calltask = task.get();
         System.out.println("返回结果calltask--->"+calltask);
 
     }
-            
+
 }
 
 
@@ -147,6 +147,6 @@ public class FutureTaskTest {
  * 当调用get()的时候就会抛出CancellationException异常
  * 而isCancelled()方法只要是调用了cancel(boolean)就会返回true
  * featuretask使用线程池提交的话调用cancel(false) Callable里面的方法同调用cancel(true)时一样不会执行Callable里面的代码 不知什么原因 有可能是线程池里面的线程不允许中断
- * 
+ *
  * 调用featuretask.run()是调用Callable里面的任务执行完后回调done()方法然后在继续往下执行，所以任务无法设置为中断，isDone()一直返回true（自己的结论未必正确）
  */

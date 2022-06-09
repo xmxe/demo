@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.util.excel;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
@@ -312,6 +312,3 @@ public class EasyExcelUtil {
    /************************匿名内部类结束，可以提取出去***************************/
 
 }
-
-
-

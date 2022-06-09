@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.util.httpclient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
+ *
  */
 public class HttpClientUtil {
 

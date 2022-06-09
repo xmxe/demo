@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.util.image;
 
 import org.apache.commons.lang3.StringUtils;
 import javax.imageio.ImageIO;

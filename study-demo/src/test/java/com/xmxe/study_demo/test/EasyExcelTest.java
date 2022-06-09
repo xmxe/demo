@@ -7,7 +7,7 @@ import java.util.List;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
-import com.xmxe.study_demo.util.EasyExcelUtil;
+import com.xmxe.study_demo.util.excel.EasyExcelUtil;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -117,8 +117,8 @@ public class EasyExcelTest {
    }
 
        /*******************匿名内部类，实际开发中该对象要提取出去**********************/
-    
-    
+
+
 
     @EqualsAndHashCode
     @Data
@@ -137,7 +137,7 @@ public class EasyExcelTest {
         @ExcelProperty(value = "学校",index = 2)
         private String school;
     }
-   
+
        /*******************匿名内部类，实际开发中该对象要提取出去**********************/
-   
+
    }
