@@ -32,6 +32,7 @@ import org.junit.Test;
 
 /**
  * JDK 5-15都有哪些经典新特性(https://mp.weixin.qq.com/s/1_pbYNskgTxjecZmpvVG0g)
+ * 详解 Java 17中的新特性：“密封类”https://mp.weixin.qq.com/s/XRPI2WlaNGZ05n7Uw7FGGw
  */
 public class FeatureFromJDK {
 

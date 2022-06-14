@@ -7,6 +7,11 @@ import java.util.concurrent.RecursiveTask;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&mid=2247484997&idx=1&sn=51b297dddbbba40912f71236fb297453&scene=21#wechat_redirect
+ * 
+ * Fork/Join框架是Java7提供的并行执行任务框架，思想是将大任务分解成小任务，然后小任务又可以继续分解，然后每个小任务分别计算出结果再合并起来，
+ * 最后将汇总的结果作为大任务结果。其思想和MapReduce的思想非常类似。对于任务的分割，要求各个子任务之间相互独立，能够并行独立地执行任务，互相之间不影响。
+ * 
  * 对于ForkJoinTask，虽然有很多子类，但是我们在基本的使用中都是使用了带返回值的RecursiveTask和不带返回值的RecursiveAction类
  */
 public class ForkJoinTest {
