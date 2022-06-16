@@ -16,6 +16,7 @@ import java.util.concurrent.CountDownLatch;
 public class ZKDistributedLock implements Watcher {
 
     private int threadId;
+
     // 形如[第i个线程]
     private String THREAD_FLAG;
     // 连接zookeeper服务器用
@@ -51,6 +52,9 @@ public class ZKDistributedLock implements Watcher {
         THREAD_FLAG = "[第" + threadId + "个线程]";
     }
 
+    public int getThreadId(){
+        return this.threadId;
+    }
     /**
      * 回调函数，返回连接结果
      *

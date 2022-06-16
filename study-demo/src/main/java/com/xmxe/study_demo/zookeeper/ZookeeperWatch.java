@@ -348,9 +348,11 @@ class ZooKeeperWatcher implements Watcher {
 			// -----------------第二步: 读取节点 /parent 和 读取/parent节点下的子节点(getChildren)的区别 --------------//
 			// 读取数据
 			String readData = zkWatch.readData(PARENT_PATH, true);
+			System.out.println("readData="+readData);
 
 			// 读取子节点(监控childNodeChange事件)
 			List<String> children = zkWatch.getChildren(PARENT_PATH, true);
+			children.forEach(xhild -> System.out.println(xhild));
 
 			// 更新数据
 			zkWatch.writeData(PARENT_PATH, System.currentTimeMillis() + "");

@@ -107,7 +107,7 @@ public class ExcelUtils {
 	 */
 	private static String readExcelSheet(Sheet sheet) {
 		StringBuilder sb = new StringBuilder();
-
+		DataFormatter formatter = new DataFormatter();
 		if (sheet != null) {
 			int rowNos = sheet.getLastRowNum();// 得到excel的总记录条数
 			for (int i = 0; i <= rowNos; i++) {// 遍历行
@@ -117,9 +117,11 @@ public class ExcelUtils {
 					for (int j = 0; j < columNos; j++) {
 						Cell cell = row.getCell(j);
 						if (cell != null) {
-							cell.setCellType(CellType.STRING);
-							sb.append(cell.getStringCellValue() + " ");
-							// System.out.print(cell.getStringCellValue() + " ");
+							// cell.setCellType(CellType.STRING);// 过时
+							// sb.append(cell.getStringCellValue() + " ");
+							
+							String value = formatter.formatCellValue(cell);
+							sb.append(value);
 						}
 					}
 					// System.out.println();
@@ -365,10 +367,14 @@ public class ExcelUtils {
 	public static void writeExcel(String srcFilepath, String desFilepath)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
 		FileOutputStream outputStream = null;
-
+		DataFormatter formatter = new DataFormatter();
+		// 目标
 		Workbook workbook_des = createWorkbook(desFilepath);
-
+		// 源
 		Workbook workbook = getWorkbook(srcFilepath);
+		// 公式
+		FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+		
 		if (workbook != null) {
 			int numberOfSheets = workbook.getNumberOfSheets();
 			for (int k = 0; k < numberOfSheets; k++) {
@@ -385,10 +391,13 @@ public class ExcelUtils {
 								Cell cell = row.getCell(j);
 								Cell cell_des = row_des.createCell(j);
 								if (cell != null) {
-									cell.setCellType(CellType.STRING);
-									cell_des.setCellType(CellType.STRING);
+									// 过时
+									// cell.setCellType(CellType.STRING);
+									// cell_des.setCellType(CellType.STRING);
+									// cell_des.setCellValue(cell.getStringCellValue());
 
-									cell_des.setCellValue(cell.getStringCellValue());
+									String value = formatter.formatCellValue(cell, evaluator);
+									cell_des.setCellValue(value);
 								}
 							}
 						}
@@ -496,7 +505,7 @@ public class ExcelUtils {
 		if (null == cell) {
 			return "";
 		}
-		switch (cell.getCellTypeEnum()) {
+		switch (cell.getCellType()) {
 		case NUMERIC:
 			if (DateUtil.isCellDateFormatted(cell)) {
 				val = fmt.format(cell.getDateCellValue()); // 日期型

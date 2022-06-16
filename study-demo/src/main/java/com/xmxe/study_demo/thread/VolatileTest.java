@@ -9,7 +9,7 @@ public class VolatileTest {
 	public static void main(String[] args) throws Exception {
 		Thread ta = new Thread(() -> {
 			while (!stop) {
-				String a = "a";
+				// String a = "a";
 				//System.out.println(a); 
 				/**
 				 * System.out.println()会影响volatile可见性,

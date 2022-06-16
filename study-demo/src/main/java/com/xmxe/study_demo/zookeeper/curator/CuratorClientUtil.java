@@ -36,7 +36,7 @@ public class CuratorClientUtil {
     private static final int CONNECTION_TIMEOUT = 3 * 1000;
 
     // ZooKeeper服务地址
-    private static final String CONNECT_ADDR = "192.168.1.1:2100,192.168.1.1:2101,192.168.1.1:2102";
+    // private static final String CONNECT_ADDR = "192.168.1.1:2100,192.168.1.1:2101,192.168.1.1:2102";
 
     private volatile static CuratorFramework client; // 客户端
 

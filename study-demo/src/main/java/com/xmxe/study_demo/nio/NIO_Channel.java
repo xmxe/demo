@@ -229,13 +229,13 @@ public class NIO_Channel {
         // 此外，传输过程中的协议可能将数据报分解成碎片，被分解的数据报在目的地会被重新组合起来，接收者将看不到碎片。
         // 但是，如果有一个碎片不能按时到达，那么整个数据报将被丢弃。分解有助于发送大数据报，但也会会造成较高的丢包率。
         int bytesSent = channel.send(byteBuffer, new InetSocketAddress("127.0.0.1", 9999));
-
+        System.out.println("bytesSent="+bytesSent);
     }
 
     /**
      * UDP接收方
      */
-    private void receiveData() throws IOException {
+    public void receiveData() throws IOException {
         DatagramChannel channel = DatagramChannel.open();
         channel.socket().bind(new InetSocketAddress(9999));
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
@@ -244,6 +244,7 @@ public class NIO_Channel {
         // 同时返回一个SocketAddress对象以指出数据来源。在阻塞模式下，receive（）将会阻塞至有数据包到来，
         // 非阻塞模式下，如果没有可接受的包则返回null。如果包内的数据大小超过缓冲区容量时，多出的数据会被悄悄抛弃
         SocketAddress address = channel.receive(byteBuffer);// receive data
+        System.out.println(address);
         byteBuffer.flip();
         while (byteBuffer.hasRemaining()) {
             System.out.print((char) byteBuffer.get());

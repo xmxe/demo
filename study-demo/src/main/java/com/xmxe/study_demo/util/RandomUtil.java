@@ -45,22 +45,27 @@ public class RandomUtil {
         // Math 类中的 random 方法返回一个 [0.0, 1.0) 区间的 double 值。下面这段代码能得到一个 min 和 max 之间的随机数
         int max = 108, min = 3;
         int randomWithMathRandom = (int) ((Math.random() * (max - min)) + min);
+        System.out.println(randomWithMathRandom);
 
         // Java 1.7 之前，最流行的随机数生成方法是 nextInt。这个方法提供了带参数和无参数两个版本。不带参数调用时，nextInt
         // 会以近似相等概率返回任意 int 值，因此很可能会得到负数：
         Random random = new Random();
         int randomWithNextInt = random.nextInt();
+        System.out.println(randomWithNextInt);
         // 如果调用 netxInt 时带上 bound 参数，将得到预期区间内的随机数：
         int randomWintNextIntWithinARange = random.nextInt(max - min) + min;
+        System.out.println(randomWintNextIntWithinARange);
 
-        // Java 8 引入了新的 ints 方法，返回一个java.util.stream.IntStream，不带参数的 ints方法将返回一个无限 int
-        // 流：
+        // Java 8 引入了新的 ints 方法，返回一个java.util.stream.IntStream，不带参数的 ints方法将返回一个无限 int流：
         IntStream unlimitedIntStream = random.ints();
+        unlimitedIntStream.forEach(x->System.out.println(x));
         // 调用时还可以指定参数来限制流大小：
         int streamSize = 5;
         IntStream limitedIntStream = random.ints(streamSize);
+        limitedIntStream.forEach(x->System.out.println(x));
         // 当然，也可以为生成数值设置最大值和最小值：
         IntStream limitedIntStreamWithinARange = random.ints(streamSize, min, max);
+        limitedIntStreamWithinARange.forEach(x->System.out.println(x));
 
         /**
          * Java 1.7 中ThreadLocalRandom类提供了一种新的更高效的随机数生成方法。与 Random 类相比有三个重要区别： 无需显式初始化
@@ -68,12 +73,16 @@ public class RandomUtil {
          * 设置随机种子（seed），这可能会导致问题。如果需要设置随机种子，应该避免采用这种方式生成随机数。 Random 类在多线程时表现不佳。
          */
         int randomWithThreadLocalRandomInARange = ThreadLocalRandom.current().nextInt(min, max);
+        System.out.println(randomWithThreadLocalRandomInARange);
 
         // Java 8 及更高版本提供了几种新方法。首先，nextInt 方法有两个变体：
         int randomWithThreadLocalRandom = ThreadLocalRandom.current().nextInt();
+        System.out.println(randomWithThreadLocalRandom);
         int randomWithThreadLocalRandomFromZero = ThreadLocalRandom.current().nextInt(max);
+        System.out.println(randomWithThreadLocalRandomFromZero);
         // 其次，还可以使用 ints 方法
         IntStream streamWithThreadLocalRandom = ThreadLocalRandom.current().ints();
+        System.out.println(streamWithThreadLocalRandom);
 
         /**
          * Java 8 还带来了一个快速随机数生成器SplittableRandom类。
@@ -84,9 +93,11 @@ public class RandomUtil {
          */
         SplittableRandom splittableRandom = new SplittableRandom();
         int randomWithSplittableRandom = splittableRandom.nextInt(min, max);
-        // 这里也提供了ints方法。这意味着可以轻松得到 int流。可以选择流数据个数有限或无限。对于有限流，可以为数字生成范围设置 top 和 bottom：
+        System.out.println(randomWithSplittableRandom);
 
+        // 这里也提供了ints方法。这意味着可以轻松得到 int流。可以选择流数据个数有限或无限。对于有限流，可以为数字生成范围设置 top 和 bottom：
         IntStream limitedIntStreamWithinARangeWithSplittableRandom = splittableRandom.ints(streamSize, min, max);
+        limitedIntStreamWithinARangeWithSplittableRandom.forEach(x->System.out.println(x));
 
         /**
          * 如果应用程序对安全敏感，则应考虑使用SecureRandom。这是一个强加密随机数生成器。实例默认构造函数不使用随机种子。因此，我们应该：
@@ -97,11 +108,13 @@ public class RandomUtil {
          */
         SecureRandom secureRandom = new SecureRandom();
         int randomWithSecureRandom = secureRandom.nextInt();
+        System.out.println(randomWithSecureRandom);
         // 如果需要设置随机数生成范围，则可以在调用时带 bound 参数
         int randomWithSecureRandomWithinARange = secureRandom.nextInt(max - min) + min;
+        System.out.println(randomWithSecureRandomWithinARange);
 
         RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
         int randomWithRandomDataGenerator = randomDataGenerator.nextInt(min, max);
-
+        System.out.println(randomWithRandomDataGenerator);
     }
 }

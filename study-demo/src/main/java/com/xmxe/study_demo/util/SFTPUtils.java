@@ -625,7 +625,7 @@ public class SFTPUtils {
 		String username="fh";
 		String password="fh.3798873";
 		// Sftp下载路径
-		String sftpPath = "/home/fh/";
+		// String sftpPath = "/home/fh/";
 		
 		try {
 			sftp = new SFTPUtils(host,host,port,username, password);

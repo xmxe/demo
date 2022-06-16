@@ -354,75 +354,79 @@ public class HandleMaxRepeatProblem {
     /**
      * 后台线程去消费map里数据写入到各个文件里, 如果不消费，那么会将内存程爆
      */
-    private static void startConsumer0() throws FileNotFoundException, UnsupportedEncodingException {
+    public static void startConsumer0() {
         for (int i = start; i <= end; i++) {
             final int index = i;
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir + "\\" + i + ".dat", false), "utf-8"));
-            new Thread(() -> {
-                int miss = 0;
-                int countIndex = 0;
-                while (true) {
-                    // 每隔100万打印一次
-                    int count = countMap.get(index).get();
-                    if (count > 1000000 * countIndex) {
-                        System.out.println(index + "岁年龄的个数为:" + countMap.get(index).get());
-                        countIndex += 1;
-                    }
-                    if (miss > 1000) {
-                        // 终止线程
-                        try {
-                            Thread.currentThread().interrupt();
-                            bw.close();
-                        } catch (IOException e) {
-
+            try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir + "\\" + i + ".dat", false), "utf-8"))){
+                new Thread(() -> {
+                    int miss = 0;
+                    int countIndex = 0;
+                    while (true) {
+                        // 每隔100万打印一次
+                        int count = countMap.get(index+"").get();
+                        if (count > 1000000 * countIndex) {
+                            System.out.println(index + "岁年龄的个数为:" + countMap.get(index+"").get());
+                            countIndex += 1;
                         }
-                    }
-                    if (Thread.currentThread().isInterrupted()) {
-                        break;
-                    }
-
-
-                    Vector<String> lines = valueMap.computeIfAbsent(index, vector -> new Vector<>());
-                    // 写入到文件里
-                    try {
-
-                        if (CollectionUtil.isEmpty(lines)) {
-                            miss++;
-                            Thread.sleep(1000);
-                        } else {
-                            // 100个一批
-                            if (lines.size() < 1000) {
-                                Thread.sleep(1000);
-                                continue;
-                            }
-                            // 1000个的时候开始处理
-                            ReentrantLock lock = lockMap.computeIfAbsent(index, lockIndex -> new ReentrantLock());
-                            lock.lock();
+                        if (miss > 1000) {
+                            // 终止线程
                             try {
-                                Iterator<String> iterator = lines.iterator();
-                                StringBuilder sb = new StringBuilder();
-                                while (iterator.hasNext()) {
-                                    sb.append(iterator.next());
-                                    countMap.get(index).addAndGet(1);
-                                }
-                                try {
-                                    bw.write(sb.toString());
-                                    bw.flush();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                // 清除掉vector
-                                valueMap.put(index, new Vector<>());
-                            } finally {
-                                lock.unlock();
+                                Thread.currentThread().interrupt();
+                                bw.close();
+                            } catch (IOException e) {
+    
                             }
-
                         }
-                    } catch (InterruptedException e) {
-
+                        if (Thread.currentThread().isInterrupted()) {
+                            break;
+                        }
+    
+    
+                        Vector<String> lines = valueMap.computeIfAbsent(index, vector -> new Vector<>());
+                        // 写入到文件里
+                        try {
+    
+                            if (CollectionUtil.isEmpty(lines)) {
+                                miss++;
+                                Thread.sleep(1000);
+                            } else {
+                                // 100个一批
+                                if (lines.size() < 1000) {
+                                    Thread.sleep(1000);
+                                    continue;
+                                }
+                                // 1000个的时候开始处理
+                                ReentrantLock lock = lockMap.computeIfAbsent(index, lockIndex -> new ReentrantLock());
+                                lock.lock();
+                                try {
+                                    Iterator<String> iterator = lines.iterator();
+                                    StringBuilder sb = new StringBuilder();
+                                    while (iterator.hasNext()) {
+                                        sb.append(iterator.next());
+                                        countMap.get(index+"").addAndGet(1);
+                                    }
+                                    try {
+                                        bw.write(sb.toString());
+                                        bw.flush();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    // 清除掉vector
+                                    valueMap.put(index, new Vector<>());
+                                } finally {
+                                    lock.unlock();
+                                }
+    
+                            }
+                        } catch (InterruptedException e) {
+    
+                        }
                     }
-                }
-            }).start();
+                }).start();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            
         }
 
     }

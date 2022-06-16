@@ -71,7 +71,7 @@ public class NIO_Selector {
      */
 
     
-    private static class ServerSelector {
+    static class ServerSelector {
         private static final int BUF_SIZE = 1024;
         private static final int PORT = 8080;
         private static final int TIMEOUT = 3000;
@@ -190,7 +190,7 @@ public class NIO_Selector {
         }
     }
 
-    private static class ClientSelector {
+    static class ClientSelector {
 
         /*标识数字*/
         private static int flag = 0;

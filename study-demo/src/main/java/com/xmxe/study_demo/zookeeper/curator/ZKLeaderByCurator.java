@@ -6,7 +6,6 @@ import org.apache.curator.framework.recipes.leader.LeaderSelector;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListener;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.retry.RetryNTimes;
-import org.apache.curator.utils.EnsurePath;
 
 /**
  * Curator framework's leader election test.
@@ -67,14 +66,20 @@ public class ZKLeaderByCurator {
 
         // 2.Ensure path
         try {
-            new EnsurePath(ZK_PATH).ensure(client.getZookeeperClient());
+            
+            // new EnsurePath(ZK_PATH).ensure(client.getZookeeperClient());// 过时
+            client.create().creatingParentContainersIfNeeded();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // 3.Register listener
-        LeaderSelector selector = new LeaderSelector(client, ZK_PATH, listener);
-        selector.autoRequeue();
-        selector.start();
+        try(LeaderSelector selector = new LeaderSelector(client, ZK_PATH, listener)){
+            selector.autoRequeue();
+            selector.start();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
 }

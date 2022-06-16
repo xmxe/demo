@@ -320,7 +320,7 @@ public class FileUtils {
      * @param list
      * @return
      */
-    private static boolean hasSame(List<? extends Object> list) {
+    public static boolean hasSame(List<? extends Object> list) {
         if (null == list)
             return false;
         return 1 == new HashSet<Object>(list).size();
@@ -332,7 +332,7 @@ public class FileUtils {
      * @param list
      * @return
      */
-    private static boolean hasSame2(List<? extends Object> list) {
+    public static boolean hasSame2(List<? extends Object> list) {
         if (null == list)
             return false;
         return list.size() == new HashSet<Object>(list).size();

@@ -237,6 +237,7 @@ public class JDBCUtil {
         return list;  
     }  
      
+    @SuppressWarnings("unchecked")
     public List<Map<String,Object>> excuteQueryMap(String sql, Object[] params){
     	List<Object> objs = excuteQueryObj(sql, params);
     	List<Map<String,Object>> res = new ArrayList<Map<String,Object>>(objs.size());

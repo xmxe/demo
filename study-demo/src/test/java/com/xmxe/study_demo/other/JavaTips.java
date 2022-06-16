@@ -69,9 +69,10 @@ public class JavaTips{
         System.out.println(date); // 输出 2021-05-01 01:01:01
         // String类型转Date类型
         Date date2 = DateUtils.parseDate("2021-05-01 01:01:01", "yyyy-MM-dd HH:mm:ss");
+        System.out.println(date2);
         // 计算一个小时后的日期
         Date date3 = DateUtils.addHours(new Date(), 1);
-
+        System.out.println(date3);
         // 包装临时对象
         // 当一个方法需要返回两个及以上字段时，我们一般会封装成一个临时对象返回，现在有了Pair和Triple就不需要了
         // 返回两个字段
@@ -97,11 +98,13 @@ public class JavaTips{
         List<String> listA = List.of("1","2","3");
         List<String> listB = List.of("1","2","3","4");
         Collection<String> collection = CollectionUtils.retainAll(listA, listB);
+        collection.forEach(x->System.out.println(x));
         // 两个集合取并集
         Collection<String> collection2 = CollectionUtils.union(listA, listB);
+        collection2.forEach(x->System.out.println(x));
         // 两个集合取差集
         Collection<String> collection3 = CollectionUtils.subtract(listA, listB);
-
+        collection3.forEach(x->System.out.println(x));
         // common-beanutils 操作对象
         Student student = new Student();
         BeanUtils.setProperty(student, "id", 1);

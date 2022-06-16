@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,10 +124,11 @@ public class OperateString {
     @Test
     public void splitStr() {
         String[] splitted = "沉默王二，一枚有趣的程序员".split("，");
+        System.out.println(Arrays.toString(splitted));
         // 当然了，该方法也不是 null 安全的
         // 之前反复提到的 StringUtils 类，来自 Apache 的 Commons Lang 包：
         String[] splitted2 = StringUtils.split("沉默王二，一枚有趣的程序员", "，");
-
+        System.out.println(Arrays.toString(splitted2));
         System.out.println(StringUtils.split("a..b.c", '.')); // ["a", "b", "c"]
         System.out.println(StringUtils.splitByWholeSeparatorPreserveAllTokens("a..b.c", ".")); // ["a","", "b", "c"]
         // ps:注意以上两个方法区别。

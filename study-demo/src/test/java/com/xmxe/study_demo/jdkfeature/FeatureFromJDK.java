@@ -216,7 +216,8 @@ public class FeatureFromJDK {
         Stream.of("one", "two", "three", "four").filter(e -> e.length() > 3).peek(e -> System.out.println("转换之前: " + e))
             .map(String::toUpperCase).peek(e -> System.out.println("转换之后: " + e)).collect(Collectors.toList());
 
-        /**anyMatch/allMatch/noneMatch（匹配）
+        /**
+         * anyMatch/allMatch/noneMatch（匹配）
          * allMatch：Stream 中全部元素符合则返回 true ;
          * anyMatch：Stream 中只要有一个元素符合则返回 true;
          * noneMatch：Stream 中没有一个元素符合则返回 true。
@@ -286,8 +287,6 @@ public class FeatureFromJDK {
         map.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
             .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
 
-
-
     }
     /**
      * jdk8新增的map方法
@@ -337,7 +336,7 @@ public class FeatureFromJDK {
         newMap.compute("3", (k,v) -> String.valueOf(v)+"1" );
         newMap.compute("c", (k,v) -> String.valueOf(v)+"1" );
 
-        //merge() 适用于两种情况。如果给定的key不存在，它就变成了put(key, value)即newMap.get("a")==null的话merge操作就变成了传统的put操作。但是，如果key已经存在一些值，我们 remappingFunction 可以选择合并的方式
+        // merge() 适用于两种情况。如果给定的key不存在，它就变成了put(key, value)即newMap.get("a")==null的话merge操作就变成了传统的put操作。但是，如果key已经存在一些值，我们 remappingFunction 可以选择合并的方式
         // 以前写法
         // BiFunction第一个参数代表以前newMap.get("a")的值
         // BiFunction第二个参数代表输入的第二个参数

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -94,83 +95,91 @@ public class SocketServer {
 	/**
 	 * 双向通信，发送消息并接受消息
 	 */
-	public static void twoWayCommunicationServer() throws Exception{
+	public static void twoWayCommunicationServer(){
 		// 监听指定的端口
 		int port = 55533;
-		ServerSocket server = new ServerSocket(port);
-		// server将一直等待连接的到来
-		System.out.println("server将一直等待连接的到来");
-		
-		while(true){
-			Socket socket = server.accept();
-			// 建立好连接后，从socket中获取输入流，并建立缓冲区进行读取
-			InputStream inputStream = socket.getInputStream();
-			byte[] bytes = new byte[1024];
-			int len;
-			StringBuilder sb = new StringBuilder();
-			while ((len = inputStream.read(bytes)) != -1) {
-				// 注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
-				sb.append(new String(bytes, 0, len, "UTF-8"));
+		try(ServerSocket server = new ServerSocket(port)){
+			// server将一直等待连接的到来
+			System.out.println("server将一直等待连接的到来");
+			
+			while(true){
+				Socket socket = server.accept();
+				// 建立好连接后，从socket中获取输入流，并建立缓冲区进行读取
+				InputStream inputStream = socket.getInputStream();
+				byte[] bytes = new byte[1024];
+				int len;
+				StringBuilder sb = new StringBuilder();
+				while ((len = inputStream.read(bytes)) != -1) {
+					// 注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
+					sb.append(new String(bytes, 0, len, "UTF-8"));
+				}
+				System.out.println("get message from client: " + sb);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+				bw.write("mess"+"\n");
+				bw.flush();
+				inputStream.close();
+				socket.close();
 			}
-			System.out.println("get message from client: " + sb);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			bw.write("mess"+"\n");
-			bw.flush();
-			inputStream.close();
-			socket.close();
-		}	 
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
 	 * 使用多线程
 	 */
-	public static void twoWayCommunicationServerUseThread() throws Exception{
+	public static void twoWayCommunicationServerUseThread(){
 		// 监听指定的端口
 		int port = 55533;
-		ServerSocket server = new ServerSocket(port);
-		// server将一直等待连接的到来
-		System.out.println("server将一直等待连接的到来");
-	
-		//如果使用多线程，那就需要线程池，防止并发过高时创建过多线程耗尽资源
-		ExecutorService threadPool = Executors.newFixedThreadPool(100);
+		try(ServerSocket server = new ServerSocket(port)){
+			// server将一直等待连接的到来
+			System.out.println("server将一直等待连接的到来");
 		
-		while (true) {
-			Socket socket = server.accept();
-			Runnable runnable=()->{
-				try {
-					// 建立好连接后，从socket中获取输入流，并建立缓冲区进行读取
-					InputStream inputStream = socket.getInputStream();
-					byte[] bytes = new byte[1024];
-					int len;
-					StringBuilder sb = new StringBuilder();
-					while ((len = inputStream.read(bytes)) != -1) {
-						// 注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
-						sb.append(new String(bytes, 0, len, "UTF-8"));
+			//如果使用多线程，那就需要线程池，防止并发过高时创建过多线程耗尽资源
+			ExecutorService threadPool = Executors.newFixedThreadPool(100);
+			
+			while (true) {
+				Socket socket = server.accept();
+				Runnable runnable=()->{
+					try {
+						// 建立好连接后，从socket中获取输入流，并建立缓冲区进行读取
+						InputStream inputStream = socket.getInputStream();
+						byte[] bytes = new byte[1024];
+						int len;
+						StringBuilder sb = new StringBuilder();
+						while ((len = inputStream.read(bytes)) != -1) {
+							// 注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
+							sb.append(new String(bytes, 0, len, "UTF-8"));
+						}
+						System.out.println("get message from client: " + sb);
+						BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+						bw.write("mess"+"\n");
+						bw.flush();
+						inputStream.close();
+						socket.close();
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					System.out.println("get message from client: " + sb);
-					BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-					bw.write("mess"+"\n");
-					bw.flush();
-					inputStream.close();
-					socket.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			};
-			threadPool.submit(runnable);
+				};
+				threadPool.submit(runnable);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-	 
+		
 	}
 
 	/**
 	 * buffer socket
 	 */
 	public static void bufferSocketServer(){
-		try {
-			ServerSocket ss = new ServerSocket(8888);
+		try (ServerSocket ss = new ServerSocket(8888)){
 			System.out.println("启动服务器....");
 			Socket s = ss.accept();
-			System.out.println("客户端:"+s.getInetAddress().getLocalHost()+"已连接到服务器");
+			// InetAddress in =  s.getInetAddress();
+			// System.out.println("客户端:"+in.getLocalHost()+"已连接到服务器");
+			System.out.println("客户端:"+InetAddress.getLocalHost()+"已连接到服务器");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 			//读取客户端发送来的消息

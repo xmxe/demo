@@ -12,6 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * 常用的限流算法有哪些？
  * https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw
+ * 
+ * 新来个技术总监，把限流实现的那叫一个优雅，佩服！
+ * https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg
  */
 public class LimitAlgorithm {
 
@@ -127,9 +130,9 @@ public class LimitAlgorithm {
                 return time;
             }
 
-            public void setNumber(AtomicInteger number){
-                this.number = number;
-            }
+            // public void setNumber(AtomicInteger number){
+            //     this.number = number;
+            // }
             public AtomicInteger getNumber(){
                 return number;
             }

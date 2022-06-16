@@ -309,7 +309,7 @@ class ImageIconWaterMarkUtil {
      * @param g
      * @return
      */
-    private static int getWatermarkLength(String text, Graphics2D g) {
+    public static int getWatermarkLength(String text, Graphics2D g) {
         return g.getFontMetrics(g.getFont()).charsWidth(text.toCharArray(), 0, text.length());
     }
 

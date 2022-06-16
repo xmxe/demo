@@ -159,7 +159,7 @@ public class JVMInfo {
     public void cpuinfo(){
         JSONObject cpuInfo = new JSONObject();
         SystemInfo systemInfo = new SystemInfo();
-        OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
+        // OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
         HardwareAbstractionLayer hardwareAbstractionLayer = systemInfo.getHardware();
         CentralProcessor processor = hardwareAbstractionLayer.getProcessor();
         // CPU信息
