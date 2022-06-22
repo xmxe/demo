@@ -262,6 +262,7 @@ public class FeatureFromJDK {
 
     /**
      * [Java8 stream 排序以及自定义比较器，很实用！](https://mp.weixin.qq.com/s/NCJ0_sF0RVIeZdkQveNHmQ)
+     * [Java 8 排序的 10 个姿势](https://mp.weixin.qq.com/s/xsvIStVM36LAdEExNsyxbw)
      */
     @Test
     public void sort(){
