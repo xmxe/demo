@@ -7,7 +7,6 @@ public enum WeekEnum {
 	MON(1) {
 		@Override
 		public double eval(double x, double y) {
-
 			return 1;
 		}
 	},
@@ -63,7 +62,7 @@ public enum WeekEnum {
 	private int value;
 
 	private WeekEnum(int value) {
-		this.value = value + 1;
+		this.value = value;
 	}
 
 	public int getValue() {
@@ -73,6 +72,13 @@ public enum WeekEnum {
 	public boolean isRest() {
 		return false;
 	}
+
+	public static final WeekEnum[] _table = new WeekEnum[7];
+    static {
+        for (WeekEnum c : values()) {
+            _table[c.getValue()] = c;
+        }
+    }
 
 	/**
 	 * 抽象方法，由不同的枚举值提供不同的实现。

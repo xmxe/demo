@@ -2,7 +2,7 @@ package com.xmxe.study_demo.enums;
 
 /**
  * see jdk java.util.concurrent.TimeUnit details
- * imitate TineUnit sample
+ * imitate TimeUnit sample
  */
 public enum AnimalEnum {
     PEOPLE{

@@ -19,47 +19,10 @@ public class TaskBuilderPattern {
         this.finishDate = taskBuilder.finishDate;
     }
 
-    
-    public static class TaskBuilder {
-
-        private long id;
-        private String name;
-        private String content;
-        private int type;
-        private int status;
-        private Date finishDate;
-
-        public TaskBuilder(long id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public TaskBuilder content(String content) {
-            this.content = content;
-            return this;
-        }
-
-        public TaskBuilder type(int type) {
-            this.type = type;
-            return this;
-        }
-
-        public TaskBuilder status(int status) {
-            this.status = status;
-            return this;
-        }
-
-        public TaskBuilder finishDate(Date finishDate) {
-            this.finishDate = finishDate;
-            return this;
-        }
-
-        public TaskBuilderPattern build() {
-            return new TaskBuilderPattern(this);
-        }
-
+    public static TaskBuilder builder(){
+        return new TaskBuilder();
     }
-
+    
     public long getId() {
         return id;
     }
@@ -90,10 +53,46 @@ public class TaskBuilderPattern {
                 + ", status=" + status + ", finishDate=" + finishDate + '}';
     }
 
+    public static class TaskBuilder {
+
+        private long id;
+        private String name;
+        private String content;
+        private int type;
+        private int status;
+        private Date finishDate;
+
+        public TaskBuilder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public TaskBuilder type(int type) {
+            this.type = type;
+            return this;
+        }
+
+        public TaskBuilder status(int status) {
+            this.status = status;
+            return this;
+        }
+
+        public TaskBuilder finishDate(Date finishDate) {
+            this.finishDate = finishDate;
+            return this;
+        }
+
+        public TaskBuilderPattern build() {
+            return new TaskBuilderPattern(this);
+        }
+
+    }
+
+
 }
 
 class Builder{
-    TaskBuilderPattern task = new TaskBuilderPattern.TaskBuilder(99, "紧急任务")
+    TaskBuilderPattern task = TaskBuilderPattern.builder()
             .type(1)
             .content("处理一下这个任务")
             .status(0)

@@ -1,5 +1,6 @@
 package com.xmxe.study_demo.enums;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -84,13 +85,15 @@ public class EnumTest {
 		// ordinal()， 返回值是从 0 开始 返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）
 		System.out.println("ordinal(): " + test.ordinal());// oridinal(): 1
 
-		System.out.println("EnumTest.FRI getValue() = " + WeekEnum.FRI.getValue());// EnumTest.FRI getValue() = 6 
+		System.out.println("EnumTest.FRI getValue() = " + WeekEnum.FRI.getValue());// EnumTest.FRI getValue() = 5
 		
 		System.out.println("EnumTest.FRI isResr() = " + WeekEnum.SUN.isRest());// EnumTest.FRI isResr() = true
 		WeekEnum w1 =  WeekEnum.valueOf(WeekEnum.class, "TUE");
 		WeekEnum w2 = WeekEnum.valueOf("TUE");
 		System.out.println("w1=="+w1+"===w2"+w2+"==="+w1.compareTo(test)+"---"+w2.equals(w1));// w1==TUE===w2TUE===0---true
 		System.out.println("枚举valueOf()返回的是enum " + WeekEnum.valueOf("SUN").getValue());// 枚举valueOf()返回的是enum 1 
+
+		System.out.println(Arrays.toString(WeekEnum._table));//[SUN, MON, TUE, WED, THU, FRI, SAT]
 	}
 
 	/**
