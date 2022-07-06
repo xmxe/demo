@@ -267,7 +267,3 @@ public class OperateString {
 		System.out.println(m);// {c=age=4 name=c} 原来的内存地址引用没有变化
 	}
 }
-
-/**
- * [关于 Java 字符串的全部，都在这份手册里了](https://mp.weixin.qq.com/s/iYO16IddRqAqn3D5VhURQQ)
- */

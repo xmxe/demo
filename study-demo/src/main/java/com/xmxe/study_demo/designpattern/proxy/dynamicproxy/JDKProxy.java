@@ -28,5 +28,4 @@ public class JDKProxy implements InvocationHandler{
 		return result;
 	}
 
-	
 }

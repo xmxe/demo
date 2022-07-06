@@ -86,7 +86,7 @@ public class FeatureFromJDK {
     }
 
     /**
-     * stream流
+     * 
      * Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合(https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ)
      * Java8中Stream详细用法大全(https://mp.weixin.qq.com/s/0F_CBDlav8X4-CfE0hzjWQ)
      * 玩转 Java8 Stream，常用方法大合集(https://mp.weixin.qq.com/s/owDtfi-UUI7uL1dIjPOtMw)
@@ -438,7 +438,6 @@ public class FeatureFromJDK {
     }
 
     /**
-     * optional处理NPE异常
      * Java8 Optional最佳实践 https://mp.weixin.qq.com/s/QMY9H2iMQGGRRORKc1COdw
      * 不要再用 if (obj != null) 判空了！！！ https://mp.weixin.qq.com/s/0AeETDJtKCiJV_rSPaNwTQ
      */
