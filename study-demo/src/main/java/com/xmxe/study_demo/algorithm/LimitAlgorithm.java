@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.other;
+package com.xmxe.study_demo.algorithm;
 
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -59,7 +59,7 @@ public class LimitAlgorithm {
      * 滑动窗口算法
      * 滑动窗口限流工具类
      */
-    public static class RateLimiterSlidingWindow {
+    static class RateLimiterSlidingWindow {
         /**
          * 阈值
          */
@@ -171,7 +171,7 @@ public class LimitAlgorithm {
      * 滑动日志方式限流
      * 设置 QPS 为 2.
      */
-    public static class RateLimiterSildingLog {
+    static class RateLimiterSildingLog {
 
         /**
          * 阈值
