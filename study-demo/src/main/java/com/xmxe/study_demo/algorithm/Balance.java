@@ -149,7 +149,7 @@ public class Balance {
     // ------
 
     // 轮询权重算法
-    static class RoundRobinweight {
+    static class RoundWeight {
         private static AtomicInteger requestCount = new AtomicInteger(0);
 
         public static String getServer(){
