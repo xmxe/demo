@@ -12,6 +12,8 @@ import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.StringUtils;
 
+// 学习下真正的缓存之王，以及在Spring Boot中的使用！https://mp.weixin.qq.com/s/lmneEosfILnp6g30MrYPjg
+
 @SuppressWarnings("unchecked")//取消警告
 public class LocalCacheProvider {
 

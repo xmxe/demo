@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.algorithm;
+package com.xmxe.study_demo.algorithm.sort;
 
 /**
  * 冒泡排序
