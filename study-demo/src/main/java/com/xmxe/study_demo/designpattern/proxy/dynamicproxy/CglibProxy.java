@@ -15,9 +15,11 @@ public class CglibProxy implements MethodInterceptor {
         this.targetObject = obj;
         // 创建Enhancer对象，类似于JDK动态代理的Proxy类
         Enhancer enhancer = new Enhancer();
-        // 设置目标类的字节码文件
+        // 设置目标类的字节码文件,即需要给哪个类创建代理类
         enhancer.setSuperclass(obj.getClass());
-        // 设置回调函数
+        // 设置回调函数 需实现org.springframework.cglib.proxy.Callback接口，
+		// 此处我们使用的是org.springframework.cglib.proxy.MethodInterceptor，也是一个接口，实现了Callback接口，
+		// 当调用代理对象的任何方法的时候，都会被MethodInterceptor接口的invoke方法处理
         enhancer.setCallback(this);
         // 创建代理类
         Object proxyObj = enhancer.create();
@@ -26,6 +28,13 @@ public class CglibProxy implements MethodInterceptor {
     }
 
 
+	/**
+	 * 代理对象方法拦截器
+	 * @param o 代理对象
+	 * @param method 被代理的类的方法，即BuyHouseImpl中的方法
+	 * @param objects 调用方法传递的参数
+	 * @param methodProxy 方法代理对象
+	 */
 	@Override
 	public Object intercept(Object proxyObject, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
 		Object obj = null;
