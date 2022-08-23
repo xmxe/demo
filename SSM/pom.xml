@@ -10,7 +10,7 @@
 	<name>SSM</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<!-- nexus私服配置 -->
 	<!-- <repositories>
