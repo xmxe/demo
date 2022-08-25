@@ -1,6 +1,10 @@
 package com.xmxe.study_demo.jdkfeature;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -26,13 +30,14 @@ import java.util.stream.Stream;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import com.xmxe.study_demo.entity.Student;
-
 import org.junit.Test;
+
+import com.xmxe.study_demo.entity.Student;
+import com.xmxe.study_demo.enums.WeekEnum;
 
 /**
  * JDK 5-15都有哪些经典新特性(https://mp.weixin.qq.com/s/1_pbYNskgTxjecZmpvVG0g)
- * 详解 Java 17中的新特性：“密封类”https://mp.weixin.qq.com/s/XRPI2WlaNGZ05n7Uw7FGGw
+ * 
  */
 public class FeatureFromJDK {
 
@@ -57,11 +62,7 @@ public class FeatureFromJDK {
         int c = lambdaservice.lambdaTest(3, 4);
         methodParam.accept("①---" + c);
 
-        Set<Integer> set = new TreeSet<>();
-        Collections.addAll(set, 22, 3, 51, 44, 20, 6);
-        set.stream().filter(x -> x > 30).sorted((x, y) -> (y - x)).forEach(x -> methodParam.accept("②---" + x));
-
-        /*
+         /*
          * jdk7写法
          * Set<Integer> set1 = new TreeSet<>(new Comparator<Integer>() {
          *      @Override public int compare(Integer i,Integer o) {
@@ -70,18 +71,13 @@ public class FeatureFromJDK {
          * });
          */
         // jdk8写法
-        Set<Integer> set1 = new TreeSet<>((x, y) -> (x - y));
-        Collections.addAll(set1, 22, 3, 51, 44, 20, 6);
-        set1.forEach(x -> methodParam.accept("③---" + x));
-
-        // JDK9新增of方法 只能用在list set map接口上不能用在实现类上，且长度固定 无法使用add put等方法
-        List<Integer> list = List.of(5,16,41,10);
-        // jdk10新增静态方法copyof 返回不可修改的副本
-        var copyList = List.copyOf(list);
-        System.out.println(copyList);
+        Set<Integer> set = new TreeSet<>((x, y) -> (x - y));
+        Collections.addAll(set, 22, 3, 51, 44, 20, 6);
+        set.forEach(x -> methodParam.accept("③---" + x));
+        set.stream().filter(x -> x > 30).sorted((x, y) -> (y - x)).forEach(x -> methodParam.accept("②---" + x));
 
         /* stream().map()可以看作对象转换 */
-        list.stream().sorted((x, y) -> (x - y)).map(String::valueOf).filter(x -> x.startsWith("1"))
+        List.of(12,21,3).stream().sorted((x, y) -> (x - y)).map(String::valueOf).filter(x -> x.startsWith("1"))
                 .forEach(x -> methodParam.accept("④---" + x));
     }
 
@@ -99,15 +95,11 @@ public class FeatureFromJDK {
          * Stream是在一个源的基础上创建出来的，例如java.util.Collection中的list或者set（map不能作为Stream的源）。
          * Stream操作往往可以通过顺序或者并行两种方式来执行。
          */
-        Student s1 = new Student(1L, "肖战", 15, "浙江");
-        Student s2 = new Student(2L, "王一博", 15, "湖北");
-        Student s3 = new Student(3L, "杨紫", 17, "北京");
-        Student s4 = new Student(4L, "李现", 17, "浙江");
-        List<Student> students = new ArrayList<>();
-        students.add(s1);
-        students.add(s2);
-        students.add(s3);
-        students.add(s4);
+        Student s1 = new Student(1L, "a", 15, "浙江");
+        Student s2 = new Student(2L, "b", 15, "湖北");
+        Student s3 = new Student(3L, "c", 17, "北京");
+        Student s4 = new Student(4L, "d", 17, "浙江");
+        List<Student> students = List.of(s1,s2,s3,s4);
 
         //构造Stream流的方式
         Stream.of("Monkey", "Lion", "Giraffe", "Lemur").mapToInt(String::length).forEach(System.out::println);
@@ -115,37 +107,36 @@ public class FeatureFromJDK {
         String[] strArray = new String[] { "a", "b", "c" };
         stream = Stream.of(strArray);
         stream = Arrays.stream(strArray);
-        List<String> list1 = Arrays.asList(strArray);
-        stream = list1.stream();
+        List<String> list = Arrays.asList(strArray);
+        stream = list.stream();
         //注意:一个Stream流只可以使用一次，上面代码为了简洁而重复使用了数次，因此会抛出 stream has already been operated upon or closed 异常。
 
         //Stream流的之间的转换
         try {
-            Stream<String> stream2 = Stream.of("a", "b", "c");
             // stream转换成 Array
-            String[] strArray1 = stream2.toArray(String[]::new);
+            String[] strArray1 = stream.toArray(String[]::new);
 
             // stream转换成 Collection
-            List<String> list3 = stream2.collect(Collectors.toList());
-            List<String> list2 = stream2.collect(Collectors.toCollection(ArrayList::new));
-            Set<String> set1 = stream2.collect(Collectors.toSet());
-            Stack<String> stack1 = stream2.collect(Collectors.toCollection(Stack::new));
+            List<String> list1 = stream.collect(Collectors.toList());
+            List<String> list2 = stream.collect(Collectors.toCollection(ArrayList::new));
+            Set<String> set = stream.collect(Collectors.toSet());
+            Stack<String> stack = stream.collect(Collectors.toCollection(Stack::new));
 
             // 转换成 String
             String str = stream.collect(Collectors.joining()).toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         /**
          * stream和parallelStream的简单区分：
-         * stream是顺序流，由主线程按顺序对流执行操作，而parallelStream是并行流，内部以多线程并行执行的方式对流进行操作，
-         * 但前提是流中的数据处理没有顺序要求
+         * stream是顺序流，由主线程按顺序对流执行操作，而parallelStream是并行流，内部以多线程并行执行的方式对流进行操作，但前提是流中的数据处理没有顺序要求
          * 如果流中的数据量足够大，并行流可以加快处速度。除了直接创建并行流，还可以通过parallel()把顺序流转换成并行流
          */
         //parallelStream 是流并行处理程序的代替方法。
         List<String> strings = Arrays.asList("a", "", "c", "", "e","", " ");
         // 获取空字符串的数量
-        long count =  strings.parallelStream().filter(string -> string.isEmpty()).count();
+        long count = strings.parallelStream().filter(string -> string.isEmpty()).count();
 
         // filter（筛选）
         List<Student> streamStudents = students.stream().filter(s -> "浙江".equals(s.getAddress())).collect(Collectors.toList());
@@ -154,10 +145,9 @@ public class FeatureFromJDK {
         int sum = students.stream().filter(u -> "张三".equals(u.getName())).mapToInt(u -> u.getAge()).sum();
 
         // distinct(去重)
-        List<String> list = Arrays.asList("111", "222", "333", "111", "222");
-        list.stream().distinct().forEach(System.out::println);
+        strings.stream().distinct().forEach(System.out::println);
         students.stream().distinct().forEach(System.out::println);
-        List<String> wnums = list.stream().flatMap(line -> Stream.of(line.split(""))).filter(word -> word.length() >= 0)
+        List<String> wnums = strings.stream().flatMap(line -> Stream.of(line.split(""))).filter(word -> word.length() >= 0)
             .map(String::toLowerCase).distinct().sorted().collect(Collectors.toList());
 
         // sorted(排序)
@@ -289,6 +279,7 @@ public class FeatureFromJDK {
             .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
 
     }
+
     /**
      * jdk8新增的map方法
      */
@@ -532,6 +523,7 @@ public class FeatureFromJDK {
             System.out.println("执行脚本错误: "+ e.getMessage());
         }
     }
+
     /**
      * jdk11 新增的string方法
      */
@@ -551,6 +543,79 @@ public class FeatureFromJDK {
         System.out.println("a\nb\nc".lines().count());    // 3
         // 复制字符串
         System.out.println("jay".repeat(3));   // "jayjayjay"
+
+    }
+
+    /**
+     * 其他功能预览
+     */
+    @Test
+    public void otherFeature(Object param){
+        // JDK9新增of方法 只能用在list set map接口上不能用在实现类上，且长度固定 无法使用add put等方法
+        List<Integer> list = List.of(5,16,41,10);
+        // jdk10新增静态方法copyof 返回不可修改的副本
+        var copyList = List.copyOf(list);
+        
+        // 1.7 a的值为1111，下划线不影响实际值，提升可读性
+        int a = 11_11;
+
+        // Java 12 新增了mismatch方法，此方法返回第一个不匹配的位置，如果没有不匹配，则返回 -1L。
+        Path file1 = Paths.get("c:\\jay.txt");
+        Path file2 = Paths.get("c:\\aaa.txt");
+        try {
+            long fileMismatch = Files.mismatch(file1, file2);
+            System.out.println(fileMismatch);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        if(param instanceof String paramStr){
+            System.out.println(paramStr.length());
+        }
+        
+
+        WeekEnum day = WeekEnum.FRI;
+        switch (day) {
+            case MON, FRI, SUN -> System.out.println(6);
+            case TUE -> System.out.println(7);
+            case THU, SAT -> System.out.println(8);
+            case WED -> System.out.println(9);
+        }
+        String d = "m";
+        int i = switch (d) {
+            case "MONDAY" -> 1;
+            case "TUESDAY" -> 2;
+            case "WEDNESDAY" -> 3;
+            case "THURSDAY" -> 4;
+            case "FRIDAY" -> 5;
+            case "SATURDAY" -> 6;
+            case "SUNDAY" -> 7;
+            default -> 0;
+        };
+        
+        // 大多数时候，在switch表达式内部，我们会返回简单的值。一行代码的话可以用->返回，
+        // 但是如果需要复杂的语句，放到{…}里，然后用yield返回一个值作为switch语句的返回值：
+        // yield相比较于break，优化了返回值，不要要定义一个变量去接收，相较于return，还可以继续往下执行
+        String fruit = "apple";
+        String name = switch (fruit) {
+            case "apple" -> "1";
+            case "pear", "mango" -> "2";
+            default -> {
+                String code = "fruit.toString()";
+                yield code;
+            }
+        };
+
+        // java13文本块
+        String html = """
+                <html>
+                    <body>
+                        <p>Hello World</p>
+                    </body>
+                </html>
+                """;
+        // 改进NPE异常提示
 
     }
 
