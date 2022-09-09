@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "WebRoot/WEB-INF/classes",
+    "java.project.referencedLibraries": [
+        "WebRoot/WEB-INF/lib/*.jar"
+    ]
+}
