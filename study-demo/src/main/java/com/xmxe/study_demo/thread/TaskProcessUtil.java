@@ -17,7 +17,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import lombok.Data;
 
-// 多线程永动任务 https://mp.weixin.qq.com/s/Hf0UFDyRYM3oHZpVvHdLAw
+// 多线程永动任务、优雅退出 https://mp.weixin.qq.com/s/Hf0UFDyRYM3oHZpVvHdLAw
 public class TaskProcessUtil {
     // 每个任务，都有自己单独的线程池
     private static Map<String, ExecutorService> executors = new ConcurrentHashMap<>();
