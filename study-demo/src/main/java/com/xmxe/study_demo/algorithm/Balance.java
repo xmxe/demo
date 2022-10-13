@@ -40,7 +40,9 @@ public class Balance {
 
     // -------------------
 
-    // 轮询策略类：实现基本的轮询算法
+    /**
+     * 轮询策略类：实现基本的轮询算法
+     */
     static class RoundRobin{
         // 用于记录当前请求的序列号
         private static AtomicInteger requestIndex = new AtomicInteger(0);
@@ -79,7 +81,9 @@ public class Balance {
 
     // ------
 
-    // 随机策略类：随机抽取集群中的一个节点处理请求
+    /**
+     * 随机策略类：随机抽取集群中的一个节点处理请求
+     */
     static class Random {
         // 随机数产生器，用于产生随机因子
         static java.util.Random random = new java.util.Random();
@@ -92,7 +96,9 @@ public class Balance {
 
     // ------
 
-    // 随机权重算法
+    /** 
+     * 随机权重算法
+     */
     static class Randomweight {
         // 初始化随机数生产器
         static java.util.Random random = new java.util.Random();
@@ -148,7 +154,9 @@ public class Balance {
 
     // ------
 
-    // 轮询权重算法
+    /** 
+     * 轮询权重算法
+     */
     static class RoundWeight {
         private static AtomicInteger requestCount = new AtomicInteger(0);
 
@@ -195,7 +203,9 @@ public class Balance {
     
     // ------
 
-    // 权重类
+    /**
+     * 权重类
+     */
     static class Weight {
         // 节点信息
         private String server;
@@ -233,7 +243,9 @@ public class Balance {
         }
     }
 
-    // 平滑加权轮询算法
+    /**
+     * 平滑加权轮询算法
+     */
     static class RoundRobinWeight {
         // 初始化存储每个节点的权重容器
         private static Map<String,Weight> weightMap = new HashMap<>();
@@ -276,13 +288,14 @@ public class Balance {
                     maxCurrentWeight = weight;
                 }
             }
+            if(maxCurrentWeight != null){
+                // 最后用最大的动态权重值减去所有节点的总权重值
+                maxCurrentWeight.setCurrentWeight(maxCurrentWeight.getCurrentWeight() - weightTotal);
 
-            // 最后用最大的动态权重值减去所有节点的总权重值
-            maxCurrentWeight.setCurrentWeight(maxCurrentWeight.getCurrentWeight()
-                    - weightTotal);
-
-            // 返回最大的动态权重值对应的节点IP
-            return maxCurrentWeight.getServer();
+                // 返回最大的动态权重值对应的节点IP
+                return maxCurrentWeight.getServer();
+            }
+                throw new RuntimeException("maxCurrentWeight=null");
         }
 
         public static void main(String[] args){
@@ -301,7 +314,9 @@ public class Balance {
 
     // ------
 
-    // 一致性哈希算法
+    /**
+     * 一致性哈希算法
+     */
     static class ConsistentHash {
         // 使用有序的红黑树结构，用于实现哈希环结构
         private static TreeMap<Integer,String> virtualNodes = new TreeMap<>();
@@ -329,9 +344,11 @@ public class Balance {
             SortedMap<Integer, String> sortedMap = virtualNodes.tailMap(hashCode);
             // 得到该树的第一个元素，也就是最小的元素
             Integer treeNodeKey = sortedMap.firstKey();
+
             // 如果没有大于该元素的子树了，则取整棵树的第一个元素，相当于取哈希环中的最小元素
-            if (sortedMap == null)
-                treeNodeKey = virtualNodes.firstKey();
+            // if (sortedMap == null)
+            //     treeNodeKey = virtualNodes.firstKey();
+
             // 返回对应的虚拟节点名称
             return virtualNodes.get(treeNodeKey);
         }
@@ -380,11 +397,13 @@ public class Balance {
 
     // ------
 
-    // 节点类：用于封装集群中的每个节点
+    /**
+     * 节点类：用于封装集群中的每个节点
+     */
     static class Server {
         private String IP;
         private AtomicInteger active;
-    //    private Integer weight;
+        // private Integer weight;
 
         public Server(){}
         public Server(String IP,int active) {
@@ -420,7 +439,9 @@ public class Balance {
         }
     }
 
-    // 集群类：用于模拟集群节点列表
+    /**
+     * 集群类：用于模拟集群节点列表
+     */
     static class Servers {
         // 活跃度衰减器
         public static void attenuator(){
@@ -450,7 +471,9 @@ public class Balance {
         );
     }
 
-    // 最小活跃数算法实现类
+    /**
+     * 最小活跃数算法实现类
+     */
     static class LeastActive {
 
         public static String getServer(){
@@ -491,7 +514,9 @@ public class Balance {
 
     // ------
 
-    // 最优响应算法
+    /**
+     * 最优响应算法
+     */
     static class ResponseTime {
         // 创建一个定长的线程池，用于去执行ping任务
         static ExecutorService pingServerPool = 
@@ -499,11 +524,11 @@ public class Balance {
     
         public static String getServer() throws InterruptedException {
             // 创建一个CompletableFuture用于拼接任务
-            CompletableFuture cfAnyOf;
+            CompletableFuture<Object> cfAnyOf;
             // 创建一个接收结果返回的server节点对象
             final Server resultServer = new Server();
             // 根据集群节点数量初始化一个异步任务数组
-            CompletableFuture[] cfs = new CompletableFuture[Servers.SERVERS.size()];
+            CompletableFuture<String>[] cfs = new CompletableFuture[Servers.SERVERS.size()];
     
             // 遍历整个服务器列表，为每个节点创建一个ping任务
             for (Server server : Servers.SERVERS) {

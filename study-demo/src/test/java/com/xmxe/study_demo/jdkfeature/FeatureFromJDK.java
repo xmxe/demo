@@ -86,6 +86,7 @@ public class FeatureFromJDK {
      * Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合(https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ)
      * Java8中Stream详细用法大全(https://mp.weixin.qq.com/s/0F_CBDlav8X4-CfE0hzjWQ)
      * 玩转 Java8 Stream，常用方法大合集(https://mp.weixin.qq.com/s/owDtfi-UUI7uL1dIjPOtMw)
+     * 面试官问：Stream 中的 map、peek、foreach 方法的区别？https://mp.weixin.qq.com/s/iJDyjdXDkJx95MpqZmUT3g
      */
     @Test
     public void stream() {

@@ -136,11 +136,11 @@ public class SFTPUtils {
 		List<String> filenames = new ArrayList<String>();
 		try {
 			// connect();
-			Vector v = listFiles(remotePath);
+			Vector<?> v = listFiles(remotePath);
 			// sftp.cd(remotePath);
 			if (v.size() > 0) {
 				log.info("本次处理文件个数不为零,开始下载...fileSize=" + v.size());
-				Iterator it = v.iterator();
+				Iterator<?> it = v.iterator();
 				while (it.hasNext()) {
 					LsEntry entry = (LsEntry) it.next();
 					String filename = entry.getFilename();
@@ -225,7 +225,7 @@ public class SFTPUtils {
 	public List<String> getFiles(String remotePath,String fromTime) {
 		List<String> filenames = new ArrayList<String>();
 		try {
-			Vector v = listFiles(remotePath);
+			Vector<LsEntry> v = listFiles(remotePath);
 			if (v.size() > 0) {
 				Iterator<LsEntry> it = v.iterator();
 				while (it.hasNext()) {
@@ -644,7 +644,8 @@ public class SFTPUtils {
 			log.error(e);
 			
 		} finally {
-			sftp.disconnect();
+			if(sftp != null)
+				sftp.disconnect();
 		}
 	}
 

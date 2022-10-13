@@ -223,8 +223,9 @@ public class JDBCUtil {
             // 将ResultSet的结果保存到List中  
             while (rs.next()) {  
                 Map<String, Object> map = new HashMap<String, Object>();  
-                for (int i = 1; i <= columnCount; i++) {  
-                    map.put(rsmd.getColumnLabel(i), rs.getObject(i));  
+                for (int i = 1; i <= columnCount; i++) {
+                    if(rsmd != null)
+                        map.put(rsmd.getColumnLabel(i), rs.getObject(i));  
                 }  
                 list.add(map);  
             }  

@@ -278,9 +278,12 @@ public class FileUtils {
         pw.println(content);
         pw.flush();
         try {
-            bw.flush();
+            if(bw != null){
+                bw.flush();
+                bw.close();
+            }   
             pw.close();
-            bw.close();
+           
         } catch (IOException e) {
             e.printStackTrace();
         }

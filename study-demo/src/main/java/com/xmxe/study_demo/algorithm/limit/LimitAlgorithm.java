@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.algorithm;
+package com.xmxe.study_demo.algorithm.limit;
 
 import java.time.LocalTime;
 import java.util.HashSet;

@@ -44,11 +44,12 @@ public class EncryptionAlgorithmUtil {
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("MD5");
+            byte[] bytes = messageDigest.digest(text.getBytes());
+            return Hex.encodeHexString(bytes);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        byte[] bytes = messageDigest.digest(text.getBytes());
-        return Hex.encodeHexString(bytes);
+        return null;
     }
 
     /**
@@ -59,11 +60,12 @@ public class EncryptionAlgorithmUtil {
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = messageDigest.digest(text.getBytes());
+            return Hex.encodeHexString(bytes);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        byte[] bytes = messageDigest.digest(text.getBytes());
-        return Hex.encodeHexString(bytes);
+        return null;
     }
 
     /**
@@ -74,16 +76,14 @@ public class EncryptionAlgorithmUtil {
         Mac mac = null;
         try {
             mac = Mac.getInstance("HmacSHA256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        try {
             mac.init(sk);
-        } catch (InvalidKeyException e) {
+            byte[] rawHmac = mac.doFinal(text.getBytes());
+            return new String(Base64.encodeBase64(rawHmac));
+        } catch (NoSuchAlgorithmException|InvalidKeyException e) {
             e.printStackTrace();
         }
-        byte[] rawHmac = mac.doFinal(text.getBytes());
-        return new String(Base64.encodeBase64(rawHmac));
+       
+        return null;
     }
 
     // -----对称加密算法------

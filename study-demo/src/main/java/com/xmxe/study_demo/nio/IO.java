@@ -112,7 +112,8 @@ public class IO {
         } finally {
             try {
                 // 关闭输出流
-                out.close();
+                if(out != null)
+                    out.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -151,8 +152,10 @@ public class IO {
         } finally {
             try {
                 // 关闭文件输入输出流
-                in.close();
-                out.close();
+                if(in != null)
+                    in.close();
+                if(out != null)
+                    out.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * 替代过时的Observer实现监听模式
+ * 替代过时的Observer实现观察者模式
  */
 public class PropertyChangeEventTest {
     public static void main(String[] args) {  
@@ -41,7 +41,7 @@ public class PropertyChangeEventTest {
         public void setName(String name) {  
             String oldValue = this.name;  
             this.name= name;  
-            //发布监听事件  
+            //发布事件  
             firePropertyChange("name", oldValue, name);  
         }  
             

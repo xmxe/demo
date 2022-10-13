@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.thread.juc;
+package com.xmxe.study_demo.algorithm.limit;
 
 import java.util.concurrent.TimeUnit;
 

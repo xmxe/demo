@@ -22,7 +22,8 @@ public class ShareTest {
                break;
             }  
         }
-       dealStrategy.dealMythod(type);
+        if(dealStrategy != null)
+            dealStrategy.dealMythod(type);
     }   
 }
 
