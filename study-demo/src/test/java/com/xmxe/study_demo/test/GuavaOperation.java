@@ -37,7 +37,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.common.io.FileWriteMode;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
-
+// https://mp.weixin.qq.com/s/FE0rQZeAdztdjYK763qn0Q
 public class GuavaOperation {
 
     public static void main(String[] args) {

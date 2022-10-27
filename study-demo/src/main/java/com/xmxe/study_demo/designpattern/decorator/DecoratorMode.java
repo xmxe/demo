@@ -2,6 +2,7 @@ package com.xmxe.study_demo.designpattern.decorator;
 
 /**
  * 巧妙的运用装饰器，让你的代码高出一个逼格！(https://mp.weixin.qq.com/s/8VM5PSbByoH5jgYg1bwVgA)
+ * 如何优雅的使用装饰器模式(https://mp.weixin.qq.com/s/AeTusyoLesfowHFoaAOLRA)
  */
 public class DecoratorMode {
     public static void main(String[] args) {
