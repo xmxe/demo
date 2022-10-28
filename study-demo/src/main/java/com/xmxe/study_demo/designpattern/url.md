@@ -1,2 +1,0 @@
-- [利用Java8新特征，重构传统设计模式，你学会了吗？](https://mp.weixin.qq.com/s/xAxX9UBaSeoMTSGLbCPg7A)
-- [巧妙利用 SpringBoot 应用责任连模式，让编程事半功倍](https://mp.weixin.qq.com/s/IeEOA8p-9P6rQHJ2Z2wlqQ)

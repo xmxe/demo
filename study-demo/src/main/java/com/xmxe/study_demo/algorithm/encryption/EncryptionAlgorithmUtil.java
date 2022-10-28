@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util;
+package com.xmxe.study_demo.algorithm.encryption;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
