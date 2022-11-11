@@ -8,8 +8,7 @@ import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 线程通信的5中方式
- * https://mp.weixin.qq.com/s/47UlDrzbH9cKeQ1g3DHQeQ
+ * 线程通信的5中方式 https://mp.weixin.qq.com/s/47UlDrzbH9cKeQ1g3DHQeQ
  */
 public class ThreadCommunication {
     

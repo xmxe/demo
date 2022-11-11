@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * https://mp.weixin.qq.com/s/GzjcfogxK3beXB1II7VoQw
+ * 两个线程进行数据交换 https://mp.weixin.qq.com/s/GzjcfogxK3beXB1II7VoQw
  * 
  * Exchanger可用于两个线程之间交换信息 适用场景：当两个线程工作在同一个类的不同实例上时，用于交换数据
  * Exchanger（交换者）是一个用于线程间协作的工具类。Exchanger用于进行线程间的数据交换。

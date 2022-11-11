@@ -7,6 +7,7 @@ import java.util.concurrent.Delayed;
 // 生成订单30分钟未支付，则自动取消，该怎么实现? https://mp.weixin.qq.com/s/ijv_4_qWTrG-kA9jSbz1iw
 // 一口气说出 6 种实现延时消息的方案 https://mp.weixin.qq.com/s/VcbZTsoD5-ioc4x7s6mj7Q
 // 面试官：怎么不用定时任务实现关闭订单？ https://mp.weixin.qq.com/s/Oc188nkq4-s9ivt7Ki_M1A
+// 再有人问你如何实现订单到期关闭，就把这篇文章发给他 https://mp.weixin.qq.com/s/BG1PqUWX0XwJX6aMCXCgvw
 /**
  * DelayQueue是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。
  * 这种队列是有序的，即队头对象的延迟到期时间最长。注意：不能将null元素放置到这种队列中。

@@ -11,8 +11,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
- * Java 并发异步编程牛逼之处在于：将原来十个接口的活用一个接口搞定！
- * https://mp.weixin.qq.com/s/Pb2XF-DiUFMQAXxlJwerwg
+ * Java 并发异步编程牛逼之处在于：将原来十个接口的活用一个接口搞定！https://mp.weixin.qq.com/s/Pb2XF-DiUFMQAXxlJwerwg
  * 
  * 使用场景
  * 任务需要中断，获取返回结果，将原来十个接口的活用一个接口搞定
