@@ -85,8 +85,8 @@ public class FeatureFromJDK {
      * 
      * Java8 Stream：2万字20个实例，玩转集合的筛选、归约、分组、聚合(https://mp.weixin.qq.com/s/tcU3kFLF8GIvqXOFG3EgLQ)
      * Java8中Stream详细用法大全(https://mp.weixin.qq.com/s/0F_CBDlav8X4-CfE0hzjWQ)
-     * 玩转 Java8 Stream，常用方法大合集(https://mp.weixin.qq.com/s/owDtfi-UUI7uL1dIjPOtMw)
-     * 面试官问：Stream 中的 map、peek、foreach 方法的区别？https://mp.weixin.qq.com/s/iJDyjdXDkJx95MpqZmUT3g
+     * Java8 Stream常用方法大合集(https://mp.weixin.qq.com/s/owDtfi-UUI7uL1dIjPOtMw)
+     * Stream中的map、peek、foreach方法的区别？https://mp.weixin.qq.com/s/iJDyjdXDkJx95MpqZmUT3g
      * 聊聊工作中常用的Lambda表达式 https://mp.weixin.qq.com/s/sEiz3u3UDNkSNkEQXW3o6Q
      */
     @Test
@@ -172,7 +172,7 @@ public class FeatureFromJDK {
         sumValue = Stream.of(1, 2, 3, 4).reduce(1, Integer::sum);//求和, 有起始值
         concat = Stream.of("a", "B", "c", "D", "e", "F").filter(x -> x.compareTo("Z") > 0).reduce("", String::concat);//过滤拼接字符串
 
-        //iterate 与reduce很像 使用时管道必须有 limit 这样的操作来限制 Stream 大小。
+        //iterate与reduce很像 使用时管道必须有limit这样的操作来限制Stream大小。
         Stream.iterate(2, n -> n + 2).limit(5).forEach(x -> System.out.print(x + " "));//从2开始生成一个等差数列
 
         //通过实现Supplier类的方法可以自定义流计算规则。
@@ -228,9 +228,8 @@ public class FeatureFromJDK {
             System.out.println("集合中有元素是3的整数倍");
         }
         /**
-         * findAny() 该方法返回当前流中的任意元素,可以和其他流操作结合使用,这里需要注意 findAny() 返回的结果
-         * 被 Optional 所包裹，Optional 是 Java8 为优雅的避免 NPE 所采用的新 API，这里需要说明的就是
-         * Optional.ifPresent(Consumer<? super T> consumer) 表示当 Optional 包裹的元素不为空时，执行 consumer
+         * findAny()方法返回当前流中的任意元素,可以和其他流操作结合使用,这里需要注意findAny()返回的结果被Optional所包裹,这里需要说明的就是
+         * Optional.ifPresent(Consumer<? super T> consumer) 表示当Optional包裹的元素不为空时，执行consumer
          */
         num.stream().filter(n -> n > 2).findAny().ifPresent(System.out::println);
         //stream求集合最大值最小值
@@ -253,8 +252,8 @@ public class FeatureFromJDK {
 
 
     /**
-     * [Java8 stream 排序以及自定义比较器，很实用！](https://mp.weixin.qq.com/s/NCJ0_sF0RVIeZdkQveNHmQ)
-     * [Java 8 排序的 10 个姿势](https://mp.weixin.qq.com/s/xsvIStVM36LAdEExNsyxbw)
+     * [Java8 stream排序以及自定义比较器，很实用！](https://mp.weixin.qq.com/s/NCJ0_sF0RVIeZdkQveNHmQ)
+     * [Java 8排序的10个姿势](https://mp.weixin.qq.com/s/xsvIStVM36LAdEExNsyxbw)
      */
     @Test
     public void sort(){
@@ -288,11 +287,10 @@ public class FeatureFromJDK {
     @Test
     public void newMapMethod(){
 
-        //jdk8新增的map方法
         Map<String,Object> newMap = new HashMap<>();
         newMap.put("a", 1);newMap.put("b", 2);
 
-        //remove 方法 接收2个参数，key和value，只有当Map中键值对同时等于参数Key和Value时才执行删除
+        //remove方法 接收2个参数，key和value，只有当Map中键值对同时等于参数Key和Value时才执行删除
         newMap.remove("a", 1);newMap.remove("b", 3);
 
         //replace(K key, V value) 方法
@@ -330,7 +328,7 @@ public class FeatureFromJDK {
         newMap.compute("3", (k,v) -> String.valueOf(v)+"1" );
         newMap.compute("c", (k,v) -> String.valueOf(v)+"1" );
 
-        // merge() 适用于两种情况。如果给定的key不存在，它就变成了put(key, value)即newMap.get("a")==null的话merge操作就变成了传统的put操作。但是，如果key已经存在一些值，我们 remappingFunction 可以选择合并的方式
+        // merge()适用于两种情况。如果给定的key不存在，它就变成了put(key, value)即newMap.get("a")==null的话merge操作就变成了传统的put操作。但是，如果key已经存在一些值，我们remappingFunction可以选择合并的方式
         // 以前写法
         // BiFunction第一个参数代表以前newMap.get("a")的值
         // BiFunction第二个参数代表输入的第二个参数
@@ -432,7 +430,7 @@ public class FeatureFromJDK {
 
     /**
      * Java8 Optional最佳实践 https://mp.weixin.qq.com/s/QMY9H2iMQGGRRORKc1COdw
-     * 不要再用 if (obj != null) 判空了！！！ https://mp.weixin.qq.com/s/0AeETDJtKCiJV_rSPaNwTQ
+     * 不要再用if(obj!=null)判空了！！！ https://mp.weixin.qq.com/s/0AeETDJtKCiJV_rSPaNwTQ
      */
     @Test
     public void optional() throws Exception{
@@ -440,16 +438,16 @@ public class FeatureFromJDK {
         Optional<String> optEmpty = Optional.empty();
         // 2、创建包装对象值非空的Optional对象
         Optional<String> optOf = Optional.of("optional");
-        // 3、创建包装对象值允许为空也可以不为空的Optional对象 传null就得到 Optional.empty(), 非null就调用 Optional.of(obj).
+        // 3、创建包装对象值允许为空也可以不为空的Optional对象 传null就得到Optional.empty(), 非null就调用Optional.of(obj).
         Optional<String> optOfNullable1 = Optional.ofNullable(null);
         Optional<String> optOfNullable2 = Optional.ofNullable("optional");
 
         Student person = new Student();
         person.setAge(5);
-        // 如果 value 不为空则做返回，如果为空则抛出异常 "No value present" 简单实例展示
+        // 如果value不为空则做返回，如果为空则抛出异常"No value present"简单实例展示
         Optional.ofNullable(person).get();
 
-        // isPresent() 方法就是会返回一个 boolean 类型值，如果对象不为空则为真，如果为空则 false
+        // isPresent()方法就是会返回一个boolean类型值，如果对象不为空则为true，如果为空则false
         if (Optional.ofNullable(person).isPresent()){
             //写不为空的逻辑
             System.out.println("不为空");
@@ -458,41 +456,41 @@ public class FeatureFromJDK {
             System.out.println("为空");
         }
 
-        // Optional.ifPresent() 方法 (判读是否为空并返回函数)如果对象非空，则运行函数体如果对象不为空，则会打印这个年龄，因为内部已经做了 NPE（非空判断），所以就不用担心空指针异常了
+        // Optional.ifPresent()方法(判读是否为空并返回函数)如果对象非空，则运行函数体如果对象不为空，则会打印这个年龄，因为内部已经做了NPE（非空判断），所以就不用担心空指针异常了
         Optional.ofNullable(person).ifPresent(p -> System.out.println("年龄"+p.getAge()));
 
-        // Optional.filter() 方法 (过滤对象)
-        // filter() 方法大致意思是，接受一个对象，然后对他进行条件过滤，如果条件符合则返回 Optional 对象本身，如果不符合则返回空 Optional
+        // Optional.filter()方法(过滤对象)
+        // filter()方法大致意思是，接受一个对象，然后对他进行条件过滤，如果条件符合则返回Optional对象本身，如果不符合则返回空Optional
         Optional.ofNullable(person).filter(p -> p.getAge()>50);
 
-        // Optional.map() 方法 (对象进行二次包装) Optional.flatMap()
-        // map() 方法将对应 Funcation 函数式接口中的对象，进行二次运算，封装成新的对象然后返回在 Optional 中
+        // Optional.map()方法(对象进行二次包装)Optional.flatMap()
+        // map()方法将对应Funcation函数式接口中的对象，进行二次运算，封装成新的对象然后返回在Optional中
         String optName = Optional.ofNullable(person).map(p -> person.getName()).orElse("name为空");
         Optional<Object> optName2 = Optional.ofNullable(person).map(p -> Optional.ofNullable(p.getName()).orElse("name为空"));
 
-        // Optional.orElse() 方法 (为空返回对象)
-        // 常用方法之一，这个方法意思是如果包装对象为空的话，就执行 orElse 方法里的 value，如果非空，则返回写入对象
+        // Optional.orElse()方法(为空返回对象)
+        // 常用方法之一，这个方法意思是如果包装对象为空的话，就执行orElse方法里的value，如果非空，则返回写入对象
         // 注意：不管Optional是不是null, orElse都会执行里面的方法，orElseGet不会执行里面的方法，这也是orElse和orElseGet的区别
         optEmpty.orElse("100");//optEmpty为null返回100 不为null返回optEmpty的值
 
-        // Optional.orElseGet() 方法 (为空返回 Supplier 对象)
-        // 这个与 orElse 很相似，入参不一样，入参为 Supplier 对象，为空返回传入对象的. get() 方法，如果非空则返回当前对象
+        // Optional.orElseGet()方法 (为空返回Supplier对象)
+        // 这个与orElse很相似，入参不一样，入参为Supplier对象，为空返回传入对象的.get()方法，如果非空则返回当前对象
         Optional<Supplier<Student>> sup=Optional.ofNullable(Student::new);
         //调用get()方法，此时才会调用对象的构造方法，即获得到真正对象
         Optional.ofNullable(person).orElseGet(sup.get());
 
-        // Optional.orElseThrow() 方法 (为空返回异常)
+        // Optional.orElseThrow()方法(为空返回异常)
         // 方法作用的话就是如果为空，就抛出你定义的异常，如果不为空返回当前对象
         Optional.ofNullable(person).orElseThrow(() -> new RuntimeException("person为null"));
 
         /**
-         * orElse() 和 orElseGet() 和 orElseThrow() 的异同点
+         * orElse()和orElseGet()和orElseThrow()的异同点
          * 方法效果类似，如果对象不为空，则返回对象，如果为空，则返回方法体中的对应参数，所以可以看出这三个方法体中参数是不一样的
          * orElse（T 对象）
          * orElseGet（Supplier <T> 对象）
          * orElseThrow（异常）
          *
-         * map() 和 orElseGet 的异同点
+         * map()和orElseGet的异同点
          * 方法效果类似，对方法参数进行二次包装，并返回, 入参不同
          * map（function 函数）
          * flatmap（Optional<function> 函数）
@@ -510,8 +508,8 @@ public class FeatureFromJDK {
     }
 
     /**
-     * 从 JDK 1.8 开始，Nashorn 取代 Rhino(JDK 1.6, JDK1.7) 成为 Java 的嵌入式 JavaScript 引擎。
-     * 它使用基于 JSR 292 的新语言特性，将 JavaScript 编译成 Java 字节码
+     * 从JDK 1.8开始，Nashorn取代Rhino(JDK 1.6, JDK1.7)成为Java的嵌入式JavaScript引擎。
+     * 它使用基于JSR 292的新语言特性，将JavaScript编译成Java字节码
      */
     @Test
     public void jsEngine(){
@@ -561,7 +559,7 @@ public class FeatureFromJDK {
         // 1.7 a的值为1111，下划线不影响实际值，提升可读性
         int a = 11_11;
 
-        // Java 12 新增了mismatch方法，此方法返回第一个不匹配的位置，如果没有不匹配，则返回 -1L。
+        // Java 12新增了mismatch方法，此方法返回第一个不匹配的位置，如果没有不匹配，则返回 -1L。
         Path file1 = Paths.get("c:\\jay.txt");
         Path file2 = Paths.get("c:\\aaa.txt");
         try {
@@ -571,11 +569,9 @@ public class FeatureFromJDK {
             e.printStackTrace();
         }
 
-
         if(param instanceof String paramStr){
             System.out.println(paramStr.length());
         }
-        
 
         WeekEnum day = WeekEnum.FRI;
         switch (day) {

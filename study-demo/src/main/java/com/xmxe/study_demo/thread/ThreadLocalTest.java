@@ -112,6 +112,7 @@ class ThreadLocalTest3{
     }
        
 }
+
 /**
  * InheritableThreadLocal
  * 父线程传递本地变量到子线程的java类

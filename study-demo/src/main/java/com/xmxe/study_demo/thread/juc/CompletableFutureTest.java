@@ -7,8 +7,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 
 /**
- * 20个使用 Java CompletableFuture的例子 https://mp.weixin.qq.com/s/qlGriyiK2598Xz7h7hn9iQ
- * Java8 CompletableFuture 用法全解 https://blog.csdn.net/qq_31865983/article/details/106137777
+ * 20个使用Java CompletableFuture的例子 https://mp.weixin.qq.com/s/qlGriyiK2598Xz7h7hn9iQ
+ * Java8 CompletableFuture用法全解 https://blog.csdn.net/qq_31865983/article/details/106137777
  * CompletableFuture：让你的代码免受阻塞之苦 https://mp.weixin.qq.com/s/ZN-UgWGVx-LgjlCU8z36xg
  * CompletableFuture实现了CompletionStage接口和Future接口，前者是对后者的一个扩展，增加了异步回调、流式处理、
  * 多个Future组合处理的能力，使Java在处理多任务的协同工作时更加顺畅便利
@@ -164,7 +164,7 @@ public class CompletableFutureTest {
 
     /**
      * 直到这个才算使真正的异步回调 也是CompletableFuture最常用的组合方法之一，supplyAsync执行完后结果由thenApply接收处理
-     * thenApply 表示某个任务执行完成后执行的动作，即回调方法，会将该任务的执行结果即方法返回值作为入参传递到回调方法中，
+     * thenApply表示某个任务执行完成后执行的动作，即回调方法，会将该任务的执行结果即方法返回值作为入参传递到回调方法中，
      * 测试用例如下：
      */
     public void thenApply() throws Exception {
@@ -216,7 +216,7 @@ public class CompletableFutureTest {
     // --- thenAccept / thenRun ---
 
     /**
-     * thenAccept 同 thenApply 接收上一个任务的返回值作为参数，但是无返回值；thenRun 的方法没有入参，也没有返回值
+     * thenAccept同thenApply接收上一个任务的返回值作为参数，但是无返回值；thenRun的方法没有入参，也没有返回值
      */
     public void thenAccept() throws Exception {
         ForkJoinPool pool = new ForkJoinPool();
@@ -291,7 +291,7 @@ public class CompletableFutureTest {
                 return 1.2;
             }
         },pool);
-        //cf执行异常时，将抛出的异常作为入参传递给回调方法
+        // cf执行异常时，将抛出的异常作为入参传递给回调方法
         // 抛出异常后，只有cf2执行了，cf3没有执行。将上述示例中的if(true) 改成if(false)进行测试：cf2没有指定，其result就是cf执行的结果，理论上cf2.get应该立即返回的，此处是等待了cf3，即job2执行完成后才返回
         CompletableFuture<Double> cf2 = cf.exceptionally((param)->{
              System.out.println(Thread.currentThread()+" start,time->"+System.currentTimeMillis());
@@ -499,7 +499,7 @@ public class CompletableFutureTest {
         System.out.println("cf5 run result->"+cf5.get());
         System.out.println("main thread exit,time->"+System.currentTimeMillis());
 
-        // job1 和 job2几乎同时运行，job2比job1先执行完成，等job1退出后，job3和job4几乎同时开始运行，job4先退出，
+        // job1和job2几乎同时运行，job2比job1先执行完成，等job1退出后，job3和job4几乎同时开始运行，job4先退出，
         // 等job3执行完成，job5开始了，等job5执行完成后，主线程退出
     }
 
@@ -579,7 +579,7 @@ public class CompletableFutureTest {
         System.out.println("cf5 run result->"+cf5.get());
         System.out.println("main thread exit,time->"+System.currentTimeMillis());
 
-        // job1 和job2 同时开始运行，job2先执行完成，然后job4开始执行，理论上job3和job4应该同时开始运行，
+        // job1和job2同时开始运行，job2先执行完成，然后job4开始执行，理论上job3和job4应该同时开始运行，
         // 但是此时只有job4开始执行了，job3是等待job1执行完成后才开始执行，job4先于job3执行完成，然后job5开始执行，
         // 等job5执行完成后，主线程退出
     }

@@ -74,5 +74,5 @@ Date.prototype.format = function (fmt) { //author: meizz
 }
 console.log(new Date().format('yyyy-MM-dd hh:mm:ss'));
 /**
- * JavaScript Date 对象(https://www.w3school.com.cn/js/jsref_obj_date.asp)
+ * JavaScript Date对象(https://www.w3school.com.cn/js/jsref_obj_date.asp)
  */

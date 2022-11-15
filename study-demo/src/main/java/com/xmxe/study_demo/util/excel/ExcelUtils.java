@@ -88,7 +88,7 @@ public class ExcelUtils {
 
 	/**
 	 * 获取后缀
-	 * @param filepath filepath 文件全路径
+	 * @param filepath 文件全路径
 	 */
 	private static String getSuffiex(String filepath) {
 		if (StringUtils.isBlank(filepath)) {
@@ -167,7 +167,7 @@ public class ExcelUtils {
 
 	/**
 	 * 创建Excel文件
-	 * @param filepath filepath 文件全路径
+	 * @param filepath 文件全路径
 	 * @param sheetName 新Sheet页的名字
 	 * @param titles 表头
 	 * @param values 每行的单元格
@@ -422,8 +422,8 @@ public class ExcelUtils {
 
 
 	/*
-	 * getPhysicalNumberOfCells 是获取不为空的列个数。
-	 * getLastCellNum 是获取最后一个不为空的列是第几个。
+	 * getPhysicalNumberOfCells是获取不为空的列个数。
+	 * getLastCellNum是获取最后一个不为空的列是第几个。
 	 */
 
 	/**

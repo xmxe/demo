@@ -32,9 +32,7 @@ public class LimitingByGuava {
  * double acquire(int permits) 从RateLimiter获取指定许可数，该方法会被阻塞直到获取到请求 
  * 
  * static RateLimiter create(double permitsPerSecond) 根据指定的稳定吞吐率创建RateLimiter，这里的吞吐率是指每秒多少许可数（通常是指QPS，每秒多少查询） 
- * static RateLimiter create(double permitsPerSecond, long warmupPeriod, TimeUnit unit) 根据指定的稳定吞吐率和
- * 预热期来创建RateLimiter，这里的吞吐率是指每秒多少许可数（通常是指QPS，每秒多少个请求量），在这段预热时间内，
- * RateLimiter每秒分配的许可数会平稳地增长直到预热期结束时达到其最大速率。（只要存在足够请求数来使其饱和）
+ * static RateLimiter create(double permitsPerSecond, long warmupPeriod, TimeUnit unit) 根据指定的稳定吞吐率和预热期来创建RateLimiter，这里的吞吐率是指每秒多少许可数（通常是指QPS，每秒多少个请求量），在这段预热时间内，RateLimiter每秒分配的许可数会平稳地增长直到预热期结束时达到其最大速率。（只要存在足够请求数来使其饱和）
  * 
  * double getRate() 返回RateLimiter 配置中的稳定速率，该速率单位是每秒多少许可数 
  * 

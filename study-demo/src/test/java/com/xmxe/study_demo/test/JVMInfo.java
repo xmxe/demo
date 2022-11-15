@@ -39,8 +39,7 @@ import oshi.util.FormatUtil;
 import oshi.util.Util;
 
 /**
- * Jvm信息使用ManagementFactory去获取
- * OS运行信息推荐使用oshi去获取
+ * Jvm信息使用ManagementFactory去获取 OS运行信息推荐使用oshi去获取
  */
 public class JVMInfo {
     
@@ -53,7 +52,7 @@ public class JVMInfo {
         System.out.println("Committed:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getCommitted()));   //Committed:121MB
         System.out.println("Used:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getUsed()));  //Used:7MB
         System.out.println(mxb.getHeapMemoryUsage().toString());   
-                //直接内存
+        //直接内存
         System.out.println("Max:" +FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getMax()));    //Max:0MB
         System.out.println("Init:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getInit()));  //Init:2MB
         System.out.println("Committed:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getCommitted()));   //Committed:8MB

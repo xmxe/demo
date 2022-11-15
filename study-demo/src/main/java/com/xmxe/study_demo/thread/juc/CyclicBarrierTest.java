@@ -7,8 +7,8 @@ import java.util.concurrent.CyclicBarrier;
 /**
  * CyclicBarrier线程会等待，直到足够多线程达到了事先规定的数目。一旦达到触发条件，就可以进行下一步的动作,它的作用就是会让所有线程都等待完成后才会继续下一步行动
  * 
- * int await() 等待所有 parties已经在这个障碍上调用了 await 。
- * int await(long timeout, TimeUnit unit) 等待所有 parties已经在此屏障上调用 await ，或指定的等待时间过去。
+ * int await() 等待所有parties已经在这个障碍上调用了await 。
+ * int await(long timeout, TimeUnit unit) 等待所有parties已经在此屏障上调用await ，或指定的等待时间过去。
  * int getNumberWaiting() 返回目前正在等待障碍的各方的数量。
  * int getParties() 返回旅行这个障碍所需的parties数量。
  * boolean isBroken() 查询这个障碍是否处于破碎状态。

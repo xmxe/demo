@@ -1,4 +1,4 @@
-// ------数组 Array----
+// ------数组Array----
 /**
  * 数组去重⬇
  */
@@ -20,9 +20,9 @@ function noRepeat(arr) {
 }
 noRepeat([1, 2, 3, 1, 2, 3]);
 
-// 方案四：单遍历 + Object 特性
-// Object 的特性是 Key 不会重复。
-// 这里使用 values 是因为可以保留类型，keys 会变成字符串。
+// 方案四：单遍历 + Object特性
+// Object的特性是Key不会重复。
+// 这里使用values是因为可以保留类型，keys会变成字符串。
 function noRepeat(arr) {
   return Object.values(
     arr.reduce((s, n) => {
@@ -69,12 +69,12 @@ arrayMax([-1, -4, 5, 2, 0]);
 /**
  *  查找数组最小⬇
  */
-// Math.max 换成 Math.min
-// s>n?s:n 换成 s<n?s:n
-// (n,m)=>m-n 换成 (n,m)=>n-m，或者直接取最后一个元素
+// Math.max换成Math.min
+// s>n?s:n换成s<n?s:n
+// (n,m)=>m-n换成(n,m)=>n-m，或者直接取最后一个元素
 
 /**
- * 返回已 size 为长度的数组分割的原数组⬇
+ * 返回已size为长度的数组分割的原数组⬇
  */
 // 方案一：Array.from + slice
 function chunk(arr, size = 1) {
@@ -143,7 +143,7 @@ function flatten(arr, depth = -1) {
 }
 flatten([1, [2, [3]]]);
 
-// 方案二：es6 原生 flat
+// 方案二：es6原生flat
 function flatten(arr, depth = Infinity) {
   return arr.flat(depth);
 }
@@ -153,7 +153,7 @@ flatten([1, [2, [3]]]);
  * 对比两个数组并且返回其中不同的元素⬇
  */
 // 方案一：filter + includes
-// 他原文有问题，以下方法的 4,5 没有返回
+// 他原文有问题，以下方法的4,5没有返回
 
 function diffrence(arrA, arrB) {
   return arrA.filter((v) => !arrB.includes(v));
@@ -168,7 +168,7 @@ function diffrence(arrA, arrB) {
 diffrence([1, 2, 3], [3, 4, 5, 2]);
 
 // 方案二：hash + 遍历
-// 算是方案1的变种吧，优化了 includes 的性能。
+// 算是方案1的变种吧，优化了includes的性能。
 
 /**
  * 返回两个数组中相同的元素⬇
@@ -187,7 +187,7 @@ function intersection(arr1, arr2) {
 intersection([1, 2, 3], [3, 4, 5, 2]);
 
 /**
- * 从右删除 n 个元素⬇
+ * 从右删除n个元素⬇
  */
 // 方案一：slice
 function dropRight(arr, n = 0) {
@@ -201,13 +201,13 @@ function dropRight(arr, n = 0) {
 }
 dropRight([1, 2, 3, 4, 5], 2);
 
-// 方案三: slice 另一种
+// 方案三: slice另一种
 function dropRight(arr, n = 0) {
   return arr.slice(0, -n);
 }
 dropRight([1, 2, 3, 4, 5], 2);
 
-// 方案四: 修改 length
+// 方案四: 修改length
 function dropRight(arr, n = 0) {
   arr.length = Math.max(arr.length - n, 0);
   return arr;
@@ -238,7 +238,7 @@ function dropElements(arr, fn) {
 dropElements([1, 2, 3, 4, 5, 1, 2, 3], (v) => v == 2);
 
 /**
- * 返回数组中下标间隔 nth 的元素⬇
+ * 返回数组中下标间隔nth的元素⬇
  */
 // 方案一：filter
 function everyNth(arr, nth) {
@@ -253,7 +253,7 @@ function everyNth(arr, nth) {
 everyNth([1, 2, 3, 4, 5, 6, 7, 8], 2);
 
 /**
- * 返回数组中第 n 个元素（支持负数）⬇
+ * 返回数组中第n个元素（支持负数）⬇
  */
 // 方案一：slice
 function nthElement(arr, n = 0) {

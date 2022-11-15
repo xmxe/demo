@@ -3,7 +3,7 @@ package com.xmxe.study_demo.other;
 import java.util.stream.Stream;
 
 /**
- * Java 代码实现一个标准输出的进度条
+ * Java代码实现一个标准输出的进度条
  */
 public class Processing {
     public static void main(String[] args) {

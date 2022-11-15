@@ -1,5 +1,5 @@
 // -------浏览器对象 BOM-------
-// 判读浏览器是否支持 CSS 属性
+// 判读浏览器是否支持CSS属性
 /**
  * 告知浏览器支持的指定css属性情况
  * @param {String} key - css属性，是属性的名字，不需要加前缀
@@ -12,7 +12,7 @@ function validateCssKey(key) {
   }
   let validKey = "";
   // 属性名为前缀在js中的形式，属性值是前缀在css中的形式
-  // 经尝试，Webkit 也可是首字母小写 webkit
+  // 经尝试，Webkit也可是首字母小写webkit
   const prefixMap = {
     Webkit: "-webkit-",
     Moz: "-moz-",
@@ -115,7 +115,7 @@ function getScrollPosition(el = window) {
 }
 
 /**
- * 获取 url 中的参数⬇
+ * 获取url中的参数⬇
  */ 
 // 方案一：正则 + reduce
 function getURLParameters(url) {
@@ -160,7 +160,7 @@ function redirect(url, asLink = true) {
  * 滚动条回到顶部动画⬇
  */ 
 // 方案一： c - c / 8
-// c 没有定义
+// c没有定义
 function scrollToTop() {
   const scrollTop =
     document.documentElement.scrollTop || document.body.scrollTop;

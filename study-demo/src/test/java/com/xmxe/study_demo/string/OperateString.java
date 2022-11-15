@@ -34,7 +34,7 @@ public class OperateString {
         String mutiLine1 = "亲爱的" + newLine + "你好幼稚啊" + newLine + "技术文章里" + newLine + "你写这些合适吗";
         System.out.println(mutiLine1);
 
-        // Java 8 的 String 类加入了一个新的方法 join()，可以将换行符与字符串拼接起来，非常方便：
+        // Java 8的String类加入了一个新的方法join()，可以将换行符与字符串拼接起来，非常方便
         String mutiLine2 = String.join(newLine, "亲爱的", "合适啊", "这叫趣味", "哈哈");
         System.out.println(mutiLine2);
 
@@ -42,7 +42,7 @@ public class OperateString {
                 .append("肉麻").toString();
         System.err.println(mutiLine3);
 
-        // Java 还可以通过 Files.readAllBytes() 方法从源文件中直接读取多行文本，格式和源文件保持一致
+        // Java还可以通过Files.readAllBytes()方法从源文件中直接读取多行文本，格式和源文件保持一致
         String mutiLine4 = new String(Files.readAllBytes(Paths.get("src/main/resource/cmower.txt")));
         System.err.println(mutiLine4);
 
@@ -51,8 +51,8 @@ public class OperateString {
     /**
      * 检查字符串是否为空
      *
-     * Java 1.6 之后，String 类新添加了一个 empty() 方法，用于判断字符串是否为 empty 为了确保不抛出
-     * NPE，最好在判断之前先判空，因为 empty() 方法只判断了字符串的长度是否为 0 所以我们来优化一下 isEmpty() 方法
+     * Java 1.6之后，String类新添加了一个empty()方法，用于判断字符串是否为empty为了确保不抛出NPE，最好在判断之前先判空，
+     * 因为empty()方法只判断了字符串的长度是否为0所以我们来优化一下isEmpty()方法
      */
 
     public boolean isEmpty(String str) {
@@ -65,30 +65,30 @@ public class OperateString {
     /**
      * 删除最后一个字符串
      *
-     * 删除字符串最后一个字符，最简单的方法就是使用 substring() 方法进行截取，0 作为起始下标，length() - 1 作为结束下标。
-     * 不管怎么样，substring() 方法不是 null 安全的，需要先判空
+     * 删除字符串最后一个字符，最简单的方法就是使用substring()方法进行截取，0作为起始下标，length() - 1作为结束下标。
+     * 不管怎么样，substring()方法不是null安全的，需要先判空
      */
     @Test
     public void removeLastChar(String s) {
         String s1 = (s == null || s.length() == 0) ? null : (s.substring(0, s.length() - 1));
         System.out.println(s1);
         /**
-         * 如果不想在操作之前判空，那么就直接上 Apache 的 Commons Lang 包
+         * 如果不想在操作之前判空，那么就直接上Apache的Commons Lang包
          */
         System.out.println(StringUtils.substring(s, 0, s.length() - 1));
 
         /**
-         * 当然了，如果目的非常明确——就是只删除字符串的最后一个字符，还可以使用 StringUtils 类的 chop() 方法
+         * 当然了，如果目的非常明确——就是只删除字符串的最后一个字符，还可以使用StringUtils类的chop()方法
          */
         System.out.println(StringUtils.chop(s));
 
-        // 如果你对正则表达式了解的话，也可以使用 replaceAll() 方法进行替换，把最后一个字符 .$ 替换成空字符串就可以了。
+        // 如果你对正则表达式了解的话，也可以使用replaceAll()方法进行替换，把最后一个字符.$替换成空字符串就可以了。
         System.out.println(s.replaceAll(".$", ""));
 
-        // 当然了，replaceAll() 方法也不是 null 安全的，所以要提前判空：
+        // replaceAll()方法也不是null安全的，所以要提前判空：
         System.out.println((s == null) ? null : s.replaceAll(".$", ""));
 
-        // 如果对 Java 8 的 Lambda 表达式和 Optional 比较熟的话，还可以这样写：
+        // 如果对Java 8的Lambda表达式和Optional比较熟的话，还可以这样写：
         String result1 = Optional.ofNullable(s).map(str -> str.replaceAll(".$", "")).orElse(s);
         System.out.println(result1);
     }
@@ -112,7 +112,7 @@ public class OperateString {
         long countjdk8 = someString.chars().filter(ch -> ch == 'e').count();
         System.out.println(countjdk8);
 
-        // 如果想使用第三方类库的话，可以继续选择 Apache 的 Commons Lang 包
+        // 如果想使用第三方类库的话，可以继续选择Apache的Commons Lang包
         int count2 = StringUtils.countMatches("chenmowanger", "e");
         System.out.println(count2);
 
@@ -125,20 +125,20 @@ public class OperateString {
     public void splitStr() {
         String[] splitted = "沉默王二，一枚有趣的程序员".split("，");
         System.out.println(Arrays.toString(splitted));
-        // 当然了，该方法也不是 null 安全的
-        // 之前反复提到的 StringUtils 类，来自 Apache 的 Commons Lang 包：
+        // 当然了，该方法也不是null安全的
+        // 之前反复提到的StringUtils类，来自Apache的Commons Lang包：
         String[] splitted2 = StringUtils.split("沉默王二，一枚有趣的程序员", "，");
         System.out.println(Arrays.toString(splitted2));
         System.out.println(StringUtils.split("a..b.c", '.')); // ["a", "b", "c"]
         System.out.println(StringUtils.splitByWholeSeparatorPreserveAllTokens("a..b.c", ".")); // ["a","", "b", "c"]
         // ps:注意以上两个方法区别。
 
-        // StringUtils 拆分之后得到是一个数组，我们可以使用 Guava 的
+        // StringUtils拆分之后得到是一个数组，我们可以使用Guava的
         Splitter splitter = Splitter.on(",");
 
-        splitter.splitToList("ab,,b,c");// 返回是一个 List 集合，结果：[ab, , b, c]
+        splitter.splitToList("ab,,b,c");// 返回是一个List集合，结果：[ab, , b, c]
 
-        splitter.omitEmptyStrings().splitToList("ab,,b,c"); // 忽略空字符串，输出结果 [ab, b, c]
+        splitter.omitEmptyStrings().splitToList("ab,,b,c"); // 忽略空字符串，输出结果[ab, b, c]
 
     }
 
@@ -174,12 +174,12 @@ public class OperateString {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
         System.out.println(stringBuilder.toString());
-        // 上面业务代码不太难，但是需要注意一下上面这段代码非常容易出错，容易抛出 StringIndexOutOfBoundsException。
+        // 上面业务代码不太难，但是需要注意一下上面这段代码非常容易出错，容易抛出StringIndexOutOfBoundsException。
 
         // 这里我们可以直接使用以下方法获取拼接之后字符串
         String[] arrayStr = { "a", "b", "c" };
         System.out.println(StringUtils.join(arrayStr, ",")); // "a,b,c"
-        // StringUtils 只能传入数组拼接字符串，不过我比较喜欢集合拼接，所以再推荐下 Guava 的 Joiner。
+        // StringUtils只能传入数组拼接字符串，不过我比较喜欢集合拼接，所以再推荐下Guava的Joiner。
         // 实例代码如下：
 
         String[] array1 = new String[] { "test", "1234", "5678" };
@@ -189,7 +189,7 @@ public class OperateString {
         list.add("5678");
         StringUtils.join(array1, ",");
 
-        // 逗号分隔符，跳过 null
+        // 逗号分隔符，跳过null
         Joiner joiner = Joiner.on(",").skipNulls();
         joiner.join(array);
         joiner.join(list);
@@ -201,9 +201,9 @@ public class OperateString {
      */
     @Test
     public void fleng() {
-        // 字符串固定长度 8位，若不足，往左补 0
+        // 字符串固定长度8位，若不足，往左补0
         System.out.println(StringUtils.leftPad("test", 8, "0"));
-        // 另外还有一个 StringUtils#rightPad,这个方法与上面方法正好相反。
+        // 另外还有一个StringUtils#rightPad,这个方法与上面方法正好相反。
 
     }
 
@@ -230,7 +230,7 @@ public class OperateString {
         var result2 = str.stripTrailing();  //去除尾部空白
         var result3 = str.stripLeading();  //去除首部空白
         var copyStr = str.repeat(2);  //复制几遍字符串
-        var lineCount = str.lines().count();  //行数统计
+        var lineCount = str.lines().count(); //行数统计
         var str1 = " ";
         var isblank = str1.isBlank();  //判断字符串是空白
         var isempty = str1.isEmpty();  //判断字符串是否为空字符串
@@ -243,6 +243,10 @@ public class OperateString {
         System.out.println(copyStr);
         System.out.println(lineCount);
     }
+
+    /**
+     * 内存地址
+     */
     @Test
 	public void memory() {
 		Student a = new Student(1, "a");

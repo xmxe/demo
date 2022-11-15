@@ -15,7 +15,7 @@ public class FileUtils {
     private static Path bingPath = Paths.get("bing-wallpaper.md");
 
     /**
-     * 读取 bing-wallpaper.md
+     * 读取bing-wallpaper.md
      *
      * @return
      * @throws IOException
@@ -39,7 +39,7 @@ public class FileUtils {
     }
 
     /**
-     * 写入 bing-wallpaper.md
+     * 写入bing-wallpaper.md
      *
      * @param imgList
      * @throws IOException
@@ -58,7 +58,7 @@ public class FileUtils {
     }
 
     /**
-     * 读取 README.md
+     * 读取README.md
      *
      * @return
      * @throws IOException
@@ -83,7 +83,7 @@ public class FileUtils {
     }
 
     /**
-     * 写入 README.md
+     * 写入README.md
      *
      * @param imgList
      * @throws IOException

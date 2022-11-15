@@ -74,7 +74,7 @@ function randomNumber(max = 1, min = 0) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-// 5. 随机 ID 生成器
+// 5. 随机ID生成器
 // create unique id starting from current time in milliseconds
 // incrementing it by 1 everytime requested
 const uniqueId = (() => {
@@ -130,7 +130,7 @@ function range(maxOrStart, end = null, step = null) {
   );
 }
 
-// 7. 格式化 JSON 字符串，stringify 任何内容
+// 7. 格式化JSON字符串，stringify任何内容
 const stringify = (() => {
   const replacer = (key, val) => {
     if (typeof val === "symbol") {
@@ -151,7 +151,7 @@ const stringify = (() => {
   return (obj, spaces = 0) => JSON.stringify(obj, replacer, spaces);
 })();
 
-// 8. 顺序执行 promise
+// 8. 顺序执行promise
 const asyncSequentializer = (() => {
   const toPromise = (x) => {
     if (x instanceof Promise) {
@@ -204,7 +204,7 @@ async function poll(fn, validate, interval = 2500) {
   return new Promise(resolver);
 }
 
-// 10. 等待所有 promise 完成
+// 10. 等待所有promise完成
 const prom1 = Promise.reject(12);
 const prom2 = Promise.resolve(24);
 const prom3 = Promise.resolve(48);
@@ -270,7 +270,7 @@ const man = {
 
 // 13. 使用变量作为对象键
 let property = "newValidProp";
-const man = {
+const man2 = {
   someProperty: "some value",
   // the "square bracket" notation is a valid way to acces object key
   // like object[prop] but it is used inside to assign a property as well
@@ -315,7 +315,7 @@ console.log(
   })
 );
 
-// 16. 在 ArrayforEach 中执行“break”和“continue”
+// 16. 在ArrayforEach中执行“break”和“continue”
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 for (const number of numbers) {
   if (number % 2 === 0) {
@@ -328,10 +328,10 @@ for (const number of numbers) {
 }
 numbers.some((number) => {
   if (number % 2 === 0) {
-    continue;
+    // continue;
   }
   if (number > 5) {
-    break;
+    // break;
   }
   console.log(number);
 });
@@ -438,7 +438,7 @@ function forEach(list, callback) {
   }
 }
 
-// 22. 使函数参数为 required
+// 22. 使函数参数为required
 function required(argName = "param") {
   throw new Error(`"${argName}" is required`);
 }
@@ -481,7 +481,7 @@ const deepClone = (obj) => {
 };
 
 // 25. 深度冻结对象
-const deepClone = (obj) => {
+const deepClone2 = (obj) => {
   let clone = obj;
   if (obj && typeof obj === "object") {
     clone = new obj.constructor();

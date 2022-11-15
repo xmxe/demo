@@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * isFair()方法的作用是判断是不是公平锁
  * boolean isHeldByCurrentThread()方法的作用是查询当前线程是否保持此锁定
  * Boolean isLocked()方法的作用是查询此锁定是否由任意线程保持。
- * boolean tryLock()方法的作用是仅在调用时锁定未被另一个线程保持的情况下返回true，若锁定以被保持则返回false。并且是立即执行，不会进行等待。tryLock 是防止自锁的一个重要方式。
+ * boolean tryLock()方法的作用是仅在调用时锁定未被另一个线程保持的情况下返回true，若锁定以被保持则返回false。并且是立即执行，不会进行等待。tryLock是防止自锁的一个重要方式。
  * boolean tryLock(long timeout,TimeUnit unit)的作用是如果锁定在给定等待时间内没有被另一个线程保持，且当前线程未被中断，则获取该锁定。会在指定时间内等待获取锁。
  * int getWaitQueueLength(Condition con)方法的作用是返回等待与此锁定相关的给定Condition的线程数。就是有多少个指定的Condition实例在等待此锁定。
  * int hasWaiters(Condition con)的作用是查询是否有线程正在等待与此锁定有关的Condition条件。
@@ -118,7 +118,7 @@ class DeadLock implements Runnable{
 }
 
 class DeadlockChecker {
-    // Java 虚拟机线程系统的管理接口
+    // Java虚拟机线程系统的管理接口
     private final static ThreadMXBean mbean = ManagementFactory.getThreadMXBean();
     final static Runnable deadLockCheck = new Runnable() {
         @Override

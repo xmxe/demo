@@ -2,7 +2,7 @@
 var example = "potato potato";
 console.log(example.replace(/pot/, "tom"));// "tomato potato"
 console.log(example.replace(/pot/g, "tom"));// "tomato tomato"
-// 2. 提取唯一值 我们可以使用 Set 对象和 Spread 运算符，创建一个剔除重复值的新数组。
+// 2. 提取唯一值 我们可以使用Set对象和Spread运算符，创建一个剔除重复值的新数组。
 var entries = [1, 2, 2, 3, 4, 5, 6, 6, 7, 7, 8, 4, 2, 1]
 var unique_entries = [...new Set(entries)];
 console.log(unique_entries);// [1, 2, 3, 4, 5, 6, 7, 8]
@@ -35,7 +35,7 @@ var item = {
     [dynamic]: 'Cherry'
 }
 console.log(item);// { name: "Coke", flavour: "Cherry" }
-// 9. 使用 length 调整大小 / 清空数组
+// 9. 使用length调整大小 / 清空数组
 // 如果我们要调整数组的大小：
 var entries = [1, 2, 3, 4, 5, 6, 7];
 console.log(entries.length);// 7

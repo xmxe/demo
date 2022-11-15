@@ -6,13 +6,13 @@ import java.util.concurrent.SubmissionPublisher;
 
 /*
  * 响应式编程
- * WebFlux 前置知识（四）(https://mp.weixin.qq.com/s/BfgQ760h_WeUOBRrgx1ubA)
+ * WebFlux前置知识（四）(https://mp.weixin.qq.com/s/BfgQ760h_WeUOBRrgx1ubA)
 */
 public class JDK9Flow {
     public static void main(String[] args) {
-        // 首先创建一个 SubmissionPublisher 对象作为消息发布者。
+        // 首先创建一个SubmissionPublisher对象作为消息发布者。
         SubmissionPublisher<String> publisher = new SubmissionPublisher<>();
-        // 创建 Flow.Subscriber 对象作为消息订阅者，实现消息订阅者里边的四个方法，分别进行处理。
+        // 创建Flow.Subscriber对象作为消息订阅者，实现消息订阅者里边的四个方法，分别进行处理。
         Flow.Subscriber<String> subscriber = new Flow.Subscriber<String>() {
             private Flow.Subscription subscription;
 
@@ -48,7 +48,7 @@ public class JDK9Flow {
                 System.out.println("数据接收完毕");
             }
         };
-        // 配置发布者和订阅者 为 publisher 配置上 subscriber
+        // 配置发布者和订阅者为publisher配置上subscriber
         publisher.subscribe(subscriber);
         for (int i = 0; i < 500; i++) {
             System.out.println("i--------->" + i);

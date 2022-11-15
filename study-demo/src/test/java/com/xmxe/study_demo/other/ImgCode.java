@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 厉害了！通过 Java 技术手段，获取女朋友定位地址... https://mp.weixin.qq.com/s/QLDNo88mbBw59mckNNswyQ
+ * 厉害了！通过Java技术手段，获取女朋友定位地址... https://mp.weixin.qq.com/s/QLDNo88mbBw59mckNNswyQ
  **/
 public class ImgCode {
     public static void main(String[] args) throws Exception {
@@ -78,7 +78,7 @@ public class ImgCode {
     }
 
     /**
-     * 经纬度格式  转换为  度分秒格式 ,如果需要的话可以调用该方法进行转换
+     * 经纬度格式转换为度分秒格式 ,如果需要的话可以调用该方法进行转换
      *
      * @param point 坐标点
      * @return

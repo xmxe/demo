@@ -37,7 +37,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.common.io.FileWriteMode;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
-// https://mp.weixin.qq.com/s/FE0rQZeAdztdjYK763qn0Q
+
 public class GuavaOperation {
 
     public static void main(String[] args) {
@@ -49,8 +49,6 @@ public class GuavaOperation {
         // doEventsBus();
         // doStopWatch();
         // doFileOperation();
-
-
 
         // 创建集合
         List<String> list = Lists.newArrayList();
@@ -70,7 +68,7 @@ public class GuavaOperation {
      * Multimap的特点其实就是可以包含有几个重复Key的value，可以put进入多个不同value但是相同的key，但是又不会覆盖前面的内容
      */
     public static void doMultiMap(){
-        //Multimap: key-value  key可以重复，value也可重复
+        // Multimap: key-value  key可以重复，value也可重复
         Multimap<String, String> multimap = ArrayListMultimap.create();
         multimap.put("csc","1");
         multimap.put("lwl","1");
@@ -80,7 +78,7 @@ public class GuavaOperation {
         System.out.println(multimap.get("lwl"));// [1, one]
 
 
-        // Multimap 一个key可以映射多个value的HashMap
+        // Multimap一个key可以映射多个value的HashMap
         Multimap<String, Integer> map = ArrayListMultimap.create();
         map.put("key", 1);
         map.put("key", 2);
@@ -91,10 +89,10 @@ public class GuavaOperation {
     }
 
     /**
-     * MultiSet 有一个相对有用的场景，就是跟踪每种对象的数量，所以可以用来进行数量统计
+     * MultiSet有一个相对有用的场景，就是跟踪每种对象的数量，所以可以用来进行数量统计
      */
     public static void doMultiSet(){
-        //MultiSet: 无序+可重复   count()方法获取单词的次数  增强了可读性+操作简单
+        //MultiSet:无序+可重复   count()方法获取单词的次数  增强了可读性+操作简单
         Multiset<String> set = HashMultiset.create();
         set.add("csc");
         set.add("lwl");
@@ -103,7 +101,7 @@ public class GuavaOperation {
         System.out.println(set.count("csc"));// 2
 
 
-        // Multiset 一种用来计数的Set
+        // Multiset一种用来计数的Set
         Multiset<String> multiset = HashMultiset.create();
         multiset.add("apple");
         multiset.add("apple");
@@ -111,7 +109,7 @@ public class GuavaOperation {
         System.out.println(multiset.count("apple")); // 输出 2
         // 查看去重的元素
         Set<String> set2 = multiset.elementSet();
-        System.out.println(set2); // 输出 ["orange","apple"]
+        System.out.println(set2); // 输出["orange","apple"]
         // 还能查看没有去重的元素
         Iterator<String> iterator = multiset.iterator();
         while (iterator.hasNext()) {
@@ -131,7 +129,7 @@ public class GuavaOperation {
         BiMap<String, Integer> map = biMap.inverse(); // value和key互转 反转后的BiMap并不是一个新的对象，它实现了一种视图的关联，所以对反转后的BiMap执行的所有操作会作用于原先的BiMap上。
         map.forEach((v, k) -> System.out.println(v + "-" + k)); // lwl-1  csc-2
 
-        // BiMap 一种连value也不能重复的HashMap
+        // BiMap一种连value也不能重复的HashMap
         BiMap<String, String> biMap2 = HashBiMap.create();
         // 如果value重复，put方法会抛异常，除非用forcePut方法
         biMap2.put("key","value");
@@ -153,15 +151,15 @@ public class GuavaOperation {
         // 双键的Map Map--> Table-->rowKey+columnKey+value
         Table<String, String, Integer> tables = HashBasedTable.create();
         tables.put("csc", "lwl", 1);
-        //row+column对应的value
+        // row+column对应的value
         System.out.println(tables.get("csc","lwl"));// 1
 
         // 获得key或value的集合
-        //rowKey或columnKey的集合
+        // rowKey或columnKey的集合
         Set<String> rowKeys = tables.rowKeySet();
         Set<String> columnKeys = tables.columnKeySet();
 
-        //value集合
+        // value集合
         Collection<Integer> values = tables.values();
         // 计算key对应的所有value的和
         for (String key : tables.rowKeySet()) {
@@ -185,9 +183,7 @@ public class GuavaOperation {
         Map<String, Map<String, Integer>> rowMap = tables.rowMap();
         Map<String, Map<String, Integer>> columnMap = tables.columnMap();
 
-
-
-        // Table 一种有两个key的HashMap
+        // Table一种有两个key的HashMap
         // 一批用户，同时按年龄和性别分组
         Table<Integer, String, String> table = HashBasedTable.create();
         table.put(18, "男", "yideng");
@@ -210,11 +206,11 @@ public class GuavaOperation {
         // set的交集, 并集, 差集
         HashSet<Integer> setA = Sets.newHashSet(1, 2, 3, 4, 5);
         HashSet<Integer> setB = Sets.newHashSet(4, 5, 6, 7, 8);
-        //并集
+        // 并集
         SetView<Integer> union = Sets.union(setA, setB);
-        //差集 setA-setB
+        // 差集 setA-setB
         SetView<Integer> difference = Sets.difference(setA, setB);
-        //交集
+        // 交集
         SetView<Integer> intersection = Sets.intersection(setA, setB);
 
 
@@ -224,13 +220,13 @@ public class GuavaOperation {
         HashMap<String, Integer> mapB = Maps.newHashMap();
         mapB.put("b", 20);mapB.put("c", 3);mapB.put("d", 4);
         MapDifference<String, Integer> mapDifference = Maps.difference(mapA, mapB);
-        //mapA 和 mapB 相同的 entry
+        // mapA和mapB相同的entry
         System.out.println(mapDifference.entriesInCommon());//  {c=3}
-        //mapA 和 mapB key相同的value不同的 entry
+        // mapA和mapB key相同的value不同的entry
         System.out.println(mapDifference.entriesDiffering());//  {b=(2, 20)}
-        //只存在 mapA 的 entry
+        // 只存在mapA的entry
         System.out.println(mapDifference.entriesOnlyOnLeft());//  {a=1}
-        //只存在 mapB 的 entry
+        // 只存在mapB的entry
         System.out.println(mapDifference.entriesOnlyOnRight());// {d=4}
     }
 
@@ -256,8 +252,8 @@ public class GuavaOperation {
             }
         }
 
-        //使用 @Subscribe 注解,表明使用dealWithEvent 方法处理 OrderMessage类型对应的消息
-        //可以注解多个方法,不同的方法 处理不同的对象消息
+        // 使用@Subscribe注解,表明使用dealWithEvent方法处理OrderMessage类型对应的消息
+        // 可以注解多个方法,不同的方法 处理不同的对象消息
         class OrderEventListener {
             @Subscribe
             public void dealWithEvent(OrderMessage event) {
@@ -293,9 +289,9 @@ public class GuavaOperation {
             // 数据写入
             File newFile = new File("D:/text.txt");
             Files.write("this is a test".getBytes(), newFile);
-            //再次写入会把之前的内容冲掉
+            // 再次写入会把之前的内容冲掉
             Files.write("csc".getBytes(), newFile);
-            //追加写
+            // 追加写
             Files.asCharSink(newFile, Charset.defaultCharset(), FileWriteMode.APPEND).write("lwl");
             // deprecated过时的方法
             // Files.append("lwl", newFile, Charset.defaultCharset());

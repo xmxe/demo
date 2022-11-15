@@ -70,7 +70,7 @@ public class JDK8LocalDateTime {
 
         //使用jdk自身配置好的日期格式
         DateTimeFormatter formatter1 = DateTimeFormatter.ISO_DATE_TIME;
-        //反过来调用也可以 : now.format(formatter1);
+        //反过来调用也可以:now.format(formatter1);
         String date1Str = formatter1.format(now);
         System.out.println(date1Str);//2018-01-14T16:50:43:27.2
         //自定义日期格式
@@ -137,11 +137,11 @@ public class JDK8LocalDateTime {
         System.out.println("前一个月的时间:"+now.minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM")));
         System.out.println("后一个月的时间:"+now.plusMonths(1));
         System.out.println("指定2099年的当前时间:"+now.withYear(2099));
-       //  后5天时间:2018-12-24T15:50:37.508
-       //  前5天时间并格式化:2018-12-14
-       //  前一个月的时间:201712
-       //  后一个月的时间:2018-02-04T09:19:29.499
-       //  指定2099年的当前时间:2099-12-19T15:50:37.508
+        // 后5天时间:2018-12-24T15:50:37.508
+        // 前5天时间并格式化:2018-12-14
+        // 前一个月的时间:201712
+        // 后一个月的时间:2018-02-04T09:19:29.499
+        // 指定2099年的当前时间:2099-12-19T15:50:37.508
 
         //以下方法的参数都是long型，返回值都是LocalDateTime
         LocalDateTime plusYearsResult = now.plusYears(2L);
@@ -339,6 +339,4 @@ public class JDK8LocalDateTime {
         // 美国纽约此时的时间 : 2018-12-19 03:52:22.494
         // 美国纽约此时的时间 和时区: 2018-12-19T03:52:22.494-05:00[America/New_York]
     }
-
-    
 }

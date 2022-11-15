@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Delayed;
 
 // 生成订单30分钟未支付，则自动取消，该怎么实现? https://mp.weixin.qq.com/s/ijv_4_qWTrG-kA9jSbz1iw
-// 一口气说出 6 种实现延时消息的方案 https://mp.weixin.qq.com/s/VcbZTsoD5-ioc4x7s6mj7Q
+// 一口气说出6种实现延时消息的方案 https://mp.weixin.qq.com/s/VcbZTsoD5-ioc4x7s6mj7Q
 // 面试官：怎么不用定时任务实现关闭订单？ https://mp.weixin.qq.com/s/Oc188nkq4-s9ivt7Ki_M1A
 // 再有人问你如何实现订单到期关闭，就把这篇文章发给他 https://mp.weixin.qq.com/s/BG1PqUWX0XwJX6aMCXCgvw
 /**
@@ -51,9 +51,9 @@ public class DelayQueueTest {
         }
         
     }  
-// 3600分钟 转换成 小时 是多少
+// 3600分钟转换成小时是多少
 // System.out.println(TimeUnit.HOURS.convert(3600, TimeUnit.MINUTES));
-// 3600分钟 转换成 天 是多少
+// 3600分钟转换成天是多少
 // System.out.println(TimeUnit.DAYS.convert(3600, TimeUnit.MINUTES));
 }
 
@@ -120,7 +120,7 @@ class OrderDelay implements Delayed {
 }
 
 /**
- * boolean add(E e) 将指定的元素插入到此延迟队列中。如果可以立即执行此操作而不违反容量限制， 则在成功后返回 true，如果当前没有可用空间，则抛出IllegalStateException。
+ * boolean add(E e) 将指定的元素插入到此延迟队列中。如果可以立即执行此操作而不违反容量限制， 则在成功后返回true，如果当前没有可用空间，则抛出IllegalStateException。
  * boolean addAll(Collection<? extends E> c) 将指定集合中的所有元素添加到此队列中。
  * void	clear() 从此延迟队列中原子地删除所有元素。
  * int drainTo(Collection<? super E> c) 从该队列中删除所有可用的元素，并将它们添加到给定的集合中。
@@ -128,11 +128,11 @@ class OrderDelay implements Delayed {
  * Iterator<E> iterator() 返回此队列中所有元素（已过期和未过期）的迭代器。
  * boolean offer(E e) 将指定的元素插入到此队列中，如果可以立即执行此操作，而不会违反容量限制， true在成功时 false如果当前没有可用空间，则返回false。
  * boolean	offer(E e, long timeout, TimeUnit unit) 将指定的元素插入到此队列中，等待指定的等待时间（如有必要）才能使空间变得可用。
- * E peek() 检索但不删除此队列的头，如果此队列为空，则返回 null 。
- * E poll() 检索并删除此队列的头，或者如果此队列没有已过期延迟的元素，则返回 null 。
+ * E peek() 检索但不删除此队列的头，如果此队列为空，则返回null 。
+ * E poll() 检索并删除此队列的头，或者如果此队列没有已过期延迟的元素，则返回null 。
  * E poll(long timeout, TimeUnit unit) 检索并删除此队列的头部，如果需要，等待具有到期延迟的元素可用于此队列，或指定的等待时间到期。
  * void put(E e) 将指定的元素插入到此延迟队列中。
- * int remainingCapacity() 返回该队列最好可以（在没有存储器或资源约束）接受而不会阻塞，或附加的元素的数量 Integer.MAX_VALUE如果没有固有的限制。总是返回 Integer.MAX_VALUE ，因为 DelayQueue没有容量限制。
+ * int remainingCapacity() 返回该队列最好可以（在没有存储器或资源约束）接受而不会阻塞，或附加的元素的数量Integer.MAX_VALUE如果没有固有的限制。总是返回Integer.MAX_VALUE ，因为DelayQueue没有容量限制。
  * boolean remove(Object o) 从该队列中删除指定元素的单个实例（如果存在），无论其是否已过期。
  * boolean removeAll(Collection<?> c) 删除指定集合中包含的所有此集合的元素（可选操作）。
  * int size() 返回此集合中的元素数。
@@ -140,9 +140,9 @@ class OrderDelay implements Delayed {
  * Object[] toArray() 返回一个包含此队列中所有元素的数组。
  * <T> T[] toArray(T[] a) 返回一个包含此队列中所有元素的数组; 返回的数组的运行时类型是指定数组的运行时类型。
  * E element() 检索，但不删除，这个队列的头。
- * boolean contains(Object o) 如果此集合包含指定的元素，则返回 true 。
+ * boolean contains(Object o) 如果此集合包含指定的元素，则返回true 。
  * boolean containsAll(Collection<?> c) 如果此集合包含指定 集合中的所有元素，则返回true。
- * boolean isEmpty() 如果此集合不包含元素，则返回 true 。
+ * boolean isEmpty() 如果此集合不包含元素，则返回true 。
  * boolean retainAll(Collection<?> c) 仅保留此集合中包含在指定集合中的元素（可选操作）。
  * String toString() 返回此集合的字符串表示形式。
  * 

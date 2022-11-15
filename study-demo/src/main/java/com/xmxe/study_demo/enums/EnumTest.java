@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * 用好 Java 中的枚举，让你的工作效率飞起来(https://mp.weixin.qq.com/s/hX_9Dkg9612KLHQ1oPr4qA)
+ * 用好Java中的枚举，让你的工作效率飞起来(https://mp.weixin.qq.com/s/hX_9Dkg9612KLHQ1oPr4qA)
  * 
  * */
 public class EnumTest {
@@ -82,7 +82,7 @@ public class EnumTest {
 		// toString()返回枚举常量的名称，它包含在声明中。
 		System.out.println("toString(): " + test.toString());// toString(): TUE
 
-		// ordinal()， 返回值是从 0 开始 返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）
+		// ordinal()， 返回值是从0开始 返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）
 		System.out.println("ordinal(): " + test.ordinal());// oridinal(): 1
 
 		System.out.println("EnumTest.FRI getValue() = " + WeekEnum.FRI.getValue());// EnumTest.FRI getValue() = 5
@@ -142,7 +142,7 @@ public class EnumTest {
 		}
 
 		/**
-		 * 枚举替代if else if写法 一行代码搞定 如果需要再加判断只需要增加枚举类属性即可 valueOf()获取枚举类型
+		 * 枚举替代if else一行代码搞定 如果需要再加判断只需要增加枚举类属性即可 valueOf()获取枚举类型
 		 */
 		WeekEnum.valueOf(str).eval(1, 2);
 	}

@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class HttpUtils {
     /**
-     * 获取 HTTP 连接
+     * 获取HTTP连接
      *
      * @param url
      * @return
@@ -22,7 +22,7 @@ public class HttpUtils {
     }
 
     /**
-     * 请求指定 URL 返回内容
+     * 请求指定URL返回内容
      *
      * @param url
      * @return

@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * ReadWriteLock 读写分离锁, 可以大幅提升系统并行度. 
+ * ReadWriteLock读写分离锁, 可以大幅提升系统并行度. 
  * 读-读 不互斥：读读之间不阻塞。 
  * 读-写 互斥：读阻塞写，写也会阻塞读。
  * 写-写 互斥：写写阻塞。 

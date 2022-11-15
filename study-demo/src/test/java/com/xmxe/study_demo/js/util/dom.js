@@ -1,7 +1,7 @@
 // ----------文档对象 DOM----------
 /**
  * 固定滚动条
- * 功能描述：一些业务场景，如弹框出现时，需要禁止页面滚动，这是兼容安卓和 iOS 禁止页面滚动的解决方案
+ * 功能描述：一些业务场景，如弹框出现时，需要禁止页面滚动，这是兼容安卓和iOS禁止页面滚动的解决方案
  */
 
 let scrollTop = 0;
@@ -10,7 +10,7 @@ function preventScroll() {
   // 存储当前滚动位置
   scrollTop = window.scrollY;
 
-  // 将可滚动区域固定定位，可滚动区域高度为 0 后就不能滚动了
+  // 将可滚动区域固定定位，可滚动区域高度为0后就不能滚动了
   document.body.style["overflow-y"] = "hidden";
   document.body.style.position = "fixed";
   document.body.style.width = "100%";
@@ -28,7 +28,7 @@ function recoverScroll() {
 
 /**
  * 判断当前位置是否为页面底部
- * 返回值为 true/false
+ * 返回值为true/false
  */
 
 function bottomVisible() {
@@ -40,7 +40,7 @@ function bottomVisible() {
 }
 /**
  * 判断元素是否在可视范围内
- * partiallyVisible 为是否为完全可见
+ * partiallyVisible为是否为完全可见
  */
 function elementIsVisibleInViewport(el, partiallyVisible = false) {
   const { top, left, bottom, right } = el.getBoundingClientRect();
@@ -53,7 +53,7 @@ function elementIsVisibleInViewport(el, partiallyVisible = false) {
 }
 
 /**
- * 获取元素 css 样式
+ * 获取元素css样式
  */
 function getStyle(el, ruleName) {
   return getComputedStyle(el, null).getPropertyValue(ruleName);

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
- * Java 并发异步编程牛逼之处在于：将原来十个接口的活用一个接口搞定！https://mp.weixin.qq.com/s/Pb2XF-DiUFMQAXxlJwerwg
+ * Java并发异步编程牛逼之处在于将原来十个接口的活用一个接口搞定！https://mp.weixin.qq.com/s/Pb2XF-DiUFMQAXxlJwerwg
  * 
  * 使用场景
  * 任务需要中断，获取返回结果，将原来十个接口的活用一个接口搞定
@@ -33,7 +33,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 public class FutureTaskTest {
     /**
      * 核心线程8,最大线程20,保活时间30s,存储队列10,有守护线程 拒绝策略:将超负荷任务回退到调用者
-     * 说明 : 默认使用核心线程(8)数执行任务,任务数量超过核心线程数就丢到队列,队列(10)满了就再开启新的线程,新的线程数最大为20,当任务执行完,新开启的线程将存活30s,若没有任务就消亡,线程池回到核心线程数量。
+     * 说明:默认使用核心线程(8)数执行任务,任务数量超过核心线程数就丢到队列,队列(10)满了就再开启新的线程,新的线程数最大为20,当任务执行完,新开启的线程将存活30s,若没有任务就消亡,线程池回到核心线程数量。
      */
     private static ExecutorService executor = new ThreadPoolExecutor(8, 20,30L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(10),
             new ThreadFactoryBuilder().setNameFormat("User_Async_FutureTask-%d").setDaemon(true).build(),

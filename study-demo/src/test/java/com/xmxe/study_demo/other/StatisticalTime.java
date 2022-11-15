@@ -1,8 +1,7 @@
 package com.xmxe.study_demo.other;
 
 /**
- * 统计耗时
- * 别再用 System.currentTimeMillis() 统计耗时了，太 Low，StopWatch 好用到爆！ https://mp.weixin.qq.com/s/f-gJxN-wbLWK9WvIjv8vHw
+ * 别再用System.currentTimeMillis()统计耗时了,StopWatch好用到爆！ https://mp.weixin.qq.com/s/f-gJxN-wbLWK9WvIjv8vHw
  */
 public class StatisticalTime {
     public static void main(String[] args) throws Exception{

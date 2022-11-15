@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 /** 
  * 数据库连接类 
- * 说明:封装了 无参，有参，存储过程的调用 
+ * 说明:封装了无参，有参，存储过程的调用 
  */  
 public class JDBCUtil {  
   
@@ -194,10 +194,8 @@ public class JDBCUtil {
     /** 
      * 获取结果集，并将结果放在List中 
      *  
-     * @param sql 
-     *            SQL语句 
-     * @return List 
-     *                       结果集 
+     * @param sql  SQL语句 
+     * @return List  结果集 
      */  
     public List<Object> excuteQueryObj(String sql, Object[] params) {  
         // 执行SQL获得结果集  

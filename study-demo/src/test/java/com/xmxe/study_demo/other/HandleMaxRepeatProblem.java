@@ -29,7 +29,7 @@ public class HandleMaxRepeatProblem {
 
 
     /**
-     * key 为年龄，  value为所有的行列表，使用队列
+     * key 为年龄，value为所有的行列表，使用队列
      */
     private static Map<Integer, Vector<String>> valueMap = new ConcurrentHashMap<>();
 
@@ -63,7 +63,7 @@ public class HandleMaxRepeatProblem {
 
 
     /**
-     * 按照 "," 分割数据，并写入到文件里
+     * 按照","分割数据，并写入到文件里
      */
     static class SplitData {
 
@@ -87,7 +87,7 @@ public class HandleMaxRepeatProblem {
         }
 
         /**
-         * 按照 x坐标 来分割 字符串，如果切到的字符不为“，”， 那么把坐标向前或者向后移动一位。
+         * 按照x坐标来分割字符串，如果切到的字符不为“，”那么把坐标向前或者向后移动一位。
          *
          * @param line
          * @param arr  存放x1,x2坐标

@@ -3,7 +3,7 @@ package com.xmxe.study_demo.thread.juc;
 import java.util.concurrent.locks.LockSupport;
 
 /**
- * LockSupport 线程工具类有啥用？(https://mp.weixin.qq.com/s/kq5pLJA2xm51lIcuE-pWAQ)
+ * LockSupport线程工具类有啥用？(https://mp.weixin.qq.com/s/kq5pLJA2xm51lIcuE-pWAQ)
  * 
  * LockSupport:一个线程阻塞工具, 可以在任意位置让线程阻塞.与suspend()比较, 如果unpark发生在park之前, 并不会导致线程冻结, 也不需要获取锁.
  * 

@@ -33,8 +33,8 @@ public class AtomicReferenceTest {
          *   pair = Pair.of(initialRef, initialStamp);
          * }
          * 
-         * attemptStamp()：如果 expectReference 和目前值一致，设置当前对象的版本号戳为 newStamp
-         * compareAndSet(V expectedReference,V newReference,int expectedStamp,int newStamp)：expectedReference 指的是变量预期的旧值， newReference 指的是变量需要更改成的新值， expectedStamp 指的是版本号的旧值， newStamp 指的是版本号新值。
+         * attemptStamp()：如果expectReference和目前值一致，设置当前对象的版本号戳为newStamp
+         * compareAndSet(V expectedReference,V newReference,int expectedStamp,int newStamp)：expectedReference指的是变量预期的旧值， newReference指的是变量需要更改成的新值， expectedStamp指的是版本号的旧值， newStamp指的是版本号新值。
          * get() ：该方法返回当前对象值和当前对象的版本号戳
          * getReference() ：该方法返回当前对象值
          * getStamp() ：该方法返回当前对象的版本号戳

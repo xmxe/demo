@@ -37,8 +37,10 @@ public class EncryptionAlgorithmUtil {
 
     /**
      * MD5算法有以下特点
-     * 1、压缩性:无论数据长度是多少，计算出来的MD5值长度相同 2、容易计算性:由原数据容易计算出MD5值
-     * 3、抗修改性:即便修改一个字节，计算出来的MD5值也会巨大差异 4、抗碰撞性:知道数据和MD5值，很小概率找到相同MD5值相同的原数据。
+     * 1、压缩性:无论数据长度是多少，计算出来的MD5值长度相同 
+     * 2、容易计算性:由原数据容易计算出MD5值
+     * 3、抗修改性:即便修改一个字节，计算出来的MD5值也会巨大差异 
+     * 4、抗碰撞性:知道数据和MD5值，很小概率找到相同MD5值相同的原数据。
      */
     public static String md5(String text) {
         MessageDigest messageDigest = null;
@@ -54,7 +56,7 @@ public class EncryptionAlgorithmUtil {
 
     /**
      * SHA
-     * 安全散列算法（英语:Secure Hash Algorithm
+     * 安全散列算法(英语:Secure Hash Algorithm)
      */
     public static String sha256(String text) {
         MessageDigest messageDigest = null;

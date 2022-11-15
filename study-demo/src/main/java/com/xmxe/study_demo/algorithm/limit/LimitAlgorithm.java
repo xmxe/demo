@@ -21,8 +21,8 @@ public class LimitAlgorithm {
     /**
      * 固定窗口算法
      * 固定窗口算法又叫计数器算法，是一种简单方便的限流算法。
-     * 主要通过一个支持原子操作的计数器来累计 1 秒内的请求次数，当 1 秒内计数达到限流阈值时触发拒绝策略。
-     * 每过 1 秒，计数器重置为 0 开始重新计数
+     * 主要通过一个支持原子操作的计数器来累计1秒内的请求次数，当1秒内计数达到限流阈值时触发拒绝策略。
+     * 每过1秒，计数器重置为0开始重新计数
      */
     static class RateLimiterSimpleWindow {
         // 阈值
@@ -88,7 +88,7 @@ public class LimitAlgorithm {
         /**
          * 1. 计算当前时间窗口
          * 2. 更新当前窗口计数 & 重置过期窗口计数
-         * 3. 当前 QPS 是否超过限制
+         * 3. 当前QPS是否超过限制
          *
          * @return
          */
@@ -109,7 +109,7 @@ public class LimitAlgorithm {
                 }
                 sum = sum + windowInfo.getNumber().get();
             }
-            // 3. 当前 QPS 是否超过限制
+            // 3. 当前QPS是否超过限制
             return sum <= qps;
         }
 
@@ -169,7 +169,7 @@ public class LimitAlgorithm {
      */
     /**
      * 滑动日志方式限流
-     * 设置 QPS 为 2.
+     * 设置QPS为2.
      */
     static class RateLimiterSildingLog {
 
@@ -183,7 +183,7 @@ public class LimitAlgorithm {
         private TreeMap<Long, Long> treeMap = new TreeMap<>();
 
         /**
-         * 清理请求记录间隔, 60 秒
+         * 清理请求记录间隔, 60秒
          */
         private long claerTime = 60 * 1000;
 
@@ -193,7 +193,7 @@ public class LimitAlgorithm {
 
         public synchronized boolean tryAcquire() {
             long now = System.currentTimeMillis();
-            // 清理过期的数据老数据，最长 60 秒清理一次
+            // 清理过期的数据老数据，最长60秒清理一次
             if (!treeMap.isEmpty() && (treeMap.firstKey() - now) > claerTime) {
                 Set<Long> keySet = new HashSet<>(treeMap.subMap(0L, now - 1000).keySet());
                 for (Long key : keySet) {
@@ -205,7 +205,7 @@ public class LimitAlgorithm {
             for (Long value : treeMap.subMap(now - 1000, now).values()) {
                 sum += value;
             }
-            // 超过QPS限制，直接返回 false
+            // 超过QPS限制，直接返回false
             if (sum + 1 > qps) {
                 return false;
             }
@@ -235,15 +235,15 @@ public class LimitAlgorithm {
     /**
      * 漏桶算法中的漏桶是一个形象的比喻，这里可以用生产者消费者模式进行说明，请求是一个生产者，每一个请求都如一滴水，
      * 请求到来后放到一个队列（漏桶）中，而桶底有一个孔，不断的漏出水滴，就如消费者不断的在消费队列中的内容，
-     * 消费的速率（漏出的速度）等于限流阈值。即假如 QPS  为 2，则每 1s / 2= 500ms 消费一次。漏桶的桶有大小，
+     * 消费的速率（漏出的速度）等于限流阈值。即假如QPS为2，则每1s/2=500ms 消费一次。漏桶的桶有大小，
      * 就如队列的容量，当请求堆积超过指定容量时，会触发拒绝策略。
      */
 
 
     /**
-     * 令牌桶算法同样是实现限流是一种常见的思路，最为常用的 Google 的 Java 开发工具包 Guava 中的限流工具类 RateLimiter
+     * 令牌桶算法同样是实现限流是一种常见的思路，最为常用的Google的Java开发工具包Guava中的限流工具类RateLimiter
      * 就是令牌桶的一个实现。令牌桶的实现思路类似于生产者和消费之间的关系。系统服务作为生产者，按照指定频率向桶（容器）中添加
-     * 令牌，如 QPS 为 2，每 500ms 向桶中添加一个令牌，如果桶中令牌数量达到阈值，则不再添加。
+     * 令牌，如QPS为2，每500ms 向桶中添加一个令牌，如果桶中令牌数量达到阈值，则不再添加。
      * 请求执行作为消费者，每个请求都需要去桶中拿取一个令牌，取到令牌则继续执行；如果桶中无令牌可取，就触发拒绝策略，
      * 可以是超时等待，也可以是直接拒绝本次请求，由此达到限流目的。
      */

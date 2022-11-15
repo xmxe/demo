@@ -2,7 +2,7 @@ package com.xmxe.study_demo.util;
 
 /**
  * MySQL使用无符号整数位存储ip地址
- * 如果要存 IP 地址，用什么数据类型比较好？(https://mp.weixin.qq.com/s/VFXVQN8p9sOpanBO4QlAkA)
+ * 如果要存IP地址，用什么数据类型比较好？(https://mp.weixin.qq.com/s/VFXVQN8p9sOpanBO4QlAkA)
  */
 public class IpLongUtil {
     /**

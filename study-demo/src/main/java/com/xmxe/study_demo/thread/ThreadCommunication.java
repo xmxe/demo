@@ -13,14 +13,14 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ThreadCommunication {
     
     /**
-     * 1. 使用 volatile 关键字
+     * 1. 使用volatile关键字
      */
     static class VolatileSync {
         //定义共享变量来实现通信，它需要volatile修饰，否则线程不能及时感知
         static volatile boolean notice = false;
     
         public static void main(String[] args) {
-            List<String>  list = new ArrayList<>();
+            List<String> list = new ArrayList<>();
             //线程A
             Thread threadA = new Thread(() -> {
                 for (int i = 1; i <= 10; i++) {
@@ -57,11 +57,11 @@ public class ThreadCommunication {
     }
 
     /**
-     * 2. 使用 Object 类的 wait()/notify()
-     * wait/notify 必须配合 synchronized 使用，wait 方法释放锁，notify 方法不释放锁。wait 是指在一个已经进入了同步锁的线程内，
+     * 2. 使用Object类的wait()/notify()
+     * wait/notify必须配合synchronized使用，wait方法释放锁，notify方法不释放锁。wait是指在一个已经进入了同步锁的线程内，
      * 让自己暂时让出同步锁，以便其他正在等待此锁的线程可以得到同步锁并运行，只有其他线程调用了notify()，notify并不释放锁，只是
-     * 告诉调用过wait()的线程可以去参与获得锁的竞争了，但不是马上得到锁，因为锁还在别人手里，别人还没释放，调用 wait() 的一个
-     * 或多个线程就会解除 wait 状态，重新参与竞争对象锁，程序如果可以再次得到锁，就可以继续向下运行
+     * 告诉调用过wait()的线程可以去参与获得锁的竞争了，但不是马上得到锁，因为锁还在别人手里，别人还没释放，调用wait()的一个
+     * 或多个线程就会解除wait状态，重新参与竞争对象锁，程序如果可以再次得到锁，就可以继续向下运行
      */
     static class ObjectSync {
         public static void main(String[] args) {
@@ -112,7 +112,7 @@ public class ThreadCommunication {
     }
 
     /**
-     * 3. 使用JUC工具类 CountDownLatch
+     * 3. 使用JUC工具类CountDownLatch
      */
     static class CountDownLatchSync {
         public static void main(String[] args) {
@@ -159,7 +159,7 @@ public class ThreadCommunication {
     }
 
     /**
-     * 4. 使用 ReentrantLock 结合 Condition
+     * 4. 使用ReentrantLock结合Condition
      */
     static class ReentrantLockSync {
         public static void main(String[] args) {
@@ -207,8 +207,8 @@ public class ThreadCommunication {
     }
 
     /**
-     * 5. 基本 LockSupport 实现线程间的阻塞和唤醒
-     * LockSupport 是一种非常灵活的实现线程间阻塞和唤醒的工具，使用它不用关注是等待线程先进行还是唤醒线程先运行，但是得知道线程的名字
+     * 5. 基本LockSupport实现线程间的阻塞和唤醒
+     * LockSupport是一种非常灵活的实现线程间阻塞和唤醒的工具，使用它不用关注是等待线程先进行还是唤醒线程先运行，但是得知道线程的名字
      */
     static class TestSync {
         public static void main(String[] args) {

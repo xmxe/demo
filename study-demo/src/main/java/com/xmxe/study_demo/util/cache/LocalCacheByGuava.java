@@ -42,7 +42,7 @@ public class LocalCacheByGuava {
 
     /**
      * 全局缓存设置
-     * 缓存项最大数量：100000 缓存有效时间（天）：10
+     * 缓存项最大数量：100000缓存有效时间（天）：10
      */
     private static LoadingCache<String, Object> loadCache(CacheLoader<String,Object> cacheLoader) throws Exception {
         LoadingCache<String, Object> cache = CacheBuilder.newBuilder()

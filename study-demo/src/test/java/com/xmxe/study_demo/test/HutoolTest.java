@@ -47,7 +47,7 @@ public class HutoolTest {
         String dateStr = "2020年09月29日";
         Date date = Convert.toDate(dateStr);
 
-        // 把字符串转成 Unicode：
+        // 把字符串转成Unicode：
         String unicodeStr = "沉默王二";
         String unicode = Convert.strToUnicode(unicodeStr);
     }
@@ -55,16 +55,14 @@ public class HutoolTest {
     @Test
     public void datetime(){
         // 获取当前日期：
-
         Date date = DateUtil.date();
-        //DateUtil.date() 返回的其实是 DateTime，它继承自 Date 对象，重写了 toString() 方法，返回 yyyy-MM-dd HH:mm:ss 格式的字符串。
+        //DateUtil.date()返回的其实是DateTime，它继承自Date对象，重写了toString()方法，返回yyyy-MM-dd HH:mm:ss格式的字符串。
         System.out.println(date);// 2020-09-29 04:28:02
 
         // 字符串转日期：
-
         String dateStr = "2020-09-29";
         Date date0 = DateUtil.parse(dateStr);
-        // DateUtil.parse() 会自动识别一些常用的格式，比如说：
+        // DateUtil.parse()会自动识别一些常用的格式，比如说：
         // yyyy-MM-dd HH:mm:ss
         // yyyy-MM-dd
         // HH:mm:ss
@@ -145,7 +143,6 @@ public class HutoolTest {
                 Method method = ReflectUtil.getMethod(ReflectDemo.class, "print");
                 System.out.println(method.getName());
 
-
                 // 执行方法
                 ReflectUtil.invoke(reflectDemo, "print");
             }
@@ -162,7 +159,7 @@ public class HutoolTest {
     @Test
     public void idCode(){
         // 身份证工具
-        // Hutool 封装的 IdcardUtil 可以用来对身份证进行验证，支持大陆 15 位、18 位身份证，港澳台 10 位身份证。
+        // Hutool封装的IdcardUtil可以用来对身份证进行验证，支持大陆15位、18位身份证，港澳台10位身份证。
 
         String ID_18 = "321083197812162119";
         String ID_15 = "150102880730303";
@@ -173,15 +170,15 @@ public class HutoolTest {
 
     @Test
     public void console(){
-        // 本地编码的过程中，经常需要使用 System.out 打印结果，但是往往一些复杂的对象不支持直接打印，
-        // 比如说数组，需要调用 Arrays.toString。Hutool 封装的 Console 类借鉴了 JavaScript 中的 console.log()，
+        // 本地编码的过程中，经常需要使用System.out打印结果，但是往往一些复杂的对象不支持直接打印，
+        // 比如说数组，需要调用Arrays.toString。Hutool封装的Console类借鉴了JavaScript中的console.log()，
         // 使得打印变成了一个非常便捷的方式。
         Console.log("沉默王二，一枚有趣的程序员");
 
         // 打印字符串模板
         Console.log("洛阳是{}朝古都",13);
 
-        int [] ints = {1,2,3,4};
+        int[] ints = {1,2,3,4};
         // 打印数组
         Console.log(ints);
     }
@@ -196,7 +193,7 @@ public class HutoolTest {
     @Test
     public void biMap(){
         // 双向查找 Map
-        // Guava 中提供了一种特殊的 Map 结构，叫做 BiMap，实现了一种双向查找的功能，可以根据 key 查找 value，也可以根据 value 查找 key，Hutool 也提供这种 Map 结构。
+        // Guava中提供了一种特殊的Map结构，叫做BiMap，实现了一种双向查找的功能，可以根据key查找value，也可以根据value查找key，Hutool也提供这种Map结构。
 
         BiMap<String, String> biMap = new BiMap<>(new HashMap<>());
         biMap.put("wanger", "沉默王二");
@@ -219,14 +216,12 @@ public class HutoolTest {
         ImgUtil.scale(FileUtil.file("hutool/wangsan.jpg"),FileUtil.file("hutool/wangsan_small.jpg"),0.5f);
 
         // 裁剪图片：
-
         ImgUtil.cut(
                 FileUtil.file("hutool/wangsan.jpg"),
                 FileUtil.file("hutool/wangsan_cut.jpg"),
                 new Rectangle(200, 200, 100, 100)
         );
         // 添加水印：
-
         ImgUtil.pressText(//
                 FileUtil.file("hutool/wangsan.jpg"),
                 FileUtil.file("hutool/wangsan_logo.jpg"),
@@ -242,7 +237,7 @@ public class HutoolTest {
 
     @Test
     public void cache(){
-        // CacheUtil 是 Hutool 封装的创建缓存的快捷工具类，可以创建不同的缓存对象：
+        // CacheUtil是Hutool封装的创建缓存的快捷工具类，可以创建不同的缓存对象：
 
         // FIFOCache：先入先出，元素不停的加入缓存直到缓存满为止，当缓存满时，清理过期缓存对象，清理后依旧满则删除先入的缓存。
         Cache<String, String> fifoCache = CacheUtil.newFIFOCache(3);
@@ -251,11 +246,10 @@ public class HutoolTest {
         fifoCache.put("key3", "沉默王三");
         fifoCache.put("key4", "沉默王四");
 
-        // 大小为 3，所以 key3 放入后 key1 被清除
+        // 大小为3，所以key3放入后key1被清除
         String value1 = fifoCache.get("key1");
 
         // LFUCache，最少使用，根据使用次数来判定对象是否被持续缓存，当缓存满时清理过期对象，清理后依旧满的情况下清除最少访问的对象并将其他对象的访问数减去这个最少访问数，以便新对象进入后可以公平计数。
-
         Cache<String, String> lfuCache = CacheUtil.newLFUCache(3);
 
         lfuCache.put("key1", "沉默王一");
@@ -265,7 +259,7 @@ public class HutoolTest {
         lfuCache.put("key3", "沉默王三");
         lfuCache.put("key4", "沉默王四");
 
-        // 由于缓存容量只有 3，当加入第 4 个元素的时候，最少使用的将被移除（2,3被移除）
+        // 由于缓存容量只有3，当加入第4个元素的时候，最少使用的将被移除（2,3被移除）
         String value2 = lfuCache.get("key2");
         String value3 = lfuCache.get("key3");
 
@@ -279,7 +273,7 @@ public class HutoolTest {
         lruCache.get("key1");
         lruCache.put("key4", "沉默王四");
 
-        // 由于缓存容量只有 3，当加入第 4 个元素的时候，最久使用的将被移除（2）
+        // 由于缓存容量只有3，当加入第4个元素的时候，最久使用的将被移除（2）
         String value4 = lruCache.get("key2");
         System.out.println(value2);
     }
@@ -290,13 +284,13 @@ public class HutoolTest {
 
         // 对称加密（symmetric），例如：AES、DES 等
         // 非对称加密（asymmetric），例如：RSA、DSA 等
-        // 摘要加密（digest），例如：MD5、SHA-1、SHA-256、HMAC 等
+        // 摘要加密（digest），例如：MD5、SHA-1、SHA-256、HMAC等
         // Hutool 针对这三种情况都做了封装：
 
         // 对称加密 SymmetricCrypto
         // 非对称加密 AsymmetricCrypto
         // 摘要加密 Digester
-        // 快速加密工具类 SecureUtil 有以下这些方法：
+        // 快速加密工具类 SecureUtil有以下这些方法：
 
         // 1）对称加密
 

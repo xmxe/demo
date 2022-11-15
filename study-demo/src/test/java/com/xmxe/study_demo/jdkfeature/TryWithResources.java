@@ -1,6 +1,6 @@
 package com.xmxe.study_demo.jdkfeature;
 
-// try 语句如何更优雅的关闭资源？请看这里！ (https://mp.weixin.qq.com/s/mG1YCV7oOfdv5WMQIc9Ngw)
+// try语句如何更优雅的关闭资源？请看这里！ (https://mp.weixin.qq.com/s/mG1YCV7oOfdv5WMQIc9Ngw)
 public class TryWithResources {
    public static void main(String[] args) {
        //实现try-with-resources必须实现AutoCloseable接口

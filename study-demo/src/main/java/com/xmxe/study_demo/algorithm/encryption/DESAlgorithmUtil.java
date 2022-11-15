@@ -146,7 +146,7 @@ public class DESAlgorithmUtil {
      */
     public static String decryptFile(String password, String srcFile, String destFile) {
         if (password == null || password.length() < 8) {
-            throw new RuntimeException("加密失败，key不能小于8位");
+            throw new RuntimeException("加密失败,key不能小于8位");
         }
         try {
             File file = new File(destFile);
