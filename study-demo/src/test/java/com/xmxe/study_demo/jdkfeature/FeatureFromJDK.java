@@ -383,6 +383,12 @@ public class FeatureFromJDK {
      */
     @Test
     public void group_order(){
+
+        // 单属性分组(根据用户的城市分组)
+        // Map<String, List<User>> groupMap = userList.stream().collect(Collectors.groupingBy(User::getCity));
+        // 多属性分组(根据用户的城市和性别分组)
+        // Map<String, List<User>> groupMap = userList.stream().collect(Collectors.groupingBy(u -> u.getCity() + "|" + u.getSex()));
+
         class UserSupplier2 implements Supplier<Student> {
             private int index = 10;
             private Random random = new Random();
