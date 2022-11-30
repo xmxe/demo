@@ -561,6 +561,8 @@ public class FeatureFromJDK {
         List<Integer> list = List.of(5,16,41,10);
         // jdk10新增静态方法copyof 返回不可修改的副本
         var copyList = List.copyOf(list);
+        // list删除元素 删除成功返回true
+        boolean removeSuccess = list.removeIf(x -> x.equals(5));
         
         // 1.7 a的值为1111，下划线不影响实际值，提升可读性
         int a = 11_11;
