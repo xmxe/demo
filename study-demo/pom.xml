@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<poi.version>4.1.2</poi.version>
 		<java.version>17</java.version>
-		<spring.version>5.2.6.RELEASE</spring.version>
+		<spring.version>6.0.2</spring.version>
 	</properties>
 
 	<dependencies>
@@ -79,7 +79,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.20</version>
@@ -89,7 +89,7 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.1.23</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -162,7 +162,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.12</version>
+			<version>4.5.13</version>
 		</dependency>
 
 		<dependency>
@@ -174,7 +174,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -231,7 +231,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.10</version>
+			<version>3.12.0</version>
 		</dependency>
 
 		<dependency>
