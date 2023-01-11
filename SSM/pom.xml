@@ -30,6 +30,17 @@
             		<checksumPolicy>warn</checksumPolicy> // 在下载构件的时候，Maven会验证校验和文件，如果校验和验证失败,当checksumPolicy的值为默认的warn时(默认)，Maven会在执行构建时输出警告信息 fail:Maven遇到校验和错误就让构建失败；ignore:使Maven完全忽略校验和错误。
 				</snapshots>
 			</repository>
+			// 配置多个仓库
+			<repository>
+        		<id>jboss-repository</id>//id必须唯一
+		        <name>jboss repository</name>
+		        <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+		    </repository>
+    		<repository>
+		        <id>aliyun-repository</id>//id必须唯一
+		        <name>aliyun repository</name>
+		        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		    </repository>
 		</repositories> -->
 	<build>
 		<finalName>SSM</finalName>
