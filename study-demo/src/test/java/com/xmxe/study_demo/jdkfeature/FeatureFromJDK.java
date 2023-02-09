@@ -11,8 +11,10 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Date;
 import java.util.IntSummaryStatistics;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -278,6 +280,23 @@ public class FeatureFromJDK {
             .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
         map.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
             .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
+        
+        List<Map<String,Object>> list = new ArrayList<>();
+        // listmap分组 下面示例是根据map里的时间分组，返回一个map. key是((Date)o.get("time")).getTime()
+        Map<Long, List<Map<String,Object>>> groupBy = list.stream().collect(Collectors.groupingBy(o->((Date)o.get("time")).getTime()));
+        // 根据Map的key排序 创建一个linkedhashmap 遍历时有序
+        Map<Long, List<Map<String, Object>>> sortedmap = new LinkedHashMap<>();
+        groupBy.entrySet().stream().sorted(Map.Entry.<Long, List<Map<String,Object>>>comparingByKey()).forEachOrdered(e->sortedmap.put(e.getKey(),e.getValue()));
+        sortedmap.forEach((k,v)->{
+            Map<String,Object> m = new HashMap<>();
+            m.put("time",new Date(k));
+            v.forEach (mm->{
+                String tag_name = String.valueOf(mm.get("tag_name"));
+                String rljl = String .valueOf(mm.get("rlil"));
+                map.put(tag_name,rljl);
+            });
+            
+        });
 
     }
 
