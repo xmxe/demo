@@ -8,8 +8,6 @@ import com.google.common.util.concurrent.RateLimiter;
  * 令牌桶算法 (Guava实现) 令牌桶算法的原理是系统会以一个恒定的速度往桶里放入令牌，而如果请求需要被处理，
  * 则需要先从桶里获取一个令牌，当桶里没有令牌可取时，则拒绝服务。 当桶满时，新添加的令牌被丢弃或拒绝。
  * 比如你希望自己的应用程序QPS不要超过1000，那么RateLimiter设置1000的速率后，就会每秒往桶里扔1000个令牌。
- * 
- * 
  */
 public class LimitingByGuava {
     private static RateLimiter limiter = RateLimiter.create(5);

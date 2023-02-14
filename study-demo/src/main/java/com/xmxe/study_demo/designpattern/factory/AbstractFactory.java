@@ -2,7 +2,7 @@ package com.xmxe.study_demo.designpattern.factory;
 
 
 /**
- * 最全工厂设计模式案例详解，不服来辩！(https://mp.weixin.qq.com/s/uPl3MpA38ZwOwk6VWtdipA)
+ * 最全工厂设计模式案例详解，不服来辩！https://mp.weixin.qq.com/s/uPl3MpA38ZwOwk6VWtdipA
  */
 public class AbstractFactory {
     public static void main(String[] args) {

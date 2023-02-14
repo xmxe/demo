@@ -7,14 +7,9 @@ import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 5种限流算法，7种限流方式，挡住突发流量？
- * https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w
- *
- * 常用的限流算法有哪些？
- * https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw
- * 
- * 新来个技术总监，把限流实现的那叫一个优雅，佩服！
- * https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg
+ * 5种限流算法，7种限流方式，挡住突发流量？https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w
+ * 常用的限流算法有哪些？https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw
+ * 新来个技术总监，把限流实现的那叫一个优雅，佩服！https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg
  */
 public class LimitAlgorithm {
 

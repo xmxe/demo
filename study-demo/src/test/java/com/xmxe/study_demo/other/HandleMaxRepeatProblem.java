@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import cn.hutool.core.collection.CollectionUtil;
 
 /**
- * 
  * 我用Java几分钟处理完30亿个数据... https://mp.weixin.qq.com/s/299DPX547Nnu_JCritMggw
  */
 public class HandleMaxRepeatProblem {

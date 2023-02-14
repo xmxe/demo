@@ -18,8 +18,6 @@ public class ConcurrentLinkedQueueTest {
         System.out.println("从队列中remove已存在元素 ：" + queue.remove("哈哈哈"));// 从队列中remove已存在元素 ：true
         System.out.println("从队列中remove不存在元素：" + queue.remove("123"));// 从队列中remove不存在元素：false
         System.out.println("remove后，队列是否空？" + queue.isEmpty());// remove后，队列是否空？true
-        
-
 
     }
 }

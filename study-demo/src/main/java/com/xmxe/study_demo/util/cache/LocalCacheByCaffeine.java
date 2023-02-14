@@ -11,7 +11,9 @@ import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 
-// 看了阿里大佬用的本地缓存，那叫一个优雅！https://mp.weixin.qq.com/s/ppOCka7k-YpPI3V5Ui--IA
+/**
+ * 看了阿里大佬用的本地缓存，那叫一个优雅！https://mp.weixin.qq.com/s/ppOCka7k-YpPI3V5Ui--IA
+ */
 public class LocalCacheByCaffeine {
     
     static class LRUCache extends LinkedHashMap {

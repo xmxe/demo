@@ -14,7 +14,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 三个线程按序打印ABC？十二种做法，深入多线程同步通信机制！https:// mp.weixin.qq.com/s/8xyx_IfNTpSOLN1XAroSIA
+ * 三个线程按序打印ABC？十二种做法，深入多线程同步通信机制！https://mp.weixin.qq.com/s/8xyx_IfNTpSOLN1XAroSIA
  * 
  */
 public class ThreadSequentialExecution {

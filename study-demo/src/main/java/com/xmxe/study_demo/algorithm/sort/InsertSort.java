@@ -3,8 +3,7 @@ package com.xmxe.study_demo.algorithm.sort;
 import java.util.Arrays;
 
 /**
- * 插入排序
- * https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653199343&idx=1&sn=a5491fa908e45e6117423d9ba5062611&chksm=8c99e935bbee60232aacb7c2b74961a24e7b86d44bf98357c597ad277a8eb15639c1de7034d9&scene=21#wechat_redirect
+ * 插入排序 https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653199343&idx=1&sn=a5491fa908e45e6117423d9ba5062611&chksm=8c99e935bbee60232aacb7c2b74961a24e7b86d44bf98357c597ad277a8eb15639c1de7034d9&scene=21#wechat_redirect
  */
 public class InsertSort {
     public static void sort( int[] array) {

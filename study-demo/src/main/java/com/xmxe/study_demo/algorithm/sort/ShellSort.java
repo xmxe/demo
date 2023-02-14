@@ -3,8 +3,7 @@ package com.xmxe.study_demo.algorithm.sort;
 import java.util.Arrays;
 
 /**
- * 希尔排序
- * https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653199674&idx=1&sn=9ab7bb7e465104c67a3d8590ebd0fe6c&chksm=8c99efe0bbee66f69c07e5f423d7751c9667fa82beb6dcaef4c0e96dac9545d2277c8179c765&scene=21#wechat_redirect
+ * 希尔排序 https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653199674&idx=1&sn=9ab7bb7e465104c67a3d8590ebd0fe6c&chksm=8c99efe0bbee66f69c07e5f423d7751c9667fa82beb6dcaef4c0e96dac9545d2277c8179c765&scene=21#wechat_redirect
  * 
  */
 public class ShellSort {

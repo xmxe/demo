@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * public long longValue()   从类Number复制的描述 以long形式返回指定的数值。这可能涉及到舍入或取整。指定者：类Number中的longValue 返回：转换为long类型后该对象表示的数值。
  * public float floatValue() 从类Number复制的描述 以float形式返回指定的数值。这可能会涉及到舍入。指定者：类Number中的floatValue 返回：转换为float类型后该对象表示的数值。
  * public double doubleValue() 从类Number复制的描述 以double形式返回指定的数值。这可能会涉及到舍入。 指定者：类Number中的doubleValue 返回：转换为double类型后该对象表示的数值。
- **/
+ */
 public class LimitingByAomicInteger {
 
     /**

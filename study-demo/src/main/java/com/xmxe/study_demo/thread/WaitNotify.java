@@ -3,9 +3,7 @@ package com.xmxe.study_demo.thread;
 /**
  * wait和notify有坑 https://mp.weixin.qq.com/s/KCu3iEG1xbqQVw1GviXOjA
  * 
- * 超强图文｜并发编程【等待/通知机制】就是这个feel～
- * https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493990&idx=2&sn=9e2479dde357b4041978571610df696e&source=41#wechat_redirect
- * 
+ * 并发编程【等待/通知机制】https://mp.weixin.qq.com/s?__biz=Mzg2MDYzODI5Nw==&mid=2247493990&idx=2&sn=9e2479dde357b4041978571610df696e&source=41#wechat_redirect
  */
 public class WaitNotify {
     public static void main(String[] args) {

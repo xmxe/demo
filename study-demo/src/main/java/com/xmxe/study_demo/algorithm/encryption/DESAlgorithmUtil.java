@@ -15,7 +15,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
-// DES加密算法是怎么实现的 https://mp.weixin.qq.com/s/x7XKCWxntO7ArK0VtRCqgQ
+/**
+ * DES加密算法是怎么实现的 https://mp.weixin.qq.com/s/x7XKCWxntO7ArK0VtRCqgQ
+ */
 public class DESAlgorithmUtil {
 
     /**

@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 有图解有案例，我终于把Condition的原理讲透彻了-https://mp.weixin.qq.com/s/5-wPUOQol_OIeCIBEpF7kg
+ * 有图解有案例，我终于把Condition的原理讲透彻了 https://mp.weixin.qq.com/s/5-wPUOQol_OIeCIBEpF7kg
  * 
  * Condition是个接口，基本的方法就是await()和signal()方法；
  * Condition依赖于Lock接口，生成一个Condition的基本代码是lock.newCondition()

@@ -3,8 +3,7 @@ package com.xmxe.study_demo.algorithm.sort;
 import java.util.Arrays;
 
 /**
- * 鸡尾酒排序
- * https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653194919&idx=2&sn=f473bc9e0da124a303312a11902e2f52&chksm=8c99f87dbbee716b531df3fcf5882998f28794aad5609f225883d6c2dc71ba51b8a5126b32be&scene=21#wechat_redirect
+ * 鸡尾酒排序 https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653194919&idx=2&sn=f473bc9e0da124a303312a11902e2f52&chksm=8c99f87dbbee716b531df3fcf5882998f28794aad5609f225883d6c2dc71ba51b8a5126b32be&scene=21#wechat_redirect
  */
 public class CockTailSort {
     private static void sort(int array[]) {

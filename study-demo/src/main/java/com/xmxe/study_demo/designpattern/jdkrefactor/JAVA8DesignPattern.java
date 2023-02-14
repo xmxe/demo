@@ -1,6 +1,8 @@
 package com.xmxe.study_demo.designpattern.jdkrefactor;
 
-// 利用Java8新特征，重构传统设计模式，你学会了吗？(https://mp.weixin.qq.com/s/xAxX9UBaSeoMTSGLbCPg7A)
+/*
+ * 利用Java8新特征，重构传统设计模式，你学会了吗？https://mp.weixin.qq.com/s/xAxX9UBaSeoMTSGLbCPg7A
+ */
 public class JAVA8DesignPattern {
     
     class 策略模式{

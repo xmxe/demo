@@ -10,7 +10,9 @@ import java.net.URLDecoder;
 
 import org.springframework.core.io.ClassPathResource;
 
-// 九种方法！教你如何读取resources目录下的文件路径 https://mp.weixin.qq.com/s/JTAVORGL2R6jpepf_Vl0wA
+/*
+ * 九种方法！教你如何读取resources目录下的文件路径 https://mp.weixin.qq.com/s/JTAVORGL2R6jpepf_Vl0wA
+ */ 
 public class GetResourcesFile {
  
      /**

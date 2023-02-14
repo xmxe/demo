@@ -16,7 +16,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
 
 public class JDK8LocalDateTime {
     // Instant：瞬时时间。
@@ -24,8 +23,6 @@ public class JDK8LocalDateTime {
     // LocalTime：本地时间，不包含日期. 格式 HH:mm:ss.SSS 。
     // LocalDateTime：组合了日期和时间，但不包含时差和时区信息。
     // ZonedDateTime：最完整的日期时间，包含时区和相对UTC或格林威治的时差。
-
-    @Test
     public void 获取当前时间(){
         //本地日期,不包括时分秒
         LocalDate nowDate = LocalDate.now();
@@ -38,7 +35,6 @@ public class JDK8LocalDateTime {
        
     }
 
-    @Test
     public void 获取年月日时分秒(){
         //获取当前的时间，包括毫秒
         LocalDateTime now = LocalDateTime.now();
@@ -64,7 +60,6 @@ public class JDK8LocalDateTime {
         
     }
 
-    @Test
     public void 格式化时间(){
         LocalDateTime now = LocalDateTime.now();
 
@@ -92,7 +87,6 @@ public class JDK8LocalDateTime {
        
     }
 
-    @Test
     public void 时间戳转换(){
         //Date Instant转换
         Instant instant = Instant.now();
@@ -129,7 +123,6 @@ public class JDK8LocalDateTime {
         System.out.println("程序运行耗时为 ： " + duration1.toMillis() + "毫秒");
     }
 
-    @Test
     public void 对时间进行增加_减少年月日时分秒操作(){
         LocalDateTime now = LocalDateTime.now();
         System.out.println("后5天时间:"+now.plusDays(5));
@@ -186,7 +179,6 @@ public class JDK8LocalDateTime {
         
     }
 
-    @Test
     public void 创建指定时间(){
         LocalDate ld3=LocalDate.of(2017, Month.NOVEMBER, 17);
         LocalDate ld4=LocalDate.of(2018, 02, 11);
@@ -200,7 +192,6 @@ public class JDK8LocalDateTime {
         System.out.println(localDateTime);//2018-01-13T09:43:20
     }
 
-    @Test
     public void 将年月日修改为指定值(){
         LocalDate now = LocalDate.now();
         //当前时间基础上，指定本年当中的第几天，取值范围为1-365,366
@@ -225,7 +216,6 @@ public class JDK8LocalDateTime {
 
     }
 
-    @Test
     public void 时间相差比较(){
         //示例一: 具体相差的年月日
         LocalDate ld=LocalDate.parse("2017-11-17");
@@ -314,7 +304,6 @@ public class JDK8LocalDateTime {
         // 纳秒:-6380762427000000
     }
 
-    @Test
     public void 时区时间计算(){
         //得到其他时区的时间。
 

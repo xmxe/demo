@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  * 厉害了！通过Java技术手段，获取女朋友定位地址... https://mp.weixin.qq.com/s/QLDNo88mbBw59mckNNswyQ
- **/
+ */
 public class ImgCode {
     public static void main(String[] args) throws Exception {
 
