@@ -4,47 +4,6 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "java",
-            "name": "Launch DynamicProxtTest",
-            "request": "launch",
-            "mainClass": "com.xmxe.study_demo.designpattern.proxy.dynamicproxy.DynamicProxtTest",
-            "projectName": "study-demo"
-        },
-        {
-            "type": "java",
-            "name": "Launch JDK8LocalDateTime",
-            "request": "launch",
-            "mainClass": "com.xmxe.study_demo.jdkfeature.JDK8LocalDateTime",
-            "projectName": "study-demo"
-        },
-        {
-            "type": "java",
-            "name": "Launch Processing",
-            "request": "launch",
-            "mainClass": "com.xmxe.study_demo.util.Processing",
-            "projectName": "study-demo"
-        },
-        {
-            "type": "java",
-            "name": "Launch FutureTaskTest",
-            "request": "launch",
-            "mainClass": "com.xmxe.study_demo.thread.FutureTaskTest",
-            "projectName": "study-demo"
-        },
-        {
-            "type": "java",
-            "name": "Launch CompletableFutureTest",
-            "request": "launch",
-            "mainClass": "com.xmxe.study_demo.thread.juc.CompletableFutureTest",
-            "projectName": "study-demo"
-        },
-        {
-            "type": "java",
-            "name": "Launch EnumTest",
-            "request": "launch",
-            "mainClass": "com.xmxe.study_demo.enums.EnumTest",
-            "projectName": "study-demo"
-        }
+        
     ]
 }
