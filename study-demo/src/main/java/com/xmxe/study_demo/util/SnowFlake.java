@@ -4,6 +4,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * 深度介绍分布式系统原理与设计 https://mp.weixin.qq.com/s/-30WmwoYHg0oWZSWedE5MQ
+ * 一口气说出9种分布式ID生成方式 https://mp.weixin.qq.com/s/zXchd2SEjLkHftCe9-2_-Q
+ * 七种分布式全局ID生成策略，你更爱哪种 https://mp.weixin.qq.com/s/jGq7SvVggZ7gNqM2SZ320Q
+ * 一起学习下一线大厂的分布式唯一ID生成方案 https://mp.weixin.qq.com/s/dEkkSCbQzfhH3NuXsbbY0w
+ */
+
+/**
  * 雪花算法生成分布式ID
  */
 public class SnowFlake {
