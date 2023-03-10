@@ -15,6 +15,35 @@ public class AtomicReferenceTest {
          * AtomicReference:通过volatile和Unsafe提供的CAS函数实现原子操作。 自旋+CAS的无锁操作保证共享变量的线程安全
          * value是volatile类型，这保证了当某线程修改value的值时，其他线程看到的value的值都是最新的值，即修改之后的volatile的值
          * 但是CAS操作可能存在ABA问题(A值被B值替换后又被A值替换)。AtomicStampedReference的出现就是为了解决这问题
+         * 
+         * 原子性地更新AtomicReference内部的value值，其中expect代表当前AtomicReference的value值，update则是需要设置的新引用值。
+         * 该方法会返回一个boolean的结果，当expect和AtomicReference的当前值不相等时，修改会失败，返回值为false，若修改成功则会返回true。
+         * compareAndSet(V expect, V update)
+         * 
+         * 原子性地更新AtomicReference内部的value值，并且返回AtomicReference的旧值。
+         * getAndSet(V newValue)
+         * 
+         * 原子性地更新value值，并且返回AtomicReference的旧值，该方法需要传入一个Function接口。
+         * getAndUpdate(UnaryOperator<V> updateFunction)
+         * 
+         * 原子性地更新value值，并且返回AtomicReference更新后的新值，该方法需要传入一个Function接口。
+         * updateAndGet(UnaryOperator<V> updateFunction)
+         * 
+         * 原子性地更新value值，并且返回AtomicReference更新前的旧值。该方法需要传入两个参数，第一个是更新后的新值，第二个是BinaryOperator接口。
+         * getAndAccumulate(V x, BinaryOperator<V> accumulatorFunction)
+         * 
+         * 原子性地更新value值，并且返回AtomicReference更新后的值。该方法需要传入两个参数，第一个是更新的新值，第二个是BinaryOperator接口。
+         * accumulateAndGet(V x, BinaryOperator<V> accumulatorFunction)
+         * 
+         * 获取AtomicReference的当前对象引用值。
+         * get()
+         * 
+         * 设置AtomicReference最新的对象引用值，该新值的更新对其他线程立即可见。
+         * set(V newValue)
+         * 
+         * 设置AtomicReference的对象引用值。
+         * lazySet(V newValue)
+         * 
          */
         AtomicReference<String> atomicReference = new AtomicReference<String>("initialValue");
         atomicReference.set("newValue");
