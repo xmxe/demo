@@ -10,13 +10,13 @@ import org.apache.curator.retry.RetryNTimes;
 /**
  * Curator framework's leader election test.
  * Output:
- *  LeaderSelector-2 take leadership!
- *  LeaderSelector-2 relinquish leadership!
- *  LeaderSelector-1 take leadership!
- *  LeaderSelector-1 relinquish leadership!
- *  LeaderSelector-0 take leadership!
- *  LeaderSelector-0 relinquish leadership! 
- *      ...
+ * LeaderSelector-2 take leadership!
+ * LeaderSelector-2 relinquish leadership!
+ * LeaderSelector-1 take leadership!
+ * LeaderSelector-1 relinquish leadership!
+ * LeaderSelector-0 take leadership!
+ * LeaderSelector-0 relinquish leadership!
+ * ...
  */
 public class ZKLeaderByCurator {
 
@@ -60,13 +60,12 @@ public class ZKLeaderByCurator {
         // 1.Connect to zk
         CuratorFramework client = CuratorFrameworkFactory.newClient(
                 ZK_ADDRESS,
-                new RetryNTimes(10, 5000)
-        );
+                new RetryNTimes(10, 5000));
         client.start();
 
         // 2.Ensure path
         try {
-            
+
             // new EnsurePath(ZK_PATH).ensure(client.getZookeeperClient());// 过时
             client.create().creatingParentContainersIfNeeded();
         } catch (Exception e) {
@@ -74,12 +73,12 @@ public class ZKLeaderByCurator {
         }
 
         // 3.Register listener
-        try(LeaderSelector selector = new LeaderSelector(client, ZK_PATH, listener)){
+        try (LeaderSelector selector = new LeaderSelector(client, ZK_PATH, listener)) {
             selector.autoRequeue();
             selector.start();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 }

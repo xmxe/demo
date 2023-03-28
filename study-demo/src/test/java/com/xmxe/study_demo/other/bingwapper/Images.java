@@ -3,7 +3,7 @@ package com.xmxe.study_demo.other.bingwapper;
 import java.util.Objects;
 
 public class Images {
-    
+
     private String desc;
     private String date;
     private String url;
@@ -11,7 +11,7 @@ public class Images {
     @Override
     public String toString() {
         String smallUrl = url + "&pid=hp&w=384&h=216&rs=1&c=4";
-        //return String.format("![](%s)[%s\\| %s](%s)", smallUrl, date, desc, url);
+        // return String.format("![](%s)[%s\\| %s](%s)", smallUrl, date, desc, url);
         return String.format("![](%s)%s [download 4k](%s)", smallUrl, date, url);
     }
 
@@ -59,11 +59,15 @@ public class Images {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        Images images = (Images)o;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Images images = (Images) o;
         return Objects.equals(desc, images.desc) && Objects.equals(date, images.date)
-            && Objects.equals(url, images.url);
+                && Objects.equals(url, images.url);
     }
 
     @Override

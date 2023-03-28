@@ -25,8 +25,9 @@ public class ExcelUtils {
 
 	/**
 	 * 读取指定Sheet页的内容
+	 * 
 	 * @param filepath filepath 文件全路径
-	 * @param sheetNo sheet序号,从0开始,如果读取全文sheetNo设置null
+	 * @param sheetNo  sheet序号,从0开始,如果读取全文sheetNo设置null
 	 */
 	public static String readExcel(String filepath, Integer sheetNo)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -54,6 +55,7 @@ public class ExcelUtils {
 
 	/**
 	 * 根据文件路径获取Workbook对象
+	 * 
 	 * @param filepath 文件全路径
 	 */
 	public static Workbook getWorkbook(String filepath)
@@ -88,6 +90,7 @@ public class ExcelUtils {
 
 	/**
 	 * 获取后缀
+	 * 
 	 * @param filepath 文件全路径
 	 */
 	private static String getSuffiex(String filepath) {
@@ -100,8 +103,10 @@ public class ExcelUtils {
 		}
 		return filepath.substring(index + 1, filepath.length());
 	}
+
 	/**
 	 * 获取sheet页的所有内容
+	 * 
 	 * @param sheet
 	 * @return
 	 */
@@ -119,7 +124,7 @@ public class ExcelUtils {
 						if (cell != null) {
 							// cell.setCellType(CellType.STRING);// 过时
 							// sb.append(cell.getStringCellValue() + " ");
-							
+
 							String value = formatter.formatCellValue(cell);
 							sb.append(value);
 						}
@@ -134,8 +139,9 @@ public class ExcelUtils {
 
 	/**
 	 * 读取指定Sheet页的表头
+	 * 
 	 * @param filepath filepath 文件全路径
-	 * @param sheetNo sheet序号,从0开始,必填
+	 * @param sheetNo  sheet序号,从0开始,必填
 	 */
 	public static Row readTitle(String filepath, int sheetNo)
 			throws IOException, EncryptedDocumentException, InvalidFormatException {
@@ -167,10 +173,11 @@ public class ExcelUtils {
 
 	/**
 	 * 创建Excel文件
-	 * @param filepath 文件全路径
+	 * 
+	 * @param filepath  文件全路径
 	 * @param sheetName 新Sheet页的名字
-	 * @param titles 表头
-	 * @param values 每行的单元格
+	 * @param titles    表头
+	 * @param values    每行的单元格
 	 */
 	public static boolean writeExcel(String filepath, String sheetName, List<String> titles,
 			List<Map<String, Object>> values) throws IOException {
@@ -262,7 +269,8 @@ public class ExcelUtils {
 			return success;
 		}
 	}
-	public static Workbook createWorkbook(String filepath){
+
+	public static Workbook createWorkbook(String filepath) {
 		String suffiex = getSuffiex(filepath);
 		if (StringUtils.isBlank(suffiex)) {
 			throw new IllegalArgumentException("文件后缀不能为空");
@@ -361,6 +369,7 @@ public class ExcelUtils {
 
 	/**
 	 * 将源文件的内容复制到新Excel文件(可供理解Excel使用,使用价值不大)
+	 * 
 	 * @param srcFilepath 源文件全路径
 	 * @param desFilepath 目标文件全路径
 	 */
@@ -374,7 +383,7 @@ public class ExcelUtils {
 		Workbook workbook = getWorkbook(srcFilepath);
 		// 公式
 		FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-		
+
 		if (workbook != null) {
 			int numberOfSheets = workbook.getNumberOfSheets();
 			for (int k = 0; k < numberOfSheets; k++) {
@@ -420,40 +429,38 @@ public class ExcelUtils {
 		}
 	}
 
-
 	/*
 	 * getPhysicalNumberOfCells是获取不为空的列个数。
 	 * getLastCellNum是获取最后一个不为空的列是第几个。
 	 */
-
 	/**
 	 * 读取指定行或指定列的数据
 	 *
 	 * @param filePath 文件路径
-	 * @param sheetNo sheet页
-	 * @param num 表的行数或列数 0开始
-	 * @param is true:指定第几列 false:指定第几行
+	 * @param sheetNo  sheet页
+	 * @param num      表的行数或列数 0开始
+	 * @param is       true:指定第几列 false:指定第几行
 	 */
-	public static List<String> readExcelData(String filePath, int sheetNo,int num,boolean is) {
+	public static List<String> readExcelData(String filePath, int sheetNo, int num, boolean is) {
 		List<String> strLists = new ArrayList<>();
 		try {
 			Workbook workbook = getWorkbook(filePath);
 			Sheet sheet = workbook.getSheetAt(sheetNo); // 获取表
 			Row row = null;
-			if(is) {
+			if (is) {
 				int rowNum = sheet.getPhysicalNumberOfRows(); // 获取总行数
-				//int rowNum = sheet.getLastRowNum();
+				// int rowNum = sheet.getLastRowNum();
 				for (int i = 0; i < rowNum; i++) {
 					row = sheet.getRow(i);
-					if(row != null) {
+					if (row != null) {
 						Cell cell = row.getCell(num);
 						strLists.add(getXcellVal(cell));
 					}
 				}
-			}else {
-				row = sheet.getRow(num);//获取指定行
-				int columnNum = row.getPhysicalNumberOfCells();//获取总列数
-				for(int i = 0;i < columnNum; i++) {
+			} else {
+				row = sheet.getRow(num);// 获取指定行
+				int columnNum = row.getPhysicalNumberOfCells();// 获取总列数
+				for (int i = 0; i < columnNum; i++) {
 					Cell cell = row.getCell(i);
 					strLists.add(getXcellVal(cell));
 				}
@@ -466,21 +473,22 @@ public class ExcelUtils {
 		}
 		return null;
 	}
+
 	/**
 	 * 读取指定行、指定列的数据
 	 *
 	 * @param filePath 文件路径
-	 * @param sheetNo sheet页
-	 * @param rowNum 表的行数 0开始
-	 * @param colNum 表的列数 0开始
+	 * @param sheetNo  sheet页
+	 * @param rowNum   表的行数 0开始
+	 * @param colNum   表的列数 0开始
 	 */
-	public static List<String> readExcelData(String filePath, int sheetNo,int rowNum,int colNum) {
+	public static List<String> readExcelData(String filePath, int sheetNo, int rowNum, int colNum) {
 		List<String> strLists = new ArrayList<>();
 		try {
 			Workbook workbook = getWorkbook(filePath);
 			Sheet sheet = workbook.getSheetAt(sheetNo); // 获取表
 			Row row = null;
-			row = sheet.getRow(rowNum);//获取指定行
+			row = sheet.getRow(rowNum);// 获取指定行
 			Cell cell = row.getCell(colNum);
 			strLists.add(getXcellVal(cell));
 
@@ -506,35 +514,35 @@ public class ExcelUtils {
 			return "";
 		}
 		switch (cell.getCellType()) {
-		case NUMERIC:
-			if (DateUtil.isCellDateFormatted(cell)) {
-				val = fmt.format(cell.getDateCellValue()); // 日期型
-			} else {
-				val = df.format(cell.getNumericCellValue()); // 数字型
-			}
-			break;
-		case STRING: // 文本类型
-			val = cell.getStringCellValue();
-			break;
-		case FORMULA: // 公式
-			try {
-				val = String.valueOf(cell.getStringCellValue());
-			} catch (IllegalStateException e) {
-				val = String.valueOf(cell.getNumericCellValue());
-			}
-			break;
-		case BLANK: // 空
-			val = cell.getStringCellValue();
-			break;
-		case BOOLEAN:// 布尔
-			val = String.valueOf(cell.getBooleanCellValue());
-			break;
-		case ERROR:// 错误
-			val = "ERROR..CHECK DATA";
-			break;
-		default:
-			val = cell.getRichStringCellValue() == null ? null : cell
-					.getRichStringCellValue().toString();
+			case NUMERIC:
+				if (DateUtil.isCellDateFormatted(cell)) {
+					val = fmt.format(cell.getDateCellValue()); // 日期型
+				} else {
+					val = df.format(cell.getNumericCellValue()); // 数字型
+				}
+				break;
+			case STRING: // 文本类型
+				val = cell.getStringCellValue();
+				break;
+			case FORMULA: // 公式
+				try {
+					val = String.valueOf(cell.getStringCellValue());
+				} catch (IllegalStateException e) {
+					val = String.valueOf(cell.getNumericCellValue());
+				}
+				break;
+			case BLANK: // 空
+				val = cell.getStringCellValue();
+				break;
+			case BOOLEAN:// 布尔
+				val = String.valueOf(cell.getBooleanCellValue());
+				break;
+			case ERROR:// 错误
+				val = "ERROR..CHECK DATA";
+				break;
+			default:
+				val = cell.getRichStringCellValue() == null ? null
+						: cell.getRichStringCellValue().toString();
 		}
 
 		return val;

@@ -35,16 +35,16 @@ public class NettyClient {
 
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(group)
-                        .channel(NioSocketChannel.class)
-                        .option(ChannelOption.TCP_NODELAY, true)
-                        .handler(new ChannelInitializer<SocketChannel>() {
-                                    @Override
-                                    public void initChannel(SocketChannel ch) throws Exception {
-                                    ch.pipeline().addLast(
+                    .channel(NioSocketChannel.class)
+                    .option(ChannelOption.TCP_NODELAY, true)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(
                                     // new LoggingHandler(LogLevel.INFO),
-                                            new EchoClientHandler(firstMessageSize));
-                                    }
-                                });
+                                    new EchoClientHandler(firstMessageSize));
+                        }
+                    });
 
             // Start the client.
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
@@ -57,9 +57,9 @@ public class NettyClient {
     }
 
     static class EchoClientHandler extends ChannelInboundHandlerAdapter {
-    
+
         private final ByteBuf firstMessage;
-    
+
         /**
          * Creates a client-side handler.
          */
@@ -72,25 +72,25 @@ public class NettyClient {
                 firstMessage.writeByte((byte) i);
             }
         }
-    
+
         @Override
         public void channelActive(ChannelHandlerContext ctx) {
             ctx.writeAndFlush(firstMessage);
             System.out.print("active");
         }
-    
+
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             ctx.write(msg);
             System.out.print("read");
         }
-    
+
         @Override
         public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
             ctx.flush();
             System.out.print("readok");
         }
-    
+
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
             // Close the connection when an exception is raised.

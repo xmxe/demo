@@ -46,24 +46,25 @@ public class HttpClientUtil3 {
 
     private static final Logger log = LoggerFactory.getLogger(HttpClientUtil3.class);
 
-    private HttpClientUtil3() {}
+    private HttpClientUtil3() {
+    }
 
-    //多线程共享实例
+    // 多线程共享实例
     private static CloseableHttpClient httpClient;
 
     static {
         SSLContext sslContext = createSSLContext();
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
         // 注册http套接字工厂和https套接字工厂
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE)
                 .register("https", sslsf)
                 .build();
         // 连接池管理器
         PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-        connMgr.setMaxTotal(300);//连接池最大连接数
-        connMgr.setDefaultMaxPerRoute(300);//每个路由最大连接数，设置的过小，无法支持大并发
-        connMgr.setValidateAfterInactivity(5 * 1000); //在从连接池获取连接时，连接不活跃多长时间后需要进行一次验证
+        connMgr.setMaxTotal(300);// 连接池最大连接数
+        connMgr.setDefaultMaxPerRoute(300);// 每个路由最大连接数，设置的过小，无法支持大并发
+        connMgr.setValidateAfterInactivity(5 * 1000); // 在从连接池获取连接时，连接不活跃多长时间后需要进行一次验证
         // 请求参数配置管理器
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(60000)
@@ -79,6 +80,7 @@ public class HttpClientUtil3 {
 
     /**
      * GET请求
+     * 
      * @param url
      * @return
      */
@@ -88,6 +90,7 @@ public class HttpClientUtil3 {
 
     /**
      * GET请求/带头部的信息
+     * 
      * @param url
      * @param header
      * @return
@@ -98,6 +101,7 @@ public class HttpClientUtil3 {
 
     /**
      * POST请求/无参数
+     * 
      * @param url
      * @return
      */
@@ -107,6 +111,7 @@ public class HttpClientUtil3 {
 
     /**
      * POST请求/有参数
+     * 
      * @param url
      * @param param
      * @return
@@ -117,6 +122,7 @@ public class HttpClientUtil3 {
 
     /**
      * POST请求/无参数带头部
+     * 
      * @param url
      * @param header
      * @return
@@ -127,6 +133,7 @@ public class HttpClientUtil3 {
 
     /**
      * POST请求/有参数带头部
+     * 
      * @param url
      * @param header
      * @param params
@@ -138,6 +145,7 @@ public class HttpClientUtil3 {
 
     /**
      * 上传文件流
+     * 
      * @param url
      * @param header
      * @param param
@@ -145,29 +153,34 @@ public class HttpClientUtil3 {
      * @param inputStream
      * @return
      */
-    public static RequestResult postUploadFileStream(String url, Map<String, String> header, Map<String, String> param, String fileName, InputStream inputStream) {
+    public static RequestResult postUploadFileStream(String url, Map<String, String> header, Map<String, String> param,
+            String fileName, InputStream inputStream) {
         byte[] stream = inputStream2byte(inputStream);
         return postUploadFileStream(url, header, param, fileName, stream);
     }
 
     /**
      * 上传文件
-     * @param url 上传地址
-     * @param header 请求头部
-     * @param param 请求表单
+     * 
+     * @param url      上传地址
+     * @param header   请求头部
+     * @param param    请求表单
      * @param fileName 文件名称
-     * @param stream 文件流
+     * @param stream   文件流
      * @return
      */
-    public static RequestResult postUploadFileStream(String url, Map<String, String> header, Map<String, String> param, String fileName, byte[] stream) {
-        String infoMessage =  new StringBuilder().append("request postUploadFileStream，url:").append(url).append("，header:").append(header.toString()).append("，param:").append(JSONObject.toJSONString(param)).append("，fileName:").append(fileName).toString();
+    public static RequestResult postUploadFileStream(String url, Map<String, String> header, Map<String, String> param,
+            String fileName, byte[] stream) {
+        String infoMessage = new StringBuilder().append("request postUploadFileStream，url:").append(url)
+                .append("，header:").append(header.toString()).append("，param:").append(JSONObject.toJSONString(param))
+                .append("，fileName:").append(fileName).toString();
         log.info(infoMessage);
         RequestResult result = new RequestResult();
-        if(StringUtils.isBlank(fileName)){
+        if (StringUtils.isBlank(fileName)) {
             log.warn("上传文件名称为空");
             throw new RuntimeException("上传文件名称为空");
         }
-        if(Objects.isNull(stream)){
+        if (Objects.isNull(stream)) {
             log.warn("上传文件流为空");
             throw new RuntimeException("上传文件流为空");
         }
@@ -178,14 +191,14 @@ public class HttpClientUtil3 {
             if (Objects.nonNull(header) && !header.isEmpty()) {
                 for (Map.Entry<String, String> entry : header.entrySet()) {
                     httpPost.setHeader(entry.getKey(), entry.getValue());
-                    if(log.isDebugEnabled()){
+                    if (log.isDebugEnabled()) {
                         log.debug(entry.getKey() + ":" + entry.getValue());
                     }
                 }
             }
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setCharset(Charset.forName("UTF-8"));//使用UTF-8
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//设置浏览器兼容模式
+            builder.setCharset(Charset.forName("UTF-8"));// 使用UTF-8
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);// 设置浏览器兼容模式
             if (Objects.nonNull(param) && !param.isEmpty()) {
                 for (Map.Entry<String, String> entry : param.entrySet()) {
                     if (log.isDebugEnabled()) {
@@ -194,9 +207,9 @@ public class HttpClientUtil3 {
                     builder.addPart(entry.getKey(), new StringBody(entry.getValue(), contentType));
                 }
             }
-            builder.addBinaryBody("file",  stream, contentType, fileName);//封装上传文件
+            builder.addBinaryBody("file", stream, contentType, fileName);// 封装上传文件
             httpPost.setEntity(builder.build());
-            //请求执行，获取返回对象
+            // 请求执行，获取返回对象
             response = httpClient.execute(httpPost);
             log.info("postUploadFileStream response status:{}", response.getStatusLine());
             int statusCode = response.getStatusLine().getStatusCode();
@@ -221,6 +234,7 @@ public class HttpClientUtil3 {
 
     /**
      * 从下载地址获取文件流(如果链接出现双斜杠，请用OKHttp)
+     * 
      * @param url
      * @return
      */
@@ -234,10 +248,10 @@ public class HttpClientUtil3 {
             log.info("getDownloadFileStream response status:{}", response.getStatusLine());
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpStatus.SC_OK) {
-                //请求成功
+                // 请求成功
                 HttpEntity entity = response.getEntity();
                 if (entity != null && entity.getContent() != null) {
-                    //复制输入流
+                    // 复制输入流
                     byteOutStream = cloneInputStream(entity.getContent());
                 }
             }
@@ -248,17 +262,20 @@ public class HttpClientUtil3 {
         }
         return byteOutStream;
     }
-    
+
     /**
      * 表单请求
-     * @param url 地址
+     * 
+     * @param url    地址
      * @param header 请求头部
-     * @param param 请求表单
+     * @param param  请求表单
      * @return
      */
     public static RequestResult sendPostForm(String url, Map<String, String> header, Map<String, String> param) {
-        String infoMessage =  new StringBuilder().append("request postForm，url:").append(url).append("，header:").append(JSONObject.toJSONString(header)).append("，param:").append(JSONObject.toJSONString(param)).toString();
-        if(log.isDebugEnabled()){
+        String infoMessage = new StringBuilder().append("request postForm，url:").append(url).append("，header:")
+                .append(JSONObject.toJSONString(header)).append("，param:").append(JSONObject.toJSONString(param))
+                .toString();
+        if (log.isDebugEnabled()) {
             log.debug(infoMessage);
         }
         RequestResult result = new RequestResult();
@@ -269,7 +286,7 @@ public class HttpClientUtil3 {
             if (Objects.nonNull(header) && !header.isEmpty()) {
                 for (Map.Entry<String, String> entry : header.entrySet()) {
                     httpPost.setHeader(entry.getKey(), entry.getValue());
-                    if(log.isDebugEnabled()){
+                    if (log.isDebugEnabled()) {
                         log.debug(entry.getKey() + ":" + entry.getValue());
                     }
                 }
@@ -284,9 +301,9 @@ public class HttpClientUtil3 {
                 }
             }
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, Charset.forName("UTF-8")));
-            //请求执行，获取返回对象
+            // 请求执行，获取返回对象
             response = httpClient.execute(httpPost);
-            if(log.isDebugEnabled()){
+            if (log.isDebugEnabled()) {
                 log.debug("postForm response status:{}", response.getStatusLine());
             }
             int statusCode = response.getStatusLine().getStatusCode();
@@ -296,7 +313,7 @@ public class HttpClientUtil3 {
             HttpEntity httpEntity = response.getEntity();
             if (Objects.nonNull(httpEntity)) {
                 String content = EntityUtils.toString(httpEntity, "UTF-8");
-                if(log.isDebugEnabled()){
+                if (log.isDebugEnabled()) {
                     log.debug("postForm response body:{}", content);
                 }
                 result.setMsg(content);
@@ -310,9 +327,9 @@ public class HttpClientUtil3 {
         return result;
     }
 
-
     /**
      * 发送http请求(通用方法)
+     * 
      * @param httpMethod 请求方式（GET、POST、PUT、DELETE）
      * @param url        请求路径
      * @param header     请求头
@@ -320,9 +337,11 @@ public class HttpClientUtil3 {
      * @return 响应文本
      */
     public static String sendHttp(HttpMethod httpMethod, String url, Map<String, String> header, String params) {
-        String infoMessage = new StringBuilder().append("request sendHttp，url:").append(url).append("，method:").append(httpMethod.name()).append("，header:").append(JSONObject.toJSONString(header)).append("，param:").append(params).toString();
+        String infoMessage = new StringBuilder().append("request sendHttp，url:").append(url).append("，method:")
+                .append(httpMethod.name()).append("，header:").append(JSONObject.toJSONString(header)).append("，param:")
+                .append(params).toString();
         log.info(infoMessage);
-        //返回结果
+        // 返回结果
         String result = null;
         CloseableHttpResponse response = null;
         long beginTime = System.currentTimeMillis();
@@ -331,15 +350,15 @@ public class HttpClientUtil3 {
             HttpRequestBase request = buildHttpMethod(httpMethod, url);
             if (Objects.nonNull(header) && !header.isEmpty()) {
                 for (Map.Entry<String, String> entry : header.entrySet()) {
-                    //打印头部信息
-                    if(log.isDebugEnabled()){
+                    // 打印头部信息
+                    if (log.isDebugEnabled()) {
                         log.debug(entry.getKey() + ":" + entry.getValue());
                     }
                     request.setHeader(entry.getKey(), entry.getValue());
                 }
             }
             if (StringUtils.isNotEmpty(params)) {
-                if(HttpMethod.POST.equals(httpMethod) || HttpMethod.PUT.equals(httpMethod)){
+                if (HttpMethod.POST.equals(httpMethod) || HttpMethod.PUT.equals(httpMethod)) {
                     ((HttpEntityEnclosingRequest) request).setEntity(new StringEntity(params, contentType));
                 }
             }
@@ -353,7 +372,7 @@ public class HttpClientUtil3 {
         } catch (Exception e) {
             log.error(infoMessage + " failure", e);
         } finally {
-            HttpClientUtils.closeQuietly(response);//关闭返回对象
+            HttpClientUtils.closeQuietly(response);// 关闭返回对象
         }
         long endTime = System.currentTimeMillis();
         log.info("request sendHttp response time cost:" + (endTime - beginTime) + " ms");
@@ -370,9 +389,9 @@ public class HttpClientUtil3 {
     /**
      * 上传返回结果封装
      */
-    public static class RequestResult{
-        private boolean isSuccess;//是否成功
-        private String msg;//消息
+    public static class RequestResult {
+        private boolean isSuccess;// 是否成功
+        private String msg;// 消息
 
         public boolean isSuccess() {
             return isSuccess;
@@ -399,6 +418,7 @@ public class HttpClientUtil3 {
 
     /**
      * 构建请求方法
+     * 
      * @param method
      * @param url
      * @return
@@ -419,11 +439,12 @@ public class HttpClientUtil3 {
 
     /**
      * 配置证书
+     * 
      * @return
      */
-    private static SSLContext createSSLContext(){
+    private static SSLContext createSSLContext() {
         try {
-            //信任所有,支持导入ssl证书
+            // 信任所有,支持导入ssl证书
             TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
             SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
             return sslContext;
@@ -435,6 +456,7 @@ public class HttpClientUtil3 {
 
     /**
      * 复制文件流
+     * 
      * @param input
      * @return
      */
@@ -456,6 +478,7 @@ public class HttpClientUtil3 {
 
     /**
      * 输入流转字节流
+     * 
      * @param in
      * @return
      */

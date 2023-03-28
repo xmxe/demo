@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
 public class PropertiesUtil {
 	private static Properties config = null;
 
@@ -32,15 +31,17 @@ public class PropertiesUtil {
 			return null;
 		}
 	}
-	public static String readValue(String key, String defaultVal){
+
+	public static String readValue(String key, String defaultVal) {
 		String value = readValue(key);
-		if(value == null || value.length()==0){
+		if (value == null || value.length() == 0) {
 			value = defaultVal;
 		}
 		return value;
 	}
+
 	// 获取prop实例
-	public static Properties getInstance(){
+	public static Properties getInstance() {
 		return config;
 	}
 

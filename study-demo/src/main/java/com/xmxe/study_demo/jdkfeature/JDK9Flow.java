@@ -25,7 +25,7 @@ public class JDK9Flow {
 
             @Override
             public void onNext(String item) {
-                System.out.println("接收到 publisher 发来的消息了：" + item);
+                System.out.println("接收到publisher发来的消息了:" + item);
                 // 接收完成后，可以继续接收或者不接收
                 // this.subscription.cancel();
                 try {
@@ -105,7 +105,7 @@ public class JDK9Flow {
 
             @Override
             public void onNext(String item) {
-                System.out.println("接收到 publisher 发来的消息了：" + item);
+                System.out.println("接收到publisher发来的消息了：" + item);
                 // 接收完成后，可以继续接收或者不接收
                 // this.subscription.cancel();
                 try {
@@ -130,7 +130,7 @@ public class JDK9Flow {
         };
         dataFilter.subscribe(subscriber);
         for (int i = 0; i < 500; i++) {
-            System.out.println("发送消息 i--------->" + i);
+            System.out.println("发送消息i--------->" + i);
             publisher.submit("hello:" + i);
         }
         // 关闭发布者

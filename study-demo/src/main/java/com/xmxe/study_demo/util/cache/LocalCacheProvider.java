@@ -12,14 +12,11 @@ import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * 学习下真正的缓存之王，以及在Spring Boot中的使用！https://mp.weixin.qq.com/s/lmneEosfILnp6g30MrYPjg
- */
-@SuppressWarnings("unchecked")//取消警告
+@SuppressWarnings("unchecked") // 取消警告
 public class LocalCacheProvider {
 
     private static Map<String, Cache<String, Object>> _cacheMap = Maps.newConcurrentMap();
-    
+
     private static long CACHE_MAXIMUM_SIZE = 10000;
     private static long CACHE_MINUTE = 1000;
 
@@ -108,7 +105,7 @@ public class LocalCacheProvider {
                 obj = (T) cacheContainer.getIfPresent(key);
             } else {
                 final Long cachedTime = expireTime;
-                System.out.println("cachedTime = "+cachedTime);
+                System.out.println("cachedTime = " + cachedTime);
                 obj = (T) cacheContainer.get(key, () -> {
                     T retObj = function.apply(funcParm);
                     return retObj;
@@ -122,7 +119,7 @@ public class LocalCacheProvider {
     }
 
     /**
-     * 设置缓存键值 直接向缓存中插入值，这会直接覆盖掉给定键之前映射的值
+     * 设置缓存键值,直接向缓存中插入值，这会直接覆盖掉给定键之前映射的值
      *
      * @param key 缓存键 不可为空
      * @param obj 缓存值 不可为空
@@ -133,7 +130,7 @@ public class LocalCacheProvider {
     }
 
     /**
-     * 设置缓存键值 直接向缓存中插入值，这会直接覆盖掉给定键之前映射的值
+     * 设置缓存键值,直接向缓存中插入值，这会直接覆盖掉给定键之前映射的值
      *
      * @param key        缓存键 不可为空
      * @param obj        缓存值 不可为空
@@ -158,7 +155,7 @@ public class LocalCacheProvider {
     /**
      * 移除缓存
      *
-     * @param key 缓存键 不可为空
+     * @param key 缓存键,不可为空
      **/
     public void remove(String key) {
         if (StringUtils.isEmpty(key) == true) {
@@ -175,7 +172,7 @@ public class LocalCacheProvider {
     /**
      * 是否存在缓存
      *
-     * @param key 缓存键 不可为空
+     * @param key 缓存键,不可为空
      **/
     public boolean contains(String key) {
         boolean exists = false;
@@ -229,7 +226,7 @@ public class LocalCacheProvider {
     /**
      * 获取过期时间 单位：毫秒
      *
-     * @param expireTime 传人的过期时间 单位毫秒 如小于1分钟，默认为10分钟
+     * @param expireTime 传人的过期时间,单位毫秒.如小于1分钟，默认为10分钟
      **/
     private Long getExpireTime(Long expireTime) {
         Long result = expireTime;

@@ -7,8 +7,8 @@ package com.xmxe.study_demo.designpattern.decorator;
 public class DecoratorMode {
     public static void main(String[] args) {
         Clothes clothes = new MakeClothes();
-        clothes = new EmbroideryDecorator(clothes);//给衣服绣花
-        clothes = new MickeyDecorator(clothes);//给衣服添加米老鼠图案
+        clothes = new EmbroideryDecorator(clothes);// 给衣服绣花
+        clothes = new MickeyDecorator(clothes);// 给衣服添加米老鼠图案
         clothes.makeClothes();
         System.out.println("成品已经完成！");
     }

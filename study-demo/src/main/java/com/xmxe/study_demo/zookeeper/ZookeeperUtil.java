@@ -11,7 +11,7 @@ import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
 public class ZookeeperUtil {
-    
+
     private ZooKeeper zookeeper;
 
     public ZookeeperUtil(Watcher watcher) {

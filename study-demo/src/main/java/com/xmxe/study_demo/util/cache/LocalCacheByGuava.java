@@ -44,14 +44,14 @@ public class LocalCacheByGuava {
      * 全局缓存设置
      * 缓存项最大数量：100000缓存有效时间（天）：10
      */
-    private static LoadingCache<String, Object> loadCache(CacheLoader<String,Object> cacheLoader) throws Exception {
+    private static LoadingCache<String, Object> loadCache(CacheLoader<String, Object> cacheLoader) throws Exception {
         LoadingCache<String, Object> cache = CacheBuilder.newBuilder()
-                // 缓存池大小，在缓存项接近该大小时， Guava开始回收旧的缓存项
+                // 缓存池大小，在缓存项接近该大小时，Guava开始回收旧的缓存项
                 .maximumSize(GUAVA_CACHE_SIZE)
                 // 设置时间对象没有被读/写访问则对象从内存中删除(在另外的线程里面不定期维护)
-                .expireAfterAccess(GUAVA_CACHE_DAY, TimeUnit.DAYS)
+                .expireAfterAccess(GUAVA_CACHE_DAY,TimeUnit.DAYS)
                 // 设置时间对象没有被写访问则对象从内存中删除
-                .expireAfterWrite(GUAVA_CACHE_DAY, TimeUnit.DAYS)
+                .expireAfterWrite(GUAVA_CACHE_DAY,TimeUnit.DAYS)
                 // 移除监听器,缓存项被移除时会触发
                 .removalListener(new RemovalListener<String, Object>() {
                     @Override
@@ -65,7 +65,7 @@ public class LocalCacheByGuava {
     }
 
     /**
-     * 设置缓存值 注: 若已有该key值，则会先移除(会触发removalListener移除监听器)，再添加
+     * 设置缓存值 注:若已有该key值，则会先移除(会触发removalListener移除监听器)，再添加
      */
     public static void put(String key, Object value) {
         try {
@@ -149,7 +149,7 @@ public class LocalCacheByGuava {
      * 获取缓存状态
      * 
      */
-    public static CacheStats cacheStats(){
+    public static CacheStats cacheStats() {
         return GLOBAL_CACHE == null ? null : GLOBAL_CACHE.stats();
     }
 }

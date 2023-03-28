@@ -20,7 +20,8 @@ public class MyTest {
         Client client = dcf.createClient("http://localhost:8080/jn/ws/user?wsdl");
 
         // 需要密码的情况需要加上用户名和密码
-        // client.getOutInterceptors().add(new ClientLoginInterceptor(USER_NAME,PASS_WORD));
+        // client.getOutInterceptors().add(new
+        // ClientLoginInterceptor(USER_NAME,PASS_WORD));
         Object[] objects = new Object[0];
         try {
 
@@ -52,10 +53,9 @@ public class MyTest {
         // 迭代进行二分查找
         while (start <= end) {
             /*
-             * 我从c需要方向说明溢出原因，如果你定义一个假如是16位的mid，
-             * 那么如果start和end很大，二者求和超过16位那就溢出，高位那个进位其实被计算机舍弃了，那么得到的mid也就是错误的下标。
+             * 我从c需要方向说明溢出原因，如果你定义一个假如是16位的mid，那么如果start和end很大，二者求和超过16位那就溢出，高位那个进位其实被计算机舍弃了，那么得到的mid也就是错误的下标。
              */
-            // mid=(start+end)/2 有可能溢出
+            // mid=(start+end)/2有可能溢出
             mid = start + (end - start) / 2;
             if (array[mid] == target) {
                 return mid;
@@ -71,24 +71,19 @@ public class MyTest {
     @Test
     public void try_catch_finally_return() {
         // try中的return语句先执行了但并没有立即返回，等到finally执行结束后再return
-        // System.out.println(trycatchReturnTest1());// try block -> finally block ->
-        // b>25, b = 100 -> 100
-        // System.out.println(trycatchReturnTest2());// try block -> return statement ->
-        // finally block -> after return
+        System.out.println(trycatchReturnTest1());// try block -> finally block -> b>25, b = 100 -> 100
+        System.out.println(trycatchReturnTest2());// try block -> return statement -> finally block -> after return
 
         // finally块中的return语句会覆盖try块中的return返回
-        // System.out.println(trycatchReturnTest4());// try block -> finally block ->
-        // b>25, b = 100 -> 200
+        System.out.println(trycatchReturnTest4());// try block -> finally block -> b>25, b = 100 -> 200
 
         // 如果finally语句中没有return语句覆盖返回值，那么原来的返回值可能因为finally里的修改而改变也可能不变
-        // System.out.println(trycatchReturnTest5());// try block -> finally block ->
-        // b>25, b = 100 -> 100 无改变
-        // System.out.println(trycatchReturnTest6().get("KEY").toString());// FINALLY
+        System.out.println(trycatchReturnTest5());// try block -> finally block -> b>25, b = 100 -> 100 无改变
+        System.out.println(trycatchReturnTest6().get("KEY").toString());// FINALLY
         // 原因Java中只有传值没有传址
 
         // try块里的return语句在异常的情况下不会被执行，这样具体返回哪个看情况
-        // System.out.println(trycatchReturnTest7());// try block -> catch block ->
-        // finally block -> b>25, b = 35 -> 204
+        System.out.println(trycatchReturnTest7());// try block -> catch block -> finally block -> b>25, b = 35 -> 204
 
         // 当发生异常后，catch中的return执行情况与未发生异常时try中return的执行情况完全一样。
         System.out.println(trycatchReturnTest8());// try block -> catch block -> finally block -> b>25, b = 35 -> 35
@@ -222,8 +217,8 @@ public class MyTest {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            System.out.println("这是一个线程");
-            },"线程1");
+                System.out.println("这是一个线程");
+            }, "线程1");
             myThread.start();
             // 当设置中断状态时遇到线程阻塞会抛出InterruptedException异常并清除中断状态
             myThread.interrupt();
@@ -231,48 +226,41 @@ public class MyTest {
             System.out.println("当前线程" + Thread.currentThread().getName() + "---->是否中断" + Thread.interrupted());
             TimeUnit.SECONDS.sleep(3);
             // 调用isInterrupted()不会清除中断状态
-            System.out.println("调用线程是否中断 " + myThread.getName() + "---->是否中断" + myThread.isInterrupted());    
-            
+            System.out.println("调用线程是否中断 " + myThread.getName() + "---->是否中断" + myThread.isInterrupted());
+
         } catch (Exception e) {
             System.out.println("main catch");
             e.printStackTrace();
         }
     }
 
-
     @Test
-    public void 断言(){
+    public void 断言() {
         /*
          * 语法1：assert expression; //expression代表一个布尔类型的表达式，如果为真，就继续正常运行，如果为假，程序退出
-         * 
-         * 语法2：assert expression1 : expression2; //expression1是一个布尔表达式，expression2错误信息，
-         * 如果expression1为真，则程序忽略expression2继续运行；如果expression1为假，则程序抛出java.lang.AssertionError，并输入expression2。
-         * */
+         * 语法2：assert expression1 : expression2; //expression1是一个布尔表达式，expression2错误信息，如果expression1为真，则程序忽略expression2继续运行；如果expression1为假，则程序抛出java.lang.AssertionError，并输入expression2。
+         */
         // demo1
         int z = 6;
-        assert z==6; 
+        assert z == 6;
         System.out.println("如果断言正常，我就被打印");
 
-        assert 5==z : "断言失败，此表达式的信息将会在抛出异常的时候输出！"; 
-        System.out.println("断言2没有问题，Go！");
-        
+        assert 5 == z : "断言失败，此表达式的信息将会在抛出异常的时候输出！";
+        System.out.println("断言2没有问题,Go!");
+
         // demo2
-        int i = 3;  
-        switch (i) {  
-        case 1:  
-            System.out.println("正常");  
-            break;  
-        case 2:  
-            System.out.println("正常");  
-            break;  
-        default:  
-            assert false:"i的值无效";       //如果i的值不是你想要的，程序就警告退出  
-        }  
-        System.out.println("如果断言正常，我就被打印");  
-    }  
-    
+        int i = 3;
+        switch (i) {
+            case 1:
+                System.out.println("正常");
+                break;
+            case 2:
+                System.out.println("正常");
+                break;
+            default:
+                assert false : "i的值无效"; // 如果i的值不是你想要的，程序就警告退出
+        }
+        System.out.println("如果断言正常，我就被打印");
+    }
+
 }
-
-
-
-

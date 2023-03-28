@@ -6,11 +6,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * 5种限流算法，7种限流方式，挡住突发流量？https://mp.weixin.qq.com/s/xNvBdI99fKOsMFdoNC4K3w
- * 常用的限流算法有哪些？https://mp.weixin.qq.com/s/gsBl3J6iUEChODowLU9vjw
- * 新来个技术总监，把限流实现的那叫一个优雅，佩服！https://mp.weixin.qq.com/s/lSrFOBZHSlneNUh_tnfxjg
- */
 public class LimitAlgorithm {
 
     /**
@@ -82,7 +77,7 @@ public class LimitAlgorithm {
 
         /**
          * 1. 计算当前时间窗口
-         * 2. 更新当前窗口计数 & 重置过期窗口计数
+         * 2. 更新当前窗口计数&重置过期窗口计数
          * 3. 当前QPS是否超过限制
          *
          * @return
@@ -90,8 +85,8 @@ public class LimitAlgorithm {
         public synchronized boolean tryAcquire() {
             long currentTimeMillis = System.currentTimeMillis();
             // 1. 计算当前时间窗口
-            int currentIndex = (int)(currentTimeMillis % windowSize / (windowSize / windowCount));
-            // 2.  更新当前窗口计数 & 重置过期窗口计数
+            int currentIndex = (int) (currentTimeMillis % windowSize / (windowSize / windowCount));
+            // 2. 更新当前窗口计数&重置过期窗口计数
             int sum = 0;
             for (int i = 0; i < windowArray.length; i++) {
                 WindowInfo windowInfo = windowArray[i];
@@ -118,17 +113,19 @@ public class LimitAlgorithm {
                 this.time = time;
                 this.number = number;
             }
-            public void setTime(Long time){
+
+            public void setTime(Long time) {
                 this.time = time;
             }
-            public Long getTime(){
+
+            public Long getTime() {
                 return time;
             }
 
             // public void setNumber(AtomicInteger number){
-            //     this.number = number;
+            // this.number = number;
             // }
-            public AtomicInteger getNumber(){
+            public AtomicInteger getNumber() {
                 return number;
             }
         }
@@ -156,7 +153,6 @@ public class LimitAlgorithm {
         }
     }
 
-
     /**
      * 滑动日志算法是实现限流的另一种方法，这种方法比较简单。基本逻辑就是记录下所有的请求时间点，
      * 新请求到来时先判断最近指定时间范围内的请求数量是否超过指定阈值，由此来确定是否达到限流，
@@ -178,7 +174,7 @@ public class LimitAlgorithm {
         private TreeMap<Long, Long> treeMap = new TreeMap<>();
 
         /**
-         * 清理请求记录间隔, 60秒
+         * 清理请求记录间隔,60秒
          */
         private long claerTime = 60 * 1000;
 
@@ -228,19 +224,15 @@ public class LimitAlgorithm {
     }
 
     /**
-     * 漏桶算法中的漏桶是一个形象的比喻，这里可以用生产者消费者模式进行说明，请求是一个生产者，每一个请求都如一滴水，
-     * 请求到来后放到一个队列（漏桶）中，而桶底有一个孔，不断的漏出水滴，就如消费者不断的在消费队列中的内容，
-     * 消费的速率（漏出的速度）等于限流阈值。即假如QPS为2，则每1s/2=500ms 消费一次。漏桶的桶有大小，
-     * 就如队列的容量，当请求堆积超过指定容量时，会触发拒绝策略。
+     * 漏桶算法中的漏桶是一个形象的比喻，这里可以用生产者消费者模式进行说明，
+     * 请求是一个生产者，每一个请求都如一滴水，请求到来后放到一个队列（漏桶）中，而桶底有一个孔，不断的漏出水滴，就如消费者不断的在消费队列中的内容，消费的速率（漏出的速度）等于限流阈值。
+     * 即假如QPS为2，则每1s/2=500ms消费一次。漏桶的桶有大小，就如队列的容量，当请求堆积超过指定容量时，会触发拒绝策略。
      */
 
-
     /**
-     * 令牌桶算法同样是实现限流是一种常见的思路，最为常用的Google的Java开发工具包Guava中的限流工具类RateLimiter
-     * 就是令牌桶的一个实现。令牌桶的实现思路类似于生产者和消费之间的关系。系统服务作为生产者，按照指定频率向桶（容器）中添加
-     * 令牌，如QPS为2，每500ms 向桶中添加一个令牌，如果桶中令牌数量达到阈值，则不再添加。
-     * 请求执行作为消费者，每个请求都需要去桶中拿取一个令牌，取到令牌则继续执行；如果桶中无令牌可取，就触发拒绝策略，
-     * 可以是超时等待，也可以是直接拒绝本次请求，由此达到限流目的。
+     * 令牌桶算法同样是实现限流是一种常见的思路，最为常用的Google的Java开发工具包Guava中的限流工具类.RateLimiter就是令牌桶的一个实现。
+     * 令牌桶的实现思路类似于生产者和消费之间的关系。系统服务作为生产者，按照指定频率向桶（容器）中添加令牌，如QPS为2，每500ms向桶中添加一个令牌，如果桶中令牌数量达到阈值，则不再添加。
+     * 请求执行作为消费者，每个请求都需要去桶中拿取一个令牌，取到令牌则继续执行；如果桶中无令牌可取，就触发拒绝策略，可以是超时等待，也可以是直接拒绝本次请求，由此达到限流目的。
      */
 
 }

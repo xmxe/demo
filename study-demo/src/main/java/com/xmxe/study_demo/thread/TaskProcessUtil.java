@@ -19,7 +19,11 @@ import lombok.Data;
 
 /**
  * 多线程永动任务、优雅退出 https://mp.weixin.qq.com/s/Hf0UFDyRYM3oHZpVvHdLAw
- */ 
+ * 需求:
+ * 1.能同时执行多个永动(任务跑起来后，需要一直跑下去)的异步任务；2.每个异步任务，支持开多个线程去消费这个任务的数据；3.支持永动异步任务的优雅关闭，即关闭后，需要把所有的数据消费完毕后，再关闭。
+ * 完成上面的需求，需要注意几个点：
+ * 1.每个永动任务，可以开一个线程去执行；2.每个子任务，因为需要支持并发，需要用线程池控制；3.永动任务的关闭，需要通知子任务的并发线程，并支持永动任务和并发子任务的优雅关闭。
+ */
 public class TaskProcessUtil {
     // 每个任务，都有自己单独的线程池
     private static Map<String, ExecutorService> executors = new ConcurrentHashMap<>();
@@ -34,7 +38,7 @@ public class TaskProcessUtil {
     }
 
     // 获取线程池
-    public static ExecutorService getOrInitExecutors(String poolName,int poolSize) {
+    public static ExecutorService getOrInitExecutors(String poolName, int poolSize) {
         ExecutorService executorService = executors.get(poolName);
         if (null == executorService) {
             synchronized (TaskProcessUtil.class) {
@@ -60,6 +64,7 @@ public class TaskProcessUtil {
 @Data
 class Cat {
     private String catName;
+
     public Cat setCatName(String name) {
         this.catName = name;
         return this;
@@ -82,7 +87,7 @@ class ChildTask {
     // 程序执行入口
     public void doExecute() {
         int i = 0;
-        while(true) {
+        while (true) {
             System.out.println(taskName + ":Cycle-" + i + "-Begin");
             // 获取数据
             List<Cat> datas = queryData();
@@ -152,7 +157,7 @@ class ChildTask {
     // 获取永动任务数据
     private List<Cat> queryData() {
         List<Cat> datas = new ArrayList<>();
-        for (int i = 0; i < 5; i ++) {
+        for (int i = 0; i < 5; i++) {
             datas.add(new Cat().setCatName("罗小黑" + i));
         }
         return datas;
@@ -161,6 +166,7 @@ class ChildTask {
 
 class LoopTask {
     private List<ChildTask> childTasks;
+
     public void initLoopTask() {
         childTasks = new ArrayList<>();
         childTasks.add(new ChildTask("childTask1"));
@@ -174,6 +180,7 @@ class LoopTask {
             }).start();
         }
     }
+
     public void shutdownLoopTask() {
         if (!CollectionUtils.isEmpty(childTasks)) {
             for (ChildTask childTask : childTasks) {
@@ -181,7 +188,8 @@ class LoopTask {
             }
         }
     }
-    public static void main(String args[]) throws Exception{
+
+    public static void main(String args[]) throws Exception {
         LoopTask loopTask = new LoopTask();
         loopTask.initLoopTask();
         Thread.sleep(5000L);

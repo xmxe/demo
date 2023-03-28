@@ -5,20 +5,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- * 使用Semaphore信号量来控制并发执行的次数，如果超过域值信号量，则进入阻塞队列中排队等待获取信号量进行执行。
- * 如果阻塞队列中排队的请求过多超出系统处理能力，则可以在拒绝请求。
- * 相对Atomic优点：如果是瞬时的高并发，可以使请求在阻塞队列中排队，而不是马上拒绝请求，从而达到一个流量削峰的目的。
- *
- * acquire()  获取一个令牌，在获取到令牌、或者被其他线程调用中断之前线程一直处于阻塞状态。
-​ * acquire(int permits)  获取一个令牌，在获取到令牌、或者被其他线程调用中断、或超时之前线程一直处于阻塞状态。
- * acquireUninterruptibly() 获取一个令牌，在获取到令牌之前线程一直处于阻塞状态（忽略中断）。
- * tryAcquire() 尝试获得令牌，返回获取令牌成功或失败，不阻塞线程。
-​ * tryAcquire(long timeout, TimeUnit unit)尝试获得令牌，在超时时间内循环尝试获取，直到尝试获取成功或超时返回，不阻塞线程。
-​ * release() 释放一个令牌，唤醒一个获取令牌不成功的阻塞线程。
-​ * hasQueuedThreads() 等待队列里是否还存在等待线程。
- * getQueueLength() 获取等待队列里阻塞的线程数。
-​ * drainPermits() 清空令牌把可用令牌数置为0，返回清空令牌的数量。
-​ * availablePermits() 返回可用的令牌数量。
+ * 使用Semaphore信号量来控制并发执行的次数,如果超过域值信号量,则进入阻塞队列中排队等待获取信号量进行执行。如果阻塞队列中排队的请求过多超出系统处理能力,则可以在拒绝请求。
+ * 相对Atomic优点：如果是瞬时的高并发,可以使请求在阻塞队列中排队,而不是马上拒绝请求,从而达到一个流量削峰的目的。
+
  */
 public class LimitingBySemaphore {
     
@@ -33,7 +22,7 @@ public class LimitingBySemaphore {
         for(int i = 0;i < 20;i++){
             service.submit(()->{
                 if(semphore.getQueueLength() > 10){
-                    System.out.println("当前等待排队的任务数大于10，请稍候再试...");
+                    System.out.println("当前等待排队的任务数大于10,请稍候再试...");
                 }
                 try {
                     semphore.acquire();
@@ -51,7 +40,7 @@ public class LimitingBySemaphore {
     }
 
     /**
-     * 模拟20个线程, 但是信号量只设置了5个许可
+     * 模拟20个线程,但是信号量只设置了5个许可
      * 因此线程是按序每2秒5个的打印job done.
      */
     public static void demo2(){
@@ -81,3 +70,27 @@ public class LimitingBySemaphore {
         service.shutdown();
     }
 }
+
+/**
+ *
+// 获取一个令牌,在获取到令牌、或者被其他线程调用中断之前线程一直处于阻塞状态。
+acquire()
+// 获取一个令牌,在获取到令牌、或者被其他线程调用中断、或超时之前线程一直处于阻塞状态。
+acquire(int permits)
+// 获取一个令牌,在获取到令牌之前线程一直处于阻塞状态（忽略中断）
+acquireUninterruptibly()
+// 尝试获得令牌,返回获取令牌成功或失败,不阻塞线程
+tryAcquire()
+// 尝试获得令牌,在超时时间内循环尝试获取,直到尝试获取成功或超时返回,不阻塞线程。
+tryAcquire(long timeout, TimeUnit unit)
+// 释放一个令牌,唤醒一个获取令牌不成功的阻塞线程。
+release()
+// 等待队列里是否还存在等待线程。
+hasQueuedThreads()
+// 获取等待队列里阻塞的线程数。
+getQueueLength()
+// 清空令牌把可用令牌数置为0,返回清空令牌的数量。
+drainPermits()
+// 返回可用的令牌数量。
+availablePermits()
+ */

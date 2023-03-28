@@ -8,9 +8,8 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-
 public class RandomUtil {
-     /**
+    /**
      * 生成随机字符串
      */
     public void random_one() {
@@ -58,14 +57,14 @@ public class RandomUtil {
 
         // Java 8引入了新的ints方法，返回一个java.util.stream.IntStream，不带参数的ints方法将返回一个无限int流：
         IntStream unlimitedIntStream = random.ints();
-        unlimitedIntStream.forEach(x->System.out.println(x));
+        unlimitedIntStream.forEach(x -> System.out.println(x));
         // 调用时还可以指定参数来限制流大小：
         int streamSize = 5;
         IntStream limitedIntStream = random.ints(streamSize);
-        limitedIntStream.forEach(x->System.out.println(x));
+        limitedIntStream.forEach(x -> System.out.println(x));
         // 当然，也可以为生成数值设置最大值和最小值：
         IntStream limitedIntStreamWithinARange = random.ints(streamSize, min, max);
-        limitedIntStreamWithinARange.forEach(x->System.out.println(x));
+        limitedIntStreamWithinARange.forEach(x -> System.out.println(x));
 
         /**
          * Java 1.7中ThreadLocalRandom类提供了一种新的更高效的随机数生成方法。与Random类相比有三个重要区别：无需显式初始化
@@ -96,12 +95,11 @@ public class RandomUtil {
 
         // 这里也提供了ints方法。这意味着可以轻松得到int流。可以选择流数据个数有限或无限。对于有限流，可以为数字生成范围设置top和bottom：
         IntStream limitedIntStreamWithinARangeWithSplittableRandom = splittableRandom.ints(streamSize, min, max);
-        limitedIntStreamWithinARangeWithSplittableRandom.forEach(x->System.out.println(x));
+        limitedIntStreamWithinARangeWithSplittableRandom.forEach(x -> System.out.println(x));
 
         /**
          * 如果应用程序对安全敏感，则应考虑使用SecureRandom。这是一个强加密随机数生成器。实例默认构造函数不使用随机种子。因此，我们应该：
-         * 设置随机种子：随机种子不可预测,设置java.util.secureRandomSeed系统属性为true。 
-         * 该类继承自java.util.Random。现在，我们介绍了上面各种随机数生成方法。例如，如果需要获取任意int值，调用nextInt时可以不带参数
+         * 设置随机种子：随机种子不可预测,设置java.util.secureRandomSeed系统属性为true。该类继承自java.util.Random。现在，我们介绍了上面各种随机数生成方法。例如，如果需要获取任意int值，调用nextInt时可以不带参数
          */
         SecureRandom secureRandom = new SecureRandom();
         int randomWithSecureRandom = secureRandom.nextInt();

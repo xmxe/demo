@@ -41,6 +41,7 @@ public class IO {
 
     /**
      * 使用BufferReader
+     * 
      * @param path
      * @return
      */
@@ -58,7 +59,7 @@ public class IO {
             StringBuffer txt = new StringBuffer();
             String line = "";
             while ((line = br.readLine()) != null) {
-                txt.append(line+";");
+                txt.append(line + ";");
             }
             // 方法一：流的关闭：先打开的后关闭，后打开的先关闭
             // 方法二：可以只调用外层流的close方法关闭其装饰的内层流
@@ -70,9 +71,7 @@ public class IO {
         }
     }
 
-     /**
-     * 
-     */
+    
     public static boolean writeFile(String path, String content) {
         // 相对路径，如果没有则要建立一个新的path文件
         File file = new File(path);
@@ -87,17 +86,16 @@ public class IO {
             out.flush();
             // 最后关闭流
             out.close();
-            //返回成功
+            // 返回成功
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    /**
-     * 
-     */
-    public void writeFile(File file){
+
+   
+    public void writeFile(File file) {
         OutputStream out = null;
         try {
             // 根据文件创建文件的输出流
@@ -112,7 +110,7 @@ public class IO {
         } finally {
             try {
                 // 关闭输出流
-                if(out != null)
+                if (out != null)
                     out.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -123,7 +121,7 @@ public class IO {
     /**
      * 复制文件
      */
-    public void copyFile(){
+    public void copyFile() {
         // 构建源文件
         File file = new File("E:" + File.separator + "HelloWorld.txt");
         // 构建目标文件
@@ -152,9 +150,9 @@ public class IO {
         } finally {
             try {
                 // 关闭文件输入输出流
-                if(in != null)
+                if (in != null)
                     in.close();
-                if(out != null)
+                if (out != null)
                     out.close();
             } catch (Exception e) {
                 e.printStackTrace();

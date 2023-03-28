@@ -38,7 +38,7 @@ public class WaitNotify {
                 }
             }
 
-        },"线程2");
+        }, "线程2");
         t2.start();
     }
 

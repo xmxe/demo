@@ -1,9 +1,9 @@
-// canvas 倒计时
+// canvas倒计时
 function showTime(a) {
   var b = {
     id: "showtime", //canvasid
-    x: 60, //中心点坐标 X轴;
-    y: 60, //中心点坐标 Y轴;
+    x: 60, //中心点坐标X轴;
+    y: 60, //中心点坐标Y轴;
     radius: 60, //圆的半径
     angle: 0, //角度 无需设置
     linewidth: 6, //线的宽度
@@ -37,7 +37,7 @@ function showTime(a) {
   }
   var ctx = canvas.getContext("2d");
 
-  this.creatText = function () {
+  (this.creatText = function () {
     ctx.fillStyle = "#000";
     ctx.font = "13px Arial";
     ctx.fillText("剩余时间", 32, 38);
@@ -96,8 +96,8 @@ function showTime(a) {
     function getStr(num) {
       return num.toString().length < 2 ? "0" + num : num;
     }
-  },
-    showTime.prototype.creatEle = function () {
+  }),
+    (showTime.prototype.creatEle = function () {
       var _w = canvas.getAttribute("width");
       var _h = canvas.getAttribute("height");
       ctx.clearRect(0, 0, _w, _h); //清楚canva绘制区域
@@ -148,7 +148,7 @@ function showTime(a) {
       ctx.fill();
       ctx.restore();
       this.creatText();
-    };
+    });
   this.creatEle();
 }
 

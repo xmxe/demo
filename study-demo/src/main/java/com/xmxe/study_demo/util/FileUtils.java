@@ -69,7 +69,7 @@ public class FileUtils {
     }
 
     /**
-     * 获取文件夹下所有文件的名称 + 模糊查询（当不需要模糊查询时，queryStr传空或null即可）
+     * 获取文件夹下所有文件的名称+模糊查询（当不需要模糊查询时，queryStr传空或null即可）
      * 1.当路径不存在时，map返回retType值为1
      * 2.当路径为文件路径时，map返回retType值为2，文件名fileName值为文件名
      * 3.当路径下有文件夹时，map返回retType值为3，文件名列表fileNameList，文件夹名列表folderNameList
@@ -129,7 +129,7 @@ public class FileUtils {
                 listContent.add(tempString);
                 // line++;
             }
-    
+
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -197,8 +197,8 @@ public class FileUtils {
                 count++;
             }
         } catch (Exception e) {
-        }finally{
-            if(reader != null){
+        } finally {
+            if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
@@ -237,7 +237,7 @@ public class FileUtils {
                     try {
                         reader.close();
                     } catch (IOException e1) {
-                    
+
                     }
                 }
             }
@@ -278,12 +278,12 @@ public class FileUtils {
         pw.println(content);
         pw.flush();
         try {
-            if(bw != null){
+            if (bw != null) {
                 bw.flush();
                 bw.close();
-            }   
+            }
             pw.close();
-           
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -355,7 +355,6 @@ public class FileUtils {
         return startDT.getTime();
     }
 
-    // https://www.cnblogs.com/chenhuan001/p/6575053.html
     /**
      * 递归删除文件或者目录
      * 
@@ -399,7 +398,6 @@ public class FileUtils {
         }
     }
 
-    // https://blog.csdn.net/lovoo/article/details/77899627
     /**
      * 判断指定的文件是否存在。
      *
@@ -415,7 +413,6 @@ public class FileUtils {
      *
      * @param fileName
      * 
-     * @return
      */
     public static String getFileExt(String fileName) {
         int point = fileName.lastIndexOf('.');
@@ -529,8 +526,7 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        // List<String> lis =
-        // readFileContent("D:\\项目\\鲁软\\省调接口\\ZJ_201912181700_PLCInfo - 副本");
+        // List<String> lis = readFileContent("D:\\项目\\鲁软\\省调接口\\ZJ_201912181700_PLCInfo - 副本");
 
     }
 

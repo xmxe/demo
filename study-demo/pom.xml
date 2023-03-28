@@ -293,7 +293,7 @@
 			<version>5.7.16</version>
 		</dependency>
 
-		<!-- OSHI 是基于 JNA 的（本地）操作系统和硬件信息库 获取系统/服务器资源相关信息 -->
+		<!-- OSHI是基于JNA的（本地）操作系统和硬件信息库,获取系统/服务器资源相关信息 -->
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>
@@ -307,12 +307,19 @@
 			<version>0.4.13</version>
 		</dependency>
 
-		<!-- 收集图片信息，如分辨率 经纬度等 -->
+		<!-- 收集图片信息，如分辨率,经纬度等 -->
 		<dependency>
 			<groupId>com.drewnoakes</groupId>
 			<artifactId>metadata-extractor</artifactId>
 			<version>2.18.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -353,11 +360,11 @@
                 <!-- 排除标签 -->
                 <excludes>
                     <!--
-                        exclude可以排除指定文件，支持通配符 ,匹配项不会生成到classes目录下，路径是以directory开始的
+                        exclude可以排除指定文件，支持通配符,匹配项不会生成到classes目录下，路径是以directory开始的
                         在这里就是directory（src/main/resources/）/multiEnv/filter-*-env.properties
                     -->
                     <exclude>multiEnv/filter-*-env.properties</exclude>
-                    <!-- **/*.xml 代表 directory(src/main/resources/)目录以及所有子目录的xml文件-->
+                    <!--**/*.xml代表directory(src/main/resources/)目录以及所有子目录的xml文件-->
                     <!--
                     <exclude>**/*.xml</exclude>
                     <exclude>**/*.properties</exclude>
@@ -385,7 +392,7 @@
 		打测试环境包：mvn clean package -Ptest
 
 		执行结果：
-		通过命令指定<filter>下的文件,然后查看<filtering>为true的<directory>目录 ，如果此目录下的文件内容有${},则匹配替换
+		通过命令指定<filter>下的文件,然后查看<filtering>为true的<directory>目录，如果此目录下的文件内容有${},则匹配替换
 	-->
 	<profiles>
         <profile>

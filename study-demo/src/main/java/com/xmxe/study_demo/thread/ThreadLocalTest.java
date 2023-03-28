@@ -23,7 +23,6 @@ public class ThreadLocalTest {
             }
         }, "threadLocal1").start();
 
-
         new Thread(() -> {
             try {
                 for (int i = 0; i < 10; i++) {
@@ -41,7 +40,6 @@ public class ThreadLocalTest {
     }
 }
 
-
 /**
  * ThreadLocal测试2
  */
@@ -55,16 +53,17 @@ class ThreadLocalTest2 {
 
     public static void main(String[] args) {
         ThreadLocalTest2 threadLocalTest2 = new ThreadLocalTest2();
-        new ThreadOne(threadLocalTest2,"线程1").start();
-        new ThreadOne(threadLocalTest2,"线程2").start();
-        new ThreadOne(threadLocalTest2,"线程3").start();
-        new ThreadOne(threadLocalTest2,"线程4").start();
+        new ThreadOne(threadLocalTest2, "线程1").start();
+        new ThreadOne(threadLocalTest2, "线程2").start();
+        new ThreadOne(threadLocalTest2, "线程3").start();
+        new ThreadOne(threadLocalTest2, "线程4").start();
     }
 
     public int next() {
         threadLocal.set(threadLocal.get() + 1);
         return threadLocal.get();
     }
+
     public void remove() {
         threadLocal.remove();
     }
@@ -73,10 +72,11 @@ class ThreadLocalTest2 {
         private ThreadLocalTest2 count;
         private String threadName;
 
-        ThreadOne(ThreadLocalTest2 count,String threadName) {
+        ThreadOne(ThreadLocalTest2 count, String threadName) {
             this.count = count;
             this.threadName = threadName;
         }
+
         public void run() {
             for (int i = 0; i < 3; i++) {
                 System.out.println(Thread.currentThread().getName() + threadName + " count :" + count.next());
@@ -86,31 +86,30 @@ class ThreadLocalTest2 {
     }
 }
 
-
-
 /**
  * ThreadLocal测试3
  */
-class ThreadLocalTest3{
-    public static final ThreadLocal<Integer> threalLocal = new ThreadLocal<>(){
+class ThreadLocalTest3 {
+    public static final ThreadLocal<Integer> threalLocal = new ThreadLocal<>() {
         @Override
-        protected Integer initialValue(){
+        protected Integer initialValue() {
             return 222;
         }
     };
+
     public static void main(String[] args) {
-        new Thread(()->{
+        new Thread(() -> {
             threalLocal.set(1111);
             Integer v = threalLocal.get();
-            System.out.println(Thread.currentThread().getName()+"-------"+v);
-        },"线程1").start();
+            System.out.println(Thread.currentThread().getName() + "-------" + v);
+        }, "线程1").start();
 
-        new Thread(()->{
-             Integer v = threalLocal.get();
-             System.out.println(Thread.currentThread().getName()+"-------"+v);
-        },"线程2").start();
+        new Thread(() -> {
+            Integer v = threalLocal.get();
+            System.out.println(Thread.currentThread().getName() + "-------" + v);
+        }, "线程2").start();
     }
-       
+
 }
 
 /**
@@ -121,9 +120,9 @@ class InheritableThreadLocalTest {
     public static void main(String[] args) {
         InheritableThreadLocal<String> inheritableThreadLocal = new InheritableThreadLocal<>();
         inheritableThreadLocal.set("主线程变量");
-        new Thread(()->{
+        new Thread(() -> {
             System.out.println(inheritableThreadLocal.get());
         }).start();
-        
+
     }
 }

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 // 爬虫获取bing壁纸，并写入到README.md https://github.com/niumoo/bing-wallpaper
 public class Wallpaper {
     // BING API
@@ -21,21 +22,21 @@ public class Wallpaper {
         JSONObject jsonObject = JSON.parseObject(httpContent);
         JSONArray jsonArray = jsonObject.getJSONArray("images");
 
-        jsonObject = (JSONObject)jsonArray.get(0);
+        jsonObject = (JSONObject) jsonArray.get(0);
         // 图片地址
-        String url = BING_URL + (String)jsonObject.get("url");
+        String url = BING_URL + (String) jsonObject.get("url");
         url = url.substring(0, url.indexOf("&"));
 
         // 图片时间
-        String enddate = (String)jsonObject.get("enddate");
+        String enddate = (String) jsonObject.get("enddate");
         LocalDate localDate = LocalDate.parse(enddate, DateTimeFormatter.BASIC_ISO_DATE);
         enddate = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
 
         // 图片版权
-        String copyright = (String)jsonObject.get("copyright");
+        String copyright = (String) jsonObject.get("copyright");
 
         List<Images> imagesList = FileUtils.readBing();
-        imagesList.set(0,new Images(copyright, enddate, url));
+        imagesList.set(0, new Images(copyright, enddate, url));
         imagesList = imagesList.stream().distinct().collect(Collectors.toList());
         FileUtils.writeBing(imagesList);
         FileUtils.writeReadme(imagesList);

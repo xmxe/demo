@@ -27,5 +27,5 @@ public record TeacherRecord(String name,int age) {
  * }
  *
  * 
- * record修饰的是一个final类 自动实现equals、hashCode、toString函数 成员变量均为public属性
+ * record修饰的是一个final类,自动实现equals、hashCode、toString函数,成员变量均为public属性
  */

@@ -4,7 +4,7 @@ package com.xmxe.study_demo.entity;
  * 详解Java 17中的新特性：“密封类”https://mp.weixin.qq.com/s/XRPI2WlaNGZ05n7Uw7FGGw
  */
 
-// 通过sealed关键词和permitspermits关键来定义Hero是一个需要密封的类，并且它的子类只允许为TankHero, AttackHero, SupportHero这三个
+// 通过sealed关键词和permitspermits关键来定义Hero是一个需要密封的类，并且它的子类只允许为TankHero,AttackHero,SupportHero这三个
 public sealed class HeroSeald permits TankHeroSeald, AttackHeroSeald, SupportHeroSeald {
 
 }

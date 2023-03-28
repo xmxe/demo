@@ -6,10 +6,6 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-/**
- * 用好Java中的枚举，让你的工作效率飞起来 https://mp.weixin.qq.com/s/hX_9Dkg9612KLHQ1oPr4qA
- * 
- */
 public class EnumTest {
 	public static void main(String[] args) {
 		EnumTest t = new EnumTest();
@@ -55,16 +51,16 @@ public class EnumTest {
 	 */
 	public void test2() {
 		WeekEnum test = WeekEnum.TUE;
-		// compareTo(E o) 比较此枚举与指定对象的顺序。
+		// compareTo(E o)比较此枚举与指定对象的顺序。
 		switch (test.compareTo(WeekEnum.MON)) {
 			case -1:
-				System.out.println("TUE 在 MON 之前");
+				System.out.println("TUE在MON之前");
 				break;
 			case 1:
-				System.out.println("TUE 在 MON 之后");
+				System.out.println("TUE在MON之后");
 				break;
 			default:
-				System.out.println("TUE 与 MON 在同一位置");
+				System.out.println("TUE与MON在同一位置");
 				break;
 		}
 	}
@@ -74,26 +70,27 @@ public class EnumTest {
 	 */
 	public void test3() {
 		WeekEnum test = WeekEnum.TUE;
-		// getDeclaringClass()返回与此枚举常量的枚举类型相对应的 Class 对象
-		System.out.println("getDeclaringClass(): " + test.getDeclaringClass().getName());// getDeclaringClass(): com.xmxe.study_demo.enums.WeekEnum
+		// getDeclaringClass()返回与此枚举常量的枚举类型相对应的Class对象
+		System.out.println("getDeclaringClass(): " + test.getDeclaringClass().getName());// getDeclaringClass():
+																							// com.xmxe.study_demo.enums.WeekEnum
 
-		// name() 返回此枚举常量的名称，在其枚举声明中对其进行声明。
+		// name()返回此枚举常量的名称，在其枚举声明中对其进行声明。
 		System.out.println("name(): " + test.name()); // name(): TUE
 		// toString()返回枚举常量的名称，它包含在声明中。
 		System.out.println("toString(): " + test.toString());// toString(): TUE
 
-		// ordinal()， 返回值是从0开始 返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）
+		// ordinal()，返回值是从0开始,返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）
 		System.out.println("ordinal(): " + test.ordinal());// oridinal(): 1
 
 		System.out.println("EnumTest.FRI getValue() = " + WeekEnum.FRI.getValue());// EnumTest.FRI getValue() = 5
-		
-		System.out.println("EnumTest.FRI isResr() = " + WeekEnum.SUN.isRest());// EnumTest.FRI isResr() = true
-		WeekEnum w1 =  WeekEnum.valueOf(WeekEnum.class, "TUE");
-		WeekEnum w2 = WeekEnum.valueOf("TUE");
-		System.out.println("w1=="+w1+"===w2"+w2+"==="+w1.compareTo(test)+"---"+w2.equals(w1));// w1==TUE===w2TUE===0---true
-		System.out.println("枚举valueOf()返回的是enum " + WeekEnum.valueOf("SUN").getValue());// 枚举valueOf()返回的是enum 1 
 
-		System.out.println(Arrays.toString(WeekEnum._table));//[SUN, MON, TUE, WED, THU, FRI, SAT]
+		System.out.println("EnumTest.FRI isResr() = " + WeekEnum.SUN.isRest());// EnumTest.FRI isResr() = true
+		WeekEnum w1 = WeekEnum.valueOf(WeekEnum.class, "TUE");
+		WeekEnum w2 = WeekEnum.valueOf("TUE");
+		System.out.println("w1==" + w1 + "===w2" + w2 + "===" + w1.compareTo(test) + "---" + w2.equals(w1));// w1==TUE===w2TUE===0---true
+		System.out.println("枚举valueOf()返回的是enum " + WeekEnum.valueOf("SUN").getValue());// 枚举valueOf()返回的是enum 1
+
+		System.out.println(Arrays.toString(WeekEnum._table));// [SUN, MON, TUE, WED, THU, FRI, SAT]
 	}
 
 	/**
@@ -110,7 +107,7 @@ public class EnumTest {
 			// 枚举allOfFRI
 			// 枚举allOfSAT
 			// 枚举allOfSUN
-			
+
 		}
 
 		// EnumMap的使用
@@ -125,6 +122,7 @@ public class EnumTest {
 			// TUE:星期二
 		}
 	}
+
 	/**
 	 * 使用枚举替代if else
 	 */
@@ -142,15 +140,15 @@ public class EnumTest {
 		}
 
 		/**
-		 * 枚举替代if else一行代码搞定 如果需要再加判断只需要增加枚举类属性即可 valueOf()获取枚举类型
+		 * 枚举替代if else一行代码搞定,如果需要再加判断只需要增加枚举类属性即可,valueOf()获取枚举类型
 		 */
 		WeekEnum.valueOf(str).eval(1, 2);
 	}
 
 	/**
-	 * 提供一个方法 根据枚举属性提供不同的实现
+	 * 提供一个方法,根据枚举属性提供不同的实现
 	 */
-	public void test6(){
+	public void test6() {
 		AnimalEnum.PEOPLE.count(5);
 		AnimalEnum.CAT.count(5);
 		AnimalEnum.DOG.count(5);

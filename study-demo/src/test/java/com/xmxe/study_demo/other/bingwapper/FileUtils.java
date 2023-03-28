@@ -69,15 +69,15 @@ public class FileUtils {
         for (int i = 3; i < allLines.size(); i++) {
             String content = allLines.get(i);
             Arrays.stream(content.split("\\|"))
-                .filter(s -> !s.isEmpty())
-                .map(s -> {
-                    int dateStartIndex = s.indexOf("[", 3) + 1;
-                    int urlStartIndex = s.indexOf("(", 4) + 1;
-                    String date = s.substring(dateStartIndex, dateStartIndex + 10);
-                    String url = s.substring(urlStartIndex, s.length() - 1);
-                    return new Images(null, date, url);
-                })
-                .forEach(imgList::add);
+                    .filter(s -> !s.isEmpty())
+                    .map(s -> {
+                        int dateStartIndex = s.indexOf("[", 3) + 1;
+                        int urlStartIndex = s.indexOf("(", 4) + 1;
+                        String date = s.substring(dateStartIndex, dateStartIndex + 10);
+                        String url = s.substring(urlStartIndex, s.length() - 1);
+                        return new Images(null, date, url);
+                    })
+                    .forEach(imgList::add);
         }
         return imgList;
     }
@@ -92,14 +92,14 @@ public class FileUtils {
         if (!Files.exists(readmePath)) {
             Files.createFile(readmePath);
         }
-        //List<String> allLines = Files.readAllLines(path);
+        // List<String> allLines = Files.readAllLines(path);
         Files.write(readmePath, "## Bing Wallpaper".getBytes());
         Files.write(readmePath, System.lineSeparator().getBytes(), StandardOpenOption.APPEND);
         Files.write(readmePath, imgList.get(0).toLarge().getBytes(), StandardOpenOption.APPEND);
         Files.write(readmePath, System.lineSeparator().getBytes(), StandardOpenOption.APPEND);
         Files.write(readmePath, "|      |      |      |".getBytes(), StandardOpenOption.APPEND);
         Files.write(readmePath, System.lineSeparator().getBytes(), StandardOpenOption.APPEND);
-        //Files.write(readmePath, "| ---- | ---- | ---- |".getBytes(), StandardOpenOption.APPEND);
+        // Files.write(readmePath, "| ---- | ---- | ---- |".getBytes(),StandardOpenOption.APPEND);
         Files.write(readmePath, "| :----: | :----: | :----: |".getBytes(), StandardOpenOption.APPEND);
         Files.write(readmePath, System.lineSeparator().getBytes(), StandardOpenOption.APPEND);
         int i = 1;

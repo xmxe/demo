@@ -7,8 +7,8 @@ import java.util.stream.Stream;
  */
 public class Processing {
     public static void main(String[] args) {
-        char incomplete = '░'; // U+2591 Unicode Character 表示还没有完成的部分
-        char complete = '█'; // U+2588 Unicode Character 表示已经完成的部分
+        char incomplete = '░'; // U+2591 Unicode Character表示还没有完成的部分
+        char complete = '█'; // U+2588 Unicode Character表示已经完成的部分
 
         int total = 100;
         StringBuilder stringBuilder = new StringBuilder();

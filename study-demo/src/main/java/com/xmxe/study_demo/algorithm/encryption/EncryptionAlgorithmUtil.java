@@ -37,9 +37,9 @@ public class EncryptionAlgorithmUtil {
 
     /**
      * MD5算法有以下特点
-     * 1、压缩性:无论数据长度是多少，计算出来的MD5值长度相同 
+     * 1、压缩性:无论数据长度是多少，计算出来的MD5值长度相同
      * 2、容易计算性:由原数据容易计算出MD5值
-     * 3、抗修改性:即便修改一个字节，计算出来的MD5值也会巨大差异 
+     * 3、抗修改性:即便修改一个字节，计算出来的MD5值也会巨大差异
      * 4、抗碰撞性:知道数据和MD5值，很小概率找到相同MD5值相同的原数据。
      */
     public static String md5(String text) {
@@ -71,7 +71,7 @@ public class EncryptionAlgorithmUtil {
     }
 
     /**
-     * HMAC 哈希运算消息认证码（Hash-based Message Authentication Code）
+     * HMAC哈希运算消息认证码（Hash-based Message Authentication Code）
      *
      */
     public static String hmacSha256(String text, SecretKeySpec sk) {
@@ -81,17 +81,17 @@ public class EncryptionAlgorithmUtil {
             mac.init(sk);
             byte[] rawHmac = mac.doFinal(text.getBytes());
             return new String(Base64.encodeBase64(rawHmac));
-        } catch (NoSuchAlgorithmException|InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();
         }
-       
+
         return null;
     }
 
     // -----对称加密算法------
 
     /**
-     * Des 加密
+     * Des加密
      */
 
     public static String encrypt(byte[] dataSource, String password) {
@@ -182,7 +182,7 @@ public class EncryptionAlgorithmUtil {
     }
 
     /**
-     * AES 高级数据加密标准
+     * AES高级数据加密标准
      * 能够有效抵御已知的针对DES算法的所有攻击，默认密钥长度为128位，还可以供选择192位，256位
      */
 
@@ -244,7 +244,7 @@ public class EncryptionAlgorithmUtil {
     public static final String KEY_ALGORITHM = "RSA";
 
     /**
-     * 密钥长度，DH算法的默认密钥长度是1024 密钥长度必须是64的倍数，在512到65536位之间
+     * 密钥长度，DH算法的默认密钥长度是1024,密钥长度必须是64的倍数，在512到65536位之间
      */
     private static final int KEY_SIZE = 1024;
     // 公钥
@@ -255,7 +255,7 @@ public class EncryptionAlgorithmUtil {
     /**
      * 初始化密钥对
      *
-     * @return Map 甲方密钥的Map
+     * @return 甲方密钥的Map
      */
     public static Map<String, Object> initKey() throws Exception {
         // 实例化密钥生成器

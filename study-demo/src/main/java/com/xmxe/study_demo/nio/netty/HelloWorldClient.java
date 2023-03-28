@@ -63,8 +63,8 @@ class ClientChannelInitializer extends  ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = socketChannel.pipeline();
 
         /*
-         * 这个地方的 必须和服务端对应上。否则无法正常解码和编码
-         * 解码和编码 我将会在下一节为大家详细的讲解。暂时不做详细的描述
+         * 这个地方的必须和服务端对应上。否则无法正常解码和编码
+         * 解码和编码我将会在下一节为大家详细的讲解。暂时不做详细的描述
          */
               
         pipeline.addLast("decoder", new StringDecoder());

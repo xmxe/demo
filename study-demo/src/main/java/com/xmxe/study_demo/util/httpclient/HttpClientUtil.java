@@ -26,11 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- *
- */
 public class HttpClientUtil {
-
 
     private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
@@ -46,7 +42,7 @@ public class HttpClientUtil {
     public static String post(String url, Map<String, String> paramMap) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpPost.setConfig(requestConfig);
         List<NameValuePair> formparams = setHttpParams(paramMap);
@@ -74,7 +70,7 @@ public class HttpClientUtil {
     public static String post(String url, String data) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpPost.setConfig(requestConfig);
         httpPost.setHeader("Content-Type", "text/json; charset=utf-8");
@@ -96,7 +92,7 @@ public class HttpClientUtil {
     public static String get(String url) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet();
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpGet.setConfig(requestConfig);
         httpGet.setURI(URI.create(url));
@@ -118,7 +114,7 @@ public class HttpClientUtil {
     public static String get(String url, Map<String, String> paramMap) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet();
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpGet.setConfig(requestConfig);
         List<NameValuePair> formparams = setHttpParams(paramMap);
@@ -142,7 +138,7 @@ public class HttpClientUtil {
     public static String put(String url, Map<String, String> paramMap) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpPut httpPut = new HttpPut(url);
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpPut.setConfig(requestConfig);
         List<NameValuePair> formparams = setHttpParams(paramMap);
@@ -165,7 +161,7 @@ public class HttpClientUtil {
     public static String delete(String url) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpDelete httpDelete = new HttpDelete();
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpDelete.setConfig(requestConfig);
         httpDelete.setURI(URI.create(url));
@@ -187,7 +183,7 @@ public class HttpClientUtil {
     public static String delete(String url, Map<String, String> paramMap) throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpDelete httpDelete = new HttpDelete();
-        //设置请求和传输超时时间
+        // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
         httpDelete.setConfig(requestConfig);
         List<NameValuePair> formparams = setHttpParams(paramMap);
@@ -198,7 +194,6 @@ public class HttpClientUtil {
         httpDelete.abort();
         return httpEntityContent;
     }
-
 
     /**
      * 设置请求参数

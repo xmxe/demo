@@ -214,7 +214,7 @@ public class HttpClientUtil2 {
         // 状态码
         // response.getStatusLine().getStatusCode();
         // 响应体，字符串，如果response.getEntity()为空，下面这个代码会报错,所以解析之前要做非空的判断
-        // EntityUtils.toString(response.getEntity(), "UTF-8");
+        // EntityUtils.toString(response.getEntity(),"UTF-8");
         HttpResult httpResult = null;
         // 解析数据封装HttpResult
         if (response.getEntity() != null) {
@@ -233,23 +233,27 @@ public class HttpClientUtil2 {
         private int code;
         // 响应的响应体
         private String body;
+
         public HttpResult(int code, String body) {
             this.code = code;
             this.body = body;
         }
+
         public int getCode() {
             return code;
         }
+
         public void setCode(int code) {
             this.code = code;
         }
+
         public String getBody() {
             return body;
         }
+
         public void setBody(String body) {
             this.body = body;
         }
-
 
     }
 

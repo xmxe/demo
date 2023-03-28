@@ -26,24 +26,20 @@ public class HandleMaxRepeatProblem {
 
     private static final int threadNums = 20;
 
-
     /**
-     * key 为年龄，value为所有的行列表，使用队列
+     * key为年龄，value为所有的行列表，使用队列
      */
     private static Map<Integer, Vector<String>> valueMap = new ConcurrentHashMap<>();
-
 
     /**
      * 存放数据的队列
      */
     private static List<LinkedBlockingQueue<String>> blockQueueLists = new LinkedList<>();
 
-
     /**
      * 统计数量
      */
     private static Map<String, AtomicInteger> countMap = new ConcurrentHashMap<>();
-
 
     private static Map<Integer, ReentrantLock> lockMap = new ConcurrentHashMap<>();
 
@@ -60,14 +56,13 @@ public class HandleMaxRepeatProblem {
      */
     private static volatile boolean consumerRunning = true;
 
-
     /**
      * 按照","分割数据，并写入到文件里
      */
     static class SplitData {
 
         public static void splitLine(String lineData) {
-//            System.out.println(lineData.length());
+            // System.out.println(lineData.length());
             String[] arr = lineData.split("\n");
             for (String str : arr) {
                 if (StringUtils.isEmpty(str)) {
@@ -89,7 +84,7 @@ public class HandleMaxRepeatProblem {
          * 按照x坐标来分割字符串，如果切到的字符不为“，”那么把坐标向前或者向后移动一位。
          *
          * @param line
-         * @param arr  存放x1,x2坐标
+         * @param arr 存放x1,x2坐标
          * @return
          */
         public static String splitStr(String line, int[] arr) {
@@ -123,7 +118,6 @@ public class HandleMaxRepeatProblem {
             return splitStr(line, arr);
         }
 
-
         public static void splitLine0(String lineData) {
             String[] arr = lineData.split(",");
             for (String str : arr) {
@@ -139,25 +133,24 @@ public class HandleMaxRepeatProblem {
                     lock.unlock();
                 }
 
-//                boolean wait = true;
-//                for (; ; ) {
-//                    if (!lockMap.get(Integer.parseInt(str)).isLocked()) {
-//                        wait = false;
-//                        valueMap.computeIfAbsent(Integer.parseInt(str), integer -> new Vector<>()).add(str);
-//                    }
-//                    // 当前阻塞，直到释放锁
-//                    if (!wait) {
-//                        break;
-//                    }
-//                }
-
+                // boolean wait = true;
+                // for (; ; ) {
+                //  if (!lockMap.get(Integer.parseInt(str)).isLocked()) {
+                //  wait = false;
+                //  valueMap.computeIfAbsent(Integer.parseInt(str), integer -> new Vector<>()).add(str);
+                // }
+                // // 当前阻塞，直到释放锁
+                // if (!wait) {
+                //  break;
+                //  }
+                // }
             }
         }
 
     }
 
     /**
-     *  init map
+     * init map
      */
 
     static {
@@ -166,11 +159,10 @@ public class HandleMaxRepeatProblem {
             file.mkdir();
         }
 
-        //每个队列容量为256
+        // 每个队列容量为256
         for (int i = 0; i < threadNums; i++) {
             blockQueueLists.add(new LinkedBlockingQueue<>(256));
         }
-
 
         for (int i = start; i <= end; i++) {
             try {
@@ -179,7 +171,7 @@ public class HandleMaxRepeatProblem {
                     subFile.createNewFile();
                 }
                 countMap.computeIfAbsent(i + "", integer -> new AtomicInteger(0));
-//                lockMap.computeIfAbsent(i, lock -> new ReentrantLock());
+                // lockMap.computeIfAbsent(i, lock -> new ReentrantLock());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -190,7 +182,6 @@ public class HandleMaxRepeatProblem {
 
     public static void main(String[] args) {
 
-
         new Thread(() -> {
             try {
                 // 读取数据
@@ -198,7 +189,6 @@ public class HandleMaxRepeatProblem {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
 
         }).start();
 
@@ -218,9 +208,7 @@ public class HandleMaxRepeatProblem {
             monitor();
         }).start();
 
-
     }
-
 
     /**
      * 每隔60s去检查栈是否为空
@@ -260,7 +248,6 @@ public class HandleMaxRepeatProblem {
 
         }
     }
-
 
     private static void readData() throws IOException {
 
@@ -311,7 +298,7 @@ public class HandleMaxRepeatProblem {
      * @throws UnsupportedEncodingException
      */
     private static void startConsumer() throws FileNotFoundException, UnsupportedEncodingException {
-        //如果共用一个队列，那么线程不宜过多，容易出现抢占现象
+        // 如果共用一个队列，那么线程不宜过多，容易出现抢占现象
         System.out.println("开始消费...");
         for (int i = 0; i < threadNums; i++) {
             final int index = i;
@@ -329,17 +316,16 @@ public class HandleMaxRepeatProblem {
             }).start();
         }
 
-
     }
 
     // 按照arr的大小，运用多线程分割字符串
     private static void countNum(String str) {
         int[] arr = new int[2];
         arr[1] = str.length() / 3;
-//        System.out.println("分割的字符串为start位置为:" + arr[0] + ",end位置为:" + arr[1]);
+        // System.out.println("分割的字符串为start位置为:" + arr[0] + ",end位置为:" + arr[1]);
         for (int i = 0; i < 3; i++) {
             final String innerStr = SplitData.splitStr(str, arr);
-//            System.out.println("分割的字符串为start位置为:" + arr[0] + ",end位置为:" + arr[1]);
+            // System.out.println("分割的字符串为start位置为:" + arr[0] + ",end位置为:" + arr[1]);
             new Thread(() -> {
                 String[] strArray = innerStr.split(",");
                 for (String s : strArray) {
@@ -349,22 +335,22 @@ public class HandleMaxRepeatProblem {
         }
     }
 
-
     /**
-     * 后台线程去消费map里数据写入到各个文件里, 如果不消费，那么会将内存程爆
+     * 后台线程去消费map里数据写入到各个文件里,如果不消费，那么会将内存程爆
      */
     public static void startConsumer0() {
         for (int i = start; i <= end; i++) {
             final int index = i;
-            try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir + "\\" + i + ".dat", false), "utf-8"))){
+            try (BufferedWriter bw = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(dir + "\\" + i + ".dat", false), "utf-8"))) {
                 new Thread(() -> {
                     int miss = 0;
                     int countIndex = 0;
                     while (true) {
                         // 每隔100万打印一次
-                        int count = countMap.get(index+"").get();
+                        int count = countMap.get(index + "").get();
                         if (count > 1000000 * countIndex) {
-                            System.out.println(index + "岁年龄的个数为:" + countMap.get(index+"").get());
+                            System.out.println(index + "岁年龄的个数为:" + countMap.get(index + "").get());
                             countIndex += 1;
                         }
                         if (miss > 1000) {
@@ -373,18 +359,17 @@ public class HandleMaxRepeatProblem {
                                 Thread.currentThread().interrupt();
                                 bw.close();
                             } catch (IOException e) {
-    
+
                             }
                         }
                         if (Thread.currentThread().isInterrupted()) {
                             break;
                         }
-    
-    
+
                         Vector<String> lines = valueMap.computeIfAbsent(index, vector -> new Vector<>());
                         // 写入到文件里
                         try {
-    
+
                             if (CollectionUtil.isEmpty(lines)) {
                                 miss++;
                                 Thread.sleep(1000);
@@ -402,7 +387,7 @@ public class HandleMaxRepeatProblem {
                                     StringBuilder sb = new StringBuilder();
                                     while (iterator.hasNext()) {
                                         sb.append(iterator.next());
-                                        countMap.get(index+"").addAndGet(1);
+                                        countMap.get(index + "").addAndGet(1);
                                     }
                                     try {
                                         bw.write(sb.toString());
@@ -415,17 +400,17 @@ public class HandleMaxRepeatProblem {
                                 } finally {
                                     lock.unlock();
                                 }
-    
+
                             }
                         } catch (InterruptedException e) {
-    
+
                         }
                     }
                 }).start();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
 
     }

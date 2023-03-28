@@ -86,13 +86,13 @@ public class ObserverTest {
 
 
 /**
- * void addObserver(Observer o)  如果观察者与集合中已有的观察者不同，则向对象的观察者集中添加此观察者。 
- * protected void clearChanged()  指示对象不再改变，或者它已对其所有的观察者通知了最近的改变，所以hasChanged方法将返回false。 
- * int countObservers()  返回Observable对象的观察者数目。 
- * void deleteObserver(Observer o) 从对象的观察者集合中删除某个观察者。 
- * void deleteObservers()  清除观察者列表，使此对象不再有任何观察者。 
- * boolean hasChanged()  测试对象是否改变。 
- * void notifyObservers()  如果hasChanged方法指示对象已改变，则通知其所有观察者，并调用clearChanged方法来指示此对象不再改变。 
- * void notifyObservers(Object arg)  如果hasChanged方法指示对象已改变，则通知其所有观察者，并调用clearChanged方法来指示此对象不再改变。 
- * protected void setChanged()  标记此Observable对象为已改变的对象；现在执行hasChanged方法将返回true。hasChanged()为true才会通知观察者数据有变化，并且在通知完成之后调用clearChanged()修改hasChanged()为false，所以当主题数据改变时，需要先调用setChanged()方法使hasChanged为true
+ * void addObserver(Observer o) 如果观察者与集合中已有的观察者不同，则向对象的观察者集中添加此观察者。
+ * protected void clearChanged() 指示对象不再改变，或者它已对其所有的观察者通知了最近的改变，所以hasChanged方法将返回false。
+ * int countObservers() 返回Observable对象的观察者数目。
+ * void deleteObserver(Observer o) 从对象的观察者集合中删除某个观察者。
+ * void deleteObservers() 清除观察者列表，使此对象不再有任何观察者。
+ * boolean hasChanged() 测试对象是否改变。
+ * void notifyObservers() 如果hasChanged方法指示对象已改变，则通知其所有观察者，并调用clearChanged方法来指示此对象不再改变。
+ * void notifyObservers(Object arg) 如果hasChanged方法指示对象已改变，则通知其所有观察者，并调用clearChanged方法来指示此对象不再改变。
+ * protected void setChanged() 标记此Observable对象为已改变的对象；现在执行hasChanged方法将返回true。hasChanged()为true才会通知观察者数据有变化，并且在通知完成之后调用clearChanged()修改hasChanged()为false，所以当主题数据改变时，需要先调用setChanged()方法使hasChanged为true
  */

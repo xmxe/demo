@@ -2,7 +2,8 @@ package com.xmxe.study_demo.util;
 
 /**
  * MySQL使用无符号整数位存储ip地址
- * 如果要存IP地址，用什么数据类型比较好？https://mp.weixin.qq.com/s/VFXVQN8p9sOpanBO4QlAkA
+ * 如果要存IP地址，用什么数据类型比较好？作者建议当存储IPv4地址时，应该使用32位的无符号整数（UNSIGNED INT）来存储IP地址，而不是使用字符串
+ * 相对字符串存储，使用无符号整数来存储有如下的好处：节省空间，不管是数据存储空间，还是索引存储空间;便于使用范围查询（BETWEEN...AND），且效率更高
  */
 public class IpLongUtil {
     /**

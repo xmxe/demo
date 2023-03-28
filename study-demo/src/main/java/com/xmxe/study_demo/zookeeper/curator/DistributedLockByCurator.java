@@ -21,8 +21,7 @@ public class DistributedLockByCurator {
         // 1.Connect to zk
         CuratorFramework client = CuratorFrameworkFactory.newClient(
                 ZK_ADDRESS,
-                new RetryNTimes(10, 5000)
-        );
+                new RetryNTimes(10, 5000));
         client.start();
         System.out.println("zk client start successfully!");
 

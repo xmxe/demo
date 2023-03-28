@@ -12,9 +12,6 @@ import java.security.spec.X509EncodedKeySpec;
 import javax.crypto.Cipher;
 import org.apache.commons.codec.binary.Base64;
 
-/*
- * 非对称加密之RSA是怎么加密的 https://mp.weixin.qq.com/s/vH7OrVKA_ktGW6jQQfrO1Q
- */
 public class RSAAlgorithmUtil {
     /**
      * RSA最大加密明文大小

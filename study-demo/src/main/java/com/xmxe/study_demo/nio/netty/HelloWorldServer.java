@@ -50,7 +50,7 @@ class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();      
 
-        // 字符串解码 和 编码
+        // 字符串解码和编码
         pipeline.addLast("decoder", new StringDecoder());
         pipeline.addLast("encoder", new StringEncoder());
 

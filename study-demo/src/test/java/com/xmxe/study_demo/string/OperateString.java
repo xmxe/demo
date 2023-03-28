@@ -14,6 +14,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.xmxe.study_demo.entity.Student;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
@@ -35,7 +36,7 @@ public class OperateString {
         System.out.println(mutiLine1);
 
         // Java 8的String类加入了一个新的方法join()，可以将换行符与字符串拼接起来，非常方便
-        String mutiLine2 = String.join(newLine, "亲爱的", "合适啊", "这叫趣味", "哈哈");
+        String mutiLine2 = String.join(newLine, "亲爱的","合适啊","这叫趣味","哈哈");
         System.out.println(mutiLine2);
 
         String mutiLine3 = new StringBuilder().append("亲爱的").append(newLine).append("看不下去了").append(newLine)
@@ -60,7 +61,7 @@ public class OperateString {
         System.out.println(StringUtils.isEmpty(" ")); // false；
         return str == null || str.isEmpty();
 
-    }  
+    }
 
     /**
      * 删除最后一个字符串
@@ -123,22 +124,21 @@ public class OperateString {
      */
     @Test
     public void splitStr() {
-        String[] splitted = "沉默王二，一枚有趣的程序员".split("，");
+        String[] splitted = "a,b".split(",");
         System.out.println(Arrays.toString(splitted));
-        // 当然了，该方法也不是null安全的
-        // 之前反复提到的StringUtils类，来自Apache的Commons Lang包：
-        String[] splitted2 = StringUtils.split("沉默王二，一枚有趣的程序员", "，");
+        // 当然了，该方法也不是null安全的,之前反复提到的StringUtils类，来自Apache的Commons Lang包：
+        String[] splitted2 = StringUtils.split("a,b", ",");
         System.out.println(Arrays.toString(splitted2));
-        System.out.println(StringUtils.split("a..b.c", '.')); // ["a", "b", "c"]
+        System.out.println(StringUtils.split("a..b.c", '.')); // ["a","b","c"]
         System.out.println(StringUtils.splitByWholeSeparatorPreserveAllTokens("a..b.c", ".")); // ["a","", "b", "c"]
         // ps:注意以上两个方法区别。
 
         // StringUtils拆分之后得到是一个数组，我们可以使用Guava的
         Splitter splitter = Splitter.on(",");
 
-        splitter.splitToList("ab,,b,c");// 返回是一个List集合，结果：[ab, , b, c]
+        splitter.splitToList("ab,,b,c");// 返回是一个List集合，结果：[ab,,b,c]
 
-        splitter.omitEmptyStrings().splitToList("ab,,b,c"); // 忽略空字符串，输出结果[ab, b, c]
+        splitter.omitEmptyStrings().splitToList("ab,,b,c"); // 忽略空字符串，输出结果[ab,b,c]
 
     }
 
@@ -149,17 +149,16 @@ public class OperateString {
     public void appendStr() {
 
         // 第一个参数为字符串连接符，比如说：
-        String message = String.join("-", "王二", "太特么", "有趣了");
-        System.out.println(message);
-        // 输出结果为：王二-太特么-有趣了
+        String message = String.join("-", "ing","太特么","有趣了");
+        System.out.println(message);// 输出结果为：ing-太特么-有趣了
 
-        String chenmo1 = "沉默";
-        String wanger1 = "王二";
+        String chenmo1 = "str";
+        String wanger1 = "ing";
 
         System.out.println(StringUtils.join(chenmo1, wanger1));
 
-        String chenmo2 = "沉默";
-        String wanger2 = "王二";
+        String chenmo2 = "str";
+        String wanger2 = "ing";
 
         System.out.println(chenmo2.concat(wanger2));
 
@@ -181,18 +180,14 @@ public class OperateString {
         System.out.println(StringUtils.join(arrayStr, ",")); // "a,b,c"
         // StringUtils只能传入数组拼接字符串，不过我比较喜欢集合拼接，所以再推荐下Guava的Joiner。
         // 实例代码如下：
-
-        String[] array1 = new String[] { "test", "1234", "5678" };
+        String[] array1 = new String[] {"test","1234","5678"};
         List<String> list = new ArrayList<>();
-        list.add("test");
-        list.add("1234");
-        list.add("5678");
-        StringUtils.join(array1, ",");
+        list.add("test");list.add("1234");list.add("5678");
+        StringUtils.join(array1,",");
 
         // 逗号分隔符，跳过null
         Joiner joiner = Joiner.on(",").skipNulls();
-        joiner.join(array);
-        joiner.join(list);
+        joiner.join(array);joiner.join(list);
 
     }
 
@@ -202,7 +197,7 @@ public class OperateString {
     @Test
     public void fleng() {
         // 字符串固定长度8位，若不足，往左补0
-        System.out.println(StringUtils.leftPad("test", 8, "0"));
+        System.out.println(StringUtils.leftPad("test",8,"0"));
         // 另外还有一个StringUtils#rightPad,这个方法与上面方法正好相反。
 
     }
@@ -214,60 +209,51 @@ public class OperateString {
     public void wordRep() {
         // 默认替换所有关键字
         System.out.println(StringUtils.replace("aba", "a", "z")); // "zbz";
-
         // 替换关键字，仅替换一次
         System.out.println(StringUtils.replaceOnce("aba", "a", "z")); // "zba";
-
         // 使用正则表达式替换
-        // System.out.println(StringUtils.replacePattern("ABCabc123", "[^A-Z0-9]+",
-        // "")); // "ABC123";
+        // System.out.println(StringUtils.replacePattern("ABCabc123", "[^A-Z0-9]+","")); // "ABC123";
+        System.out.println(RegExUtils.replacePattern("ABCabc123", "[^A-Z0-9]+",""));
     }
 
     @Test
-    public void jdkNewStringOperation(){
-        var str = "  woshidage   ";     
-        var result1 = str.strip();    //首位空白
-        var result2 = str.stripTrailing();  //去除尾部空白
-        var result3 = str.stripLeading();  //去除首部空白
-        var copyStr = str.repeat(2);  //复制几遍字符串
-        var lineCount = str.lines().count(); //行数统计
+    public void jdkNewStringOperation() {
+        var str = "  woshidage   ";
+        var result1 = str.strip(); // 首位空白
+        var result2 = str.stripTrailing(); // 去除尾部空白
+        var result3 = str.stripLeading(); // 去除首部空白
+        var copyStr = str.repeat(2); // 复制几遍字符串
+        var lineCount = str.lines().count(); // 行数统计
         var str1 = " ";
-        var isblank = str1.isBlank();  //判断字符串是空白
-        var isempty = str1.isEmpty();  //判断字符串是否为空字符串
+        var isblank = str1.isBlank(); // 判断字符串是空白
+        var isempty = str1.isEmpty(); // 判断字符串是否为空字符串
 
-        System.out.println(isblank);
-        System.out.println(isempty);
-        System.out.println(result1);
-        System.out.println(result2);
-        System.out.println(result3);
-        System.out.println(copyStr);
-        System.out.println(lineCount);
     }
 
     /**
      * 内存地址
      */
     @Test
-	public void memory() {
-		Student a = new Student(1, "a");
-		Student b = a;
-		System.out.println(b.toString());// age=1 name=a
-		a.setAge(2);
-		System.out.println(b.toString());// age=2 name=a 内存地址引用的a a发生改变，b也改变
-		a = new Student(3, "b");
-		System.out.println(a.toString());// age=3 name=b
-		System.out.println(b);// age=2 name=a a是一个新的内存地址 b还是原来的内存地址，b不变
+    public void memory() {
+        Student a = new Student(1, "a");
+        Student b = a;
+        System.out.println(b.toString());// age=1 name=a
+        a.setAge(2);
+        System.out.println(b.toString());// age=2 name=a 内存地址引用的a a发生改变，b也改变
+        a = new Student(3, "b");
+        System.out.println(a.toString());// age=3 name=b
+        System.out.println(b);// age=2 name=a a是一个新的内存地址 b还是原来的内存地址，b不变
 
-		Student c = new Student(4, "c");
-		Map<String, Student> map = new HashMap<>();
-		map.put("a", a);
-		map.put("c", c);
-		Map<String, Student> m = map;
-		System.out.println(m);// {a=age=3 name=b, c=age=4 name=c}
-		map.remove("a");
-		System.out.println(m);// {c=age=4 name=c} 内存地址引用的map map发生改变 m也跟着改变
-		map = new HashMap<>();
-		System.out.println(map);// {} map是一个新的内存地址
-		System.out.println(m);// {c=age=4 name=c} 原来的内存地址引用没有变化
-	}
+        Student c = new Student(4, "c");
+        Map<String, Student> map = new HashMap<>();
+        map.put("a", a);
+        map.put("c", c);
+        Map<String, Student> m = map;
+        System.out.println(m);// {a=age=3 name=b, c=age=4 name=c}
+        map.remove("a");
+        System.out.println(m);// {c=age=4 name=c} 内存地址引用的map map发生改变 m也跟着改变
+        map = new HashMap<>();
+        System.out.println(map);// {} map是一个新的内存地址
+        System.out.println(m);// {c=age=4 name=c} 原来的内存地址引用没有变化
+    }
 }

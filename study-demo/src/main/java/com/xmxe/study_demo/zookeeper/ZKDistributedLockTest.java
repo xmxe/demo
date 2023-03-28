@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
  * 分布式锁测试
  */
 public class ZKDistributedLockTest {
-    
+
     // private int threadId;
 
     // 连接zookeeper的地址
@@ -46,7 +46,7 @@ public class ZKDistributedLockTest {
                         e.printStackTrace();
                     }
                 }
-            },"第"+i+"个线程").start();
+            }, "第" + i + "个线程").start();
         }
         // 循环结束，提示所有线程执行完成
         try {

@@ -31,18 +31,17 @@ public class NettyServer {
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup)
-                            .channel(NioServerSocketChannel.class)
-                            .option(ChannelOption.SO_BACKLOG, 100)
-                            .handler(new LoggingHandler(LogLevel.INFO))
-                            .childHandler(new ChannelInitializer<SocketChannel>() {
-                                                @Override
-                                                public void initChannel(SocketChannel ch) throws Exception {
-                                                    ch.pipeline().addLast(
-                                                    // new LoggingHandler(LogLevel.INFO),
-                                                            new EchoServerHandler());
-                                                }
-                                            }
-                                        );
+                    .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG, 100)
+                    .handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(
+                                    // new LoggingHandler(LogLevel.INFO),
+                                    new EchoServerHandler());
+                        }
+                    });
 
             // Start the server.
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
@@ -54,20 +53,19 @@ public class NettyServer {
             workerGroup.shutdownGracefully();
         }
     }
-    
 
     static class EchoServerHandler extends ChannelInboundHandlerAdapter {
-    
+
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             ctx.write(msg);
         }
-    
+
         @Override
         public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
             ctx.flush();
         }
-    
+
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
             // Close the connection when an exception is raised.

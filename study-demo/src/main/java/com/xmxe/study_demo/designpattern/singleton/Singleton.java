@@ -134,13 +134,13 @@ enum Singleton8 {
 
     }
     /**
-     * 注意事项 
+     * 注意事项
      * 1、考虑多线程问题
      * 2、单例类构造方法要设置为private类型禁止外界new创建 private Singleton() {}
      * 3、如果类可序列化，考虑反序列化生成多个实例问题，解决方案如下
      * private Object readResolve() throws ObjectStreamException {
      * // instead of the object we're on, return the class variable INSTANCE
-     *    return INSTANCE;
+     * return INSTANCE;
      * }
      * 4.枚举类型，无线程安全问题，避免反序列华创建新的实例，很少使用。
      */

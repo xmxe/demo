@@ -84,8 +84,8 @@ public class WebSpider_Jsoup {
 		HSSFRow rowFirst = sheet.createRow(0);// 第一个sheet第一行为标题
 		rowFirst.setHeight((short) 500);
 		HSSFCellStyle cellStyle = wb.createCellStyle();// 创建单元格样式对象
-//		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
-//		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		// cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
+		// cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		for (int i = 0; i < handers.length; i++) {
 			sheet.setColumnWidth((short) i, (short) 4000);// 设置列宽
 		}

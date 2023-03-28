@@ -7,12 +7,11 @@ import java.util.concurrent.atomic.LongAccumulator;
 import java.util.concurrent.atomic.LongAdder;
 
 public class LongAdderAndLongAccumulatorTest {
-     /**
-     * LongAdder相比AtomicInteger拥有更高的性能 
-     * since jdk1.8
-     * 阿里为什么推荐使用 LongAdder https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&mid=2247558863&idx=1&sn=3c695968d16735e69d12680f4b588c48&scene=21#wechat_redirect
+    /**
+     * LongAdder相比AtomicInteger拥有更高的性能.since jdk1.8
+     * 阿里为什么推荐使用LongAdder https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&mid=2247558863&idx=1&sn=3c695968d16735e69d12680f4b588c48&scene=21#wechat_redirect
      */
-    public static void longAdder(){
+    public static void longAdder() {
         LongAdder longAdder = new LongAdder();
         longAdder.increment();
     }
@@ -21,10 +20,11 @@ public class LongAdderAndLongAccumulatorTest {
      * LongAccumulator提供了自定义的函数式接口，可以根据规则进行累加，不管是加减多少，或者是乘除多少，或者取最大值，想怎么弄，规则自己定
      */
 
-    // public LongAccumulator(LongBinaryOperator accumulatorFunction,long identity) LongBinaryOperator：函数式接口参数；identity：初始值
+    // public LongAccumulator(LongBinaryOperator accumulatorFunction,long identity)LongBinaryOperator：函数式接口参数；identity：初始值
     // 定义一个累加规则的LongAccumulator
     private static LongAccumulator longAccumulatorAdd = new LongAccumulator((left, right) -> left + right, 0);
-    private static final int MAX_POOL_SIZE = 5,MAX_LOOP_SIZE = 10;
+    private static final int MAX_POOL_SIZE = 5, MAX_LOOP_SIZE = 10;
+
     public static void add(LongAccumulator longAccumulator, long number) throws InterruptedException {
         long start = System.currentTimeMillis();
         ExecutorService es = Executors.newFixedThreadPool(MAX_POOL_SIZE);
@@ -37,7 +37,7 @@ public class LongAdderAndLongAccumulatorTest {
         }
         es.shutdown();
         es.awaitTermination(5, TimeUnit.MINUTES);
-        System.out.printf("LongAccumulator %s*%s +%s 结果：%s，耗时：%sms.\n",
+        System.out.printf("LongAccumulator %s*%s +%s 结果：%s,耗时:%sms.\n",
                 MAX_POOL_SIZE,
                 MAX_LOOP_SIZE,
                 number,
@@ -48,6 +48,7 @@ public class LongAdderAndLongAccumulatorTest {
 
     // 定义一个取最大值规则的LongAccumulator
     private static LongAccumulator longAccumulatorMax = new LongAccumulator(Long::max, 50);
+
     private static void max(LongAccumulator longAccumulator) throws InterruptedException {
         long start = System.currentTimeMillis();
         ExecutorService es = Executors.newFixedThreadPool(MAX_POOL_SIZE);
@@ -59,21 +60,19 @@ public class LongAdderAndLongAccumulatorTest {
         }
         es.shutdown();
         es.awaitTermination(5, TimeUnit.MINUTES);
-        System.out.printf("LongAccumulator 求最大值结果：%s，耗时：%sms.\n",
+        System.out.printf("LongAccumulator 求最大值结果：%s,耗时:%sms.\n",
                 longAccumulator.get(),
                 (System.currentTimeMillis() - start));
         longAccumulator.reset();
     }
 
     public static void main(String[] args) throws Exception {
-        // 和 LongAdder 一致
+        // 和LongAdder一致
         add(longAccumulatorAdd, 1);
         // 每次累加2
         add(longAccumulatorAdd, 2);
         // 求最大值
         max(longAccumulatorMax);
     }
-
-
 
 }

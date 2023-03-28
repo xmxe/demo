@@ -19,10 +19,10 @@ public class TaskBuilderPattern {
         this.finishDate = taskBuilder.finishDate;
     }
 
-    public static TaskBuilder builder(){
+    public static TaskBuilder builder() {
         return new TaskBuilder();
     }
-    
+
     public long getId() {
         return id;
     }
@@ -88,10 +88,9 @@ public class TaskBuilderPattern {
 
     }
 
-
 }
 
-class Builder{
+class Builder {
     TaskBuilderPattern task = TaskBuilderPattern.builder()
             .type(1)
             .content("处理一下这个任务")

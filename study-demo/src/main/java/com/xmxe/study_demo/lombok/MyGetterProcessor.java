@@ -69,7 +69,7 @@
 
 //     private JCTree.JCMethodDecl makeGetterMethodDecl(JCTree.JCVariableDecl jcVariableDecl) {
 //         ListBuffer<JCTree.JCStatement> statements = new ListBuffer<>();
-//         // 生成表达式 例如 this.a = a;
+//         // 生成表达式 例如this.a = a;
 //         JCTree.JCExpressionStatement aThis = makeAssignment(treeMaker.Select(treeMaker.Ident(
 //                 names.fromString("this")), jcVariableDecl.getName()), treeMaker.Ident(jcVariableDecl.getName()));
 //         statements.append(aThis);

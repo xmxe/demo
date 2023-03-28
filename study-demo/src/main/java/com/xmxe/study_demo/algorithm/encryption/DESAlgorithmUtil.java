@@ -15,13 +15,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
-/**
- * DES加密算法是怎么实现的 https://mp.weixin.qq.com/s/x7XKCWxntO7ArK0VtRCqgQ
- */
 public class DESAlgorithmUtil {
 
     /**
-     * 偏移变量，固定占8位字节
+     * 偏移变量,固定占8位字节
      */
     private final static String IV_PARAMETER = "12345678";
     /**
@@ -53,13 +50,13 @@ public class DESAlgorithmUtil {
     /**
      * DES加密字符串
      *
-     * @param password 加密密码，长度不能够小于8位
+     * @param password 加密密码,长度不能够小于8位
      * @param data     待加密字符串
      * @return 加密后内容
      */
     public static String encrypt(String password, String data) {
         if (password == null || password.length() < 8) {
-            throw new RuntimeException("加密失败，key不能小于8位");
+            throw new RuntimeException("加密失败,key不能小于8位");
         }
         if (data == null)
             return null;
@@ -70,7 +67,7 @@ public class DESAlgorithmUtil {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
             byte[] bytes = cipher.doFinal(data.getBytes(CHARSET));
 
-            // JDK1.8及以上可直接使用Base64，JDK1.7及以下可以使用BASE64Encoder
+            // JDK1.8及以上可直接使用Base64,JDK1.7及以下可以使用BASE64Encoder
             // Android平台可以使用android.util.Base64
             return new String(Base64.getEncoder().encode(bytes));
 
@@ -83,13 +80,13 @@ public class DESAlgorithmUtil {
     /**
      * DES解密字符串
      *
-     * @param password 解密密码，长度不能够小于8位
+     * @param password 解密密码,长度不能够小于8位
      * @param data     待解密字符串
      * @return 解密后内容
      */
     public static String decrypt(String password, String data) {
         if (password == null || password.length() < 8) {
-            throw new RuntimeException("加密失败，key不能小于8位");
+            throw new RuntimeException("加密失败,key不能小于8位");
         }
         if (data == null)
             return null;
@@ -115,7 +112,7 @@ public class DESAlgorithmUtil {
     public static String encryptFile(String password, String srcFile, String destFile) {
 
         if (password == null || password.length() < 8) {
-            throw new RuntimeException("加密失败，key不能小于8位");
+            throw new RuntimeException("加密失败,key不能小于8位");
         }
         try {
             IvParameterSpec iv = new IvParameterSpec(IV_PARAMETER.getBytes(CHARSET));

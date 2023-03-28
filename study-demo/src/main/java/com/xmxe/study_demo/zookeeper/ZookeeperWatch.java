@@ -18,6 +18,7 @@ import org.apache.zookeeper.ZooKeeper;
 
 public class ZookeeperWatch {
 	private static final CountDownLatch COUNT_DOWN_LATCH = new CountDownLatch(1);
+
 	public static void main(String[] args) {
 		Thread t = new Thread(() -> {
 			// 连接启动zk
@@ -26,7 +27,7 @@ public class ZookeeperWatch {
 					// 创建默认的监听器
 					public void process(WatchedEvent event) {
 						System.out.println("changing...");
-						System.out.println("state-->"+event.getState()+"  type-->"+event.getType());
+						System.out.println("state-->" + event.getState() + "  type-->" + event.getType());
 						// 测试在连接zookeeper的时候想要执行监听器需要在连接后的代码加上await()阻塞一会，否则不会打印上面的语句,不知什么原理
 					}
 				});
@@ -47,7 +48,7 @@ public class ZookeeperWatch {
 				 
 				};
 				 */
-				COUNT_DOWN_LATCH.await(2,TimeUnit.SECONDS);
+				COUNT_DOWN_LATCH.await(2, TimeUnit.SECONDS);
 				Watcher wc = (event) -> {
 					if (event.getType() == EventType.NodeDataChanged) {
 						System.out.println("change");
@@ -338,17 +339,17 @@ class ZooKeeperWatcher implements Watcher {
 		Thread.sleep(1000);
 
 		// 清理节点
-		//zkWatch.deleteAllTestPath(false);
+		// zkWatch.deleteAllTestPath(false);
 
 		// -----------------第一步: 创建父节点 /parent ------------------------//
 		if (zkWatch.createPath(PARENT_PATH, System.currentTimeMillis() + "", true)) {
 
 			Thread.sleep(1000);
 
-			// -----------------第二步: 读取节点 /parent 和 读取/parent节点下的子节点(getChildren)的区别 --------------//
+			// -----------------第二步: 读取节点 /parent 和 读取/parent节点下的子节点(getChildren)的区别
 			// 读取数据
 			String readData = zkWatch.readData(PARENT_PATH, true);
-			System.out.println("readData="+readData);
+			System.out.println("readData=" + readData);
 
 			// 读取子节点(监控childNodeChange事件)
 			List<String> children = zkWatch.getChildren(PARENT_PATH, true);

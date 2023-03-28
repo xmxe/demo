@@ -13,7 +13,8 @@ public class ElegantOffline {
             // app is runing
         }
         System.out.println("main thread execute end...");
-        // 当执行kill 15 pid的时候打印hook execute...并给出一个提示Process finished with exit code 143 (interrupted by signal 15: SIGTERM)
+        // 当执行kill 15 pid的时候打印hook execute...并给出一个提示Process finished with exit code 143
+        // (interrupted by signal 15: SIGTERM)
     }
 
 }

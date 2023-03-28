@@ -6,39 +6,39 @@ package com.xmxe.study_demo.designpattern.adapter;
  */
 public class AdapterModel {
     public static void main(String[] args) {
-        //对象适配
+        // 对象适配
         ExpensiveAdapter adapter = new ExpensiveAdapter(new HuaweiPhone());
         adapter.action();
     }
 }
 
-
 interface Phone {
     void productPhone();
 }
 
-class HuaweiPhone implements Phone{
+class HuaweiPhone implements Phone {
     @Override
     public void productPhone() {
-        System.out.println("生产一部华为手机");        
+        System.out.println("生产一部华为手机");
     }
-    
+
 }
 
-interface Player{
+interface Player {
     void action();
 }
 
-class ExpensiveAdapter implements Player{
+class ExpensiveAdapter implements Player {
 
     private Phone phone;
 
     public ExpensiveAdapter(Phone phone) {
         this.phone = phone;
     }
+
     @Override
     public void action() {
-        //调用HuaweiPhone中的productPhone方法
+        // 调用HuaweiPhone中的productPhone方法
         phone.productPhone();
         System.out.println("用手机播放音乐");
     }

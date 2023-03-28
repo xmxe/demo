@@ -52,9 +52,10 @@ public class ZKDistributedLock implements Watcher {
         THREAD_FLAG = "[第" + threadId + "个线程]";
     }
 
-    public int getThreadId(){
+    public int getThreadId() {
         return this.threadId;
     }
+
     /**
      * 回调函数，返回连接结果
      *
@@ -121,18 +122,20 @@ public class ZKDistributedLock implements Watcher {
             // 父节点一定是永久节点 如果使用临时节点的话创建节点的线程与zookeeper失去连接后会删除父节点导致其他线程无法访问
             String createdPath = zk.create(ROOT_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             logger.warn(THREAD_FLAG + "创建" + createdPath + "成功");
-            /**ZooDefs.Ids
-             * OPEN_ACL_UNSAFE  : 完全开放的ACL，任何连接的客户端都可以操作该属性znode
-             * CREATOR_ALL_ACL : 只有创建者才有ACL权限
-             * READ_ACL_UNSAFE：只能读取ACL
+            /**
+             * ZooDefs.Ids
+             * OPEN_ACL_UNSAFE:完全开放的ACL，任何连接的客户端都可以操作该属性znode
+             * CREATOR_ALL_ACL:只有创建者才有ACL权限
+             * READ_ACL_UNSAFE:只能读取ACL
              */
 
-             /**CreateMode
-              * PERSISTENT 持久化目录节点, 会话结束存储数据不会丢失
-              * PERSISTENT_SEQUENTIAL 顺序自动编号持久化目录节点, 存储数据不会丢失, 会根据当前已存在节点数自动加1, 然后返回给客户端已经创建成功的节点名
-              * EPHEMERAL 临时目录节点, 一旦创建这个节点当会话结束, 这个节点会被自动删除
-              * EPHEMERAL_SEQUENTIAL 临时自动编号节点, 一旦创建这个节点,当回话结束, 节点会被删除, 并且根据当前已经存在的节点数自动加1, 然后返回给客户端已经成功创建的目录节点名 .
-              */
+            /**
+             * CreateMode
+             * PERSISTENT 持久化目录节点, 会话结束存储数据不会丢失
+             * PERSISTENT_SEQUENTIAL 顺序自动编号持久化目录节点, 存储数据不会丢失, 会根据当前已存在节点数自动加1,然后返回给客户端已经创建成功的节点名
+             * EPHEMERAL 临时目录节点, 一旦创建这个节点当会话结束, 这个节点会被自动删除
+             * EPHEMERAL_SEQUENTIAL 临时自动编号节点, 一旦创建这个节点,当回话结束, 节点会被删除, 并且根据当前已经存在的节点数自动加1,然后返回给客户端已经成功创建的目录节点名 .
+             */
         }
 
     }
@@ -142,7 +145,8 @@ public class ZKDistributedLock implements Watcher {
      */
     public void grabLock() throws KeeperException, InterruptedException {
         // 先创建临时节点
-        currentEphemeralNode = zk.create(CHILD_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+        currentEphemeralNode = zk.create(CHILD_PATH, null, ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL);
         logger.info(THREAD_FLAG + "创建" + currentEphemeralNode + "临时顺序节点");
         // 检查是否可以获取锁
         if (isMinPath()) {

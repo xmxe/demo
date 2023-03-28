@@ -14,16 +14,17 @@ import org.reflections.util.ConfigurationBuilder;
 
 public class OrderServiceTest {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         OrderEntity order = new OrderEntity();
         // order.setSource("default");
         // order.setSource("pc");
         order.setSource("mobile");
         orderService(order);
     }
-    private static Map<String,Object> handMap = new HashMap<>();
-    
-    static {       
+
+    private static Map<String, Object> handMap = new HashMap<>();
+
+    static {
         try {
             // 实例化com.xmxe.study_demo.strategy.annotation下的所有@OrderHandlerTypeAnnotation标记的类
             // 注解标记的source的值作为map中key,作用在注解的类作为map中的value
@@ -31,13 +32,14 @@ public class OrderServiceTest {
             handMap = ClassFactory.container;
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
 
-    // MobileOrderHandler mobile = BeanFactory.getBean("mobile", MobileOrderHandler.class);
-    // PCOrderHandler pc = BeanFactory.getBean("pc", PCOrderHandler.class);
-    // handMap.put("mobile",mobile);
-    // handMap.put("pc",pc);
-      
+        // MobileOrderHandler mobile = BeanFactory.getBean("mobile",
+        // MobileOrderHandler.class);
+        // PCOrderHandler pc = BeanFactory.getBean("pc", PCOrderHandler.class);
+        // handMap.put("mobile",mobile);
+        // handMap.put("pc",pc);
+
     }
 
     /**
@@ -45,7 +47,7 @@ public class OrderServiceTest {
      */
     public static void orderService(OrderEntity order) {
         // ...一些前置处理
-        
+
         // 通过订单来源确定对应的handler
         OrderHandler orderHandler = (OrderHandler) handMap.get(order.getSource());
         orderHandler.handle(order);
@@ -56,9 +58,9 @@ public class OrderServiceTest {
 }
 
 class ClassFactory {
-    
+
     /**
-     * 获取注解标记的实现类，将实现类放到map里面 key为注解source中的值 value为注解标记的实现类
+     * 获取注解标记的实现类，将实现类放到map里面.key为注解source中的值,value为注解标记的实现类
      */
     protected static final Map<String, Object> container = new HashMap<String, Object>();
 
@@ -72,7 +74,7 @@ class ClassFactory {
 
         ConfigurationBuilder config = new ConfigurationBuilder();
         config.addUrls(ClasspathHelper.forPackage(packageName));
-        config.setScanners(new TypeAnnotationsScanner(),new SubTypesScanner());
+        config.setScanners(new TypeAnnotationsScanner(), new SubTypesScanner());
 
         // Reflections f = new Reflections(config);
         Reflections f = new Reflections(packageName);
@@ -98,7 +100,7 @@ class ClassFactory {
      * 根据注解source获取指定类型的实例
      * 
      * @param annoName 注解source值
-     * @param clazz bean类型
+     * @param clazz    bean类型
      * @return 指定类型的实例
      */
     public static <T> T getClass(String annoName, Class<T> clazz) {
@@ -112,15 +114,16 @@ class ClassFactory {
 interface OrderHandler {
     void handle(OrderEntity order);
 }
+
 /**
  * 策略模式：业务实现类
  */
 @OrderHandlerTypeAnnotation(source = "default")
-class OrderHandlerImplClass implements OrderHandler{
+class OrderHandlerImplClass implements OrderHandler {
 
     @Override
     public void handle(OrderEntity order) {
-       System.out.println("默认");
+        System.out.println("默认");
     }
 }
 
@@ -160,6 +163,7 @@ class OrderEntity {
      * 订单金额
      */
     private BigDecimal amount;
+
     // ...其他的一些字段
     public String getSource() {
         return source;
@@ -192,5 +196,5 @@ class OrderEntity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-    
+
 }

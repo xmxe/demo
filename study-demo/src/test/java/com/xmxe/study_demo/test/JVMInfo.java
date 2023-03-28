@@ -42,52 +42,52 @@ import oshi.util.Util;
  * Jvm信息使用ManagementFactory去获取 OS运行信息推荐使用oshi去获取
  */
 public class JVMInfo {
-    
+
     @Test
-    public void byManagementFactory(){
+    public void byManagementFactory() {
         MemoryMXBean mxb = ManagementFactory.getMemoryMXBean();
-        //堆
-        System.out.println("Max:" +FormatUtils.formatByte(mxb.getHeapMemoryUsage().getMax()));    //Max:1776MB
-        System.out.println("Init:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getInit()));  //Init:126MB
-        System.out.println("Committed:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getCommitted()));   //Committed:121MB
-        System.out.println("Used:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getUsed()));  //Used:7MB
-        System.out.println(mxb.getHeapMemoryUsage().toString());   
-        //直接内存
-        System.out.println("Max:" +FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getMax()));    //Max:0MB
-        System.out.println("Init:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getInit()));  //Init:2MB
-        System.out.println("Committed:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getCommitted()));   //Committed:8MB
-        System.out.println("Used:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getUsed()));  //Used:7MB
-        System.out.println(mxb.getNonHeapMemoryUsage().toString()); 
+        // 堆
+        System.out.println("Max:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getMax())); // Max:1776MB
+        System.out.println("Init:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getInit())); // Init:126MB
+        System.out.println("Committed:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getCommitted())); // Committed:121MB
+        System.out.println("Used:" + FormatUtils.formatByte(mxb.getHeapMemoryUsage().getUsed())); // Used:7MB
+        System.out.println(mxb.getHeapMemoryUsage().toString());
+        // 直接内存
+        System.out.println("Max:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getMax())); // Max:0MB
+        System.out.println("Init:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getInit())); // Init:2MB
+        System.out.println("Committed:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getCommitted())); // Committed:8MB
+        System.out.println("Used:" + FormatUtils.formatByte(mxb.getNonHeapMemoryUsage().getUsed())); // Used:7MB
+        System.out.println(mxb.getNonHeapMemoryUsage().toString());
     }
 
-
     @Test
-    public void byRuntime(){
+    public void byRuntime() {
         JSONObject cpuInfo = new JSONObject();
         Properties props = System.getProperties();
         Runtime runtime = Runtime.getRuntime();
         long jvmTotalMemoryByte = runtime.totalMemory();
         long freeMemoryByte = runtime.freeMemory();
-        //jvm总内存
+        // jvm总内存
         cpuInfo.put("total", FormatUtils.formatByte(jvmTotalMemoryByte));
-        //空闲空间
+        // 空闲空间
         cpuInfo.put("free", FormatUtils.formatByte(freeMemoryByte));
-        //jvm最大可申请
+        // jvm最大可申请
         cpuInfo.put("max", FormatUtils.formatByte(runtime.maxMemory()));
-        //jvm已使用内存
+        // jvm已使用内存
         cpuInfo.put("user", FormatUtils.formatByte(jvmTotalMemoryByte - freeMemoryByte));
-        //jvm内存使用率
-        cpuInfo.put("usageRate", new DecimalFormat("#.##%").format((jvmTotalMemoryByte - freeMemoryByte) * 1.0 / jvmTotalMemoryByte));
-        //jdk版本
+        // jvm内存使用率
+        cpuInfo.put("usageRate",
+                new DecimalFormat("#.##%").format((jvmTotalMemoryByte - freeMemoryByte) * 1.0 / jvmTotalMemoryByte));
+        // jdk版本
         cpuInfo.put("jdkVersion", props.getProperty("java.version"));
-        //jdk路径
+        // jdk路径
         cpuInfo.put("jdkHome", props.getProperty("java.home"));
-                
+
         System.out.println(cpuInfo);
     }
 
     @Test
-    public void jvminfo(){
+    public void jvminfo() {
         ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
         Map<String, Number> map = new LinkedHashMap<String, Number>();
         // 线程总数
@@ -107,45 +107,45 @@ public class JVMInfo {
         int terminatedThreadCount = 0;
         if (threadInfos != null) {
             for (ThreadInfo threadInfo : threadInfos) {
-                            if (threadInfo != null) {
-                                switch (threadInfo.getThreadState()) {
-                                    case NEW:
-                                        newThreadCount++;
-                                        break;
-                                    case RUNNABLE:
-                                        runnableThreadCount++;
-                                        break;
-                                    case BLOCKED:
-                                        blockedThreadCount++;
-                                        break;
-                                    case WAITING:
-                                        waitThreadCount++;
-                                        break;
-                                    case TIMED_WAITING:
-                                        timeWaitThreadCount++;
-                                        break;
-                                    case TERMINATED:
-                                        terminatedThreadCount++;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            } else {
-            
-                                terminatedThreadCount++;
-                            }
-                        }
-            // 新建线程数            
+                if (threadInfo != null) {
+                    switch (threadInfo.getThreadState()) {
+                        case NEW:
+                            newThreadCount++;
+                            break;
+                        case RUNNABLE:
+                            runnableThreadCount++;
+                            break;
+                        case BLOCKED:
+                            blockedThreadCount++;
+                            break;
+                        case WAITING:
+                            waitThreadCount++;
+                            break;
+                        case TIMED_WAITING:
+                            timeWaitThreadCount++;
+                            break;
+                        case TERMINATED:
+                            terminatedThreadCount++;
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+
+                    terminatedThreadCount++;
+                }
+            }
+            // 新建线程数
             map.put("jvm.thread.new.count", newThreadCount);
-            // 运行线程数   
+            // 运行线程数
             map.put("jvm.thread.runnable.count", runnableThreadCount);
-            // 阻塞线程数   
+            // 阻塞线程数
             map.put("jvm.thread.blocked.count", blockedThreadCount);
-            // 等待线程数   
+            // 等待线程数
             map.put("jvm.thread.waiting.count", waitThreadCount);
-            // 等待超时线程数   
+            // 等待超时线程数
             map.put("jvm.thread.time_waiting.count", timeWaitThreadCount);
-            // 死亡线程数   
+            // 死亡线程数
             map.put("jvm.thread.terminated.count", terminatedThreadCount);
 
             long[] ids = threadBean.findDeadlockedThreads();
@@ -153,9 +153,8 @@ public class JVMInfo {
         }
     }
 
-
     @Test
-    public void cpuinfo(){
+    public void cpuinfo() {
         JSONObject cpuInfo = new JSONObject();
         SystemInfo systemInfo = new SystemInfo();
         // OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
@@ -165,29 +164,38 @@ public class JVMInfo {
         long[] prevTicks = processor.getSystemCpuLoadTicks();
         Util.sleep(1000);
         long[] ticks = processor.getSystemCpuLoadTicks();
-        long nice = ticks[CentralProcessor.TickType.NICE.getIndex()] - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
-        long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()] - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
-        long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()] - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
-        long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()] - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
-        long cSys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()] - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
-        long user = ticks[CentralProcessor.TickType.USER.getIndex()] - prevTicks[CentralProcessor.TickType.USER.getIndex()];
-        long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()] - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
-        long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
+        long nice = ticks[CentralProcessor.TickType.NICE.getIndex()]
+                - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
+        long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()]
+                - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
+        long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()]
+                - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
+        long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()]
+                - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
+        long cSys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()]
+                - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
+        long user = ticks[CentralProcessor.TickType.USER.getIndex()]
+                - prevTicks[CentralProcessor.TickType.USER.getIndex()];
+        long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()]
+                - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
+        long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()]
+                - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
         long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
-        //cpu核数
+        // cpu核数
         cpuInfo.put("cpuNum", processor.getLogicalProcessorCount());
-        //cpu系统使用率
+        // cpu系统使用率
         cpuInfo.put("cSys", new DecimalFormat("#.##%").format(cSys * 1.0 / totalCpu));
-        //cpu用户使用率
+        // cpu用户使用率
         cpuInfo.put("user", new DecimalFormat("#.##%").format(user * 1.0 / totalCpu));
-        //cpu当前等待率
+        // cpu当前等待率
         cpuInfo.put("iowait", new DecimalFormat("#.##%").format(iowait * 1.0 / totalCpu));
-        //cpu当前使用率
+        // cpu当前使用率
         cpuInfo.put("idle", new DecimalFormat("#.##%").format(1.0 - (idle * 1.0 / totalCpu)));
         System.out.println(cpuInfo);
     }
 
 }
+
 class FormatUtils {
 
     /**
@@ -196,8 +204,8 @@ class FormatUtils {
      * @param byteNumber number
      * @return desc
      */
-   public static String formatByte(long byteNumber) {
-        //换算单位
+    public static String formatByte(long byteNumber) {
+        // 换算单位
         double FORMAT = 1024.0;
         double kbNumber = byteNumber / FORMAT;
         if (kbNumber < FORMAT) {
@@ -218,6 +226,7 @@ class FormatUtils {
 
 class SysMetric {
     static Logger log = LoggerFactory.getLogger(SysMetric.class);
+
     public static void main(String[] args) {
         // Options: ERROR > WARN > INFO > DEBUG > TRACE
 
@@ -240,7 +249,6 @@ class SysMetric {
 
         log.info("Checking CPU...");
         printCpu(hal.getProcessor());
-
 
         log.info("Checking Sensors...");
         printSensors(hal.getSensors());
@@ -313,14 +321,22 @@ class SysMetric {
         // Wait a second...
         long[] ticks = processor.getSystemCpuLoadTicks();
         System.out.println("CPU, IOWait, and IRQ ticks @ 1 sec:" + Arrays.toString(ticks));
-        long user = ticks[CentralProcessor.TickType.USER.getIndex()] - prevTicks[CentralProcessor.TickType.USER.getIndex()];
-        long nice = ticks[CentralProcessor.TickType.NICE.getIndex()] - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
-        long sys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()] - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
-        long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
-        long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()] - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
-        long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()] - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
-        long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()] - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
-        long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()] - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
+        long user = ticks[CentralProcessor.TickType.USER.getIndex()]
+                - prevTicks[CentralProcessor.TickType.USER.getIndex()];
+        long nice = ticks[CentralProcessor.TickType.NICE.getIndex()]
+                - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
+        long sys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()]
+                - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
+        long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()]
+                - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
+        long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()]
+                - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
+        long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()]
+                - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
+        long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()]
+                - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
+        long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()]
+                - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
         long totalCpu = user + nice + sys + idle + iowait + irq + softirq + steal;
 
         System.out.format(
@@ -450,4 +466,3 @@ class SysMetric {
         }
     }
 }
-

@@ -79,7 +79,7 @@ public class CuratorClientUtil {
                             value.getBytes(Charsets.UTF_8));
 
                 // isSuccessFlag = StringUtils.isSame(nodeName, opResult);
-                if(nodeName.equals(opResult))
+                if (nodeName.equals(opResult))
                     isSuccessFlag = true;
             }
         } catch (Exception e) {

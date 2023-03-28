@@ -12,7 +12,7 @@ public class FactoryMethod {
         Customer1 bankPartner = bankPartnerFactory.create("B", "Java技术栈银行客户");
         System.out.println(bankPartner);
 
-        CustomerFactory1 agentFactory  = new AgentFactory1();
+        CustomerFactory1 agentFactory = new AgentFactory1();
         Customer1 agent = agentFactory.create("A", "Java技术栈代理商");
         System.out.println(agent);
     }
@@ -33,29 +33,33 @@ abstract class Customer1 {
      */
     private String type;
 
-    public Customer1(){}
-    public Customer1(String name,String type){
+    public Customer1() {
+    }
+
+    public Customer1(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
-    public void setType(String type){
+
+    public void setType(String type) {
         this.type = type;
     }
-    public String getType(){
+
+    public String getType() {
         return type;
     }
 
     @Override
-    public String toString(){
-        return "name="+name+"type="+type;
+    public String toString() {
+        return "name=" + name + "type=" + type;
     }
 
 }
@@ -83,17 +87,19 @@ class Merchant1 extends Customer1 {
         super(name, type);
     }
 
-    public void setContractType(int contractType){
+    public void setContractType(int contractType) {
         this.contractType = contractType;
     }
-    public int getContractType(){
+
+    public int getContractType() {
         return contractType;
     }
 
-    public void setSettmentDays(int settmentDays){
+    public void setSettmentDays(int settmentDays) {
         this.settmentDays = settmentDays;
     }
-    public int getSettmentDays(){
+
+    public int getSettmentDays() {
         return settmentDays;
     }
 }
@@ -129,20 +135,23 @@ class Agent1 extends Customer1 {
         super(name, type);
     }
 
-    public void setPeriod(int period){
+    public void setPeriod(int period) {
         this.period = period;
     }
-    public int getPeriod(){
+
+    public int getPeriod() {
         return period;
     }
 
-    public void setProducts(int[] products){
+    public void setProducts(int[] products) {
         this.products = products;
     }
-    public int[] getProducts(){
+
+    public int[] getProducts() {
         return products;
     }
 }
+
 /**
  * 代理商工厂
  */
@@ -154,6 +163,7 @@ class AgentFactory1 implements CustomerFactory1 {
     }
 
 }
+
 class BankPartner1 extends Customer1 {
 
     /**
@@ -170,20 +180,23 @@ class BankPartner1 extends Customer1 {
         super(name, type);
     }
 
-    public void setCode(String code){
+    public void setCode(String code) {
         this.code = code;
     }
-    public String getCode(){
+
+    public String getCode() {
         return code;
     }
 
-    public void setAddress(String address){
+    public void setAddress(String address) {
         this.address = address;
     }
-    public String getAddress(){
+
+    public String getAddress() {
         return address;
     }
 }
+
 /**
  * 银行客户工厂
  */

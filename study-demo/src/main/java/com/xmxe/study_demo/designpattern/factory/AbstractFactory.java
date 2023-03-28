@@ -1,6 +1,5 @@
 package com.xmxe.study_demo.designpattern.factory;
 
-
 /**
  * 最全工厂设计模式案例详解，不服来辩！https://mp.weixin.qq.com/s/uPl3MpA38ZwOwk6VWtdipA
  */
@@ -35,6 +34,7 @@ public class AbstractFactory {
 interface CustomerFactory {
     // 创建客户
     Customer createCustomer(String type, String name);
+
     // 创建扩展客户
     CustomerExt createCustomerExt();
 }
@@ -54,29 +54,33 @@ abstract class Customer {
      */
     private String type;
 
-    public Customer(){}
-    public Customer(String name,String type){
+    public Customer() {
+    }
+
+    public Customer(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
-    public void setType(String type){
+
+    public void setType(String type) {
         this.type = type;
     }
-    public String getType(){
+
+    public String getType() {
         return type;
     }
 
     @Override
-    public String toString(){
-        return "name="+name+"type="+type;
+    public String toString() {
+        return "name=" + name + "type=" + type;
     }
 }
 
@@ -95,31 +99,36 @@ abstract class CustomerExt {
      */
     private String note;
 
-    public CustomerExt(){}
-    public CustomerExt(String formerName){
+    public CustomerExt() {
+    }
+
+    public CustomerExt(String formerName) {
         this.formerName = formerName;
     }
 
-    public void setFormerName(String formerName){
+    public void setFormerName(String formerName) {
         this.formerName = formerName;
     }
-    public String getFormerName(){
+
+    public String getFormerName() {
         return formerName;
     }
-    public void setNote(String note){
+
+    public void setNote(String note) {
         this.note = note;
     }
-    public String getNote(){
+
+    public String getNote() {
         return note;
     }
 
-    
     @Override
-    public String toString(){
-        return "formerName="+formerName+"note="+note;
+    public String toString() {
+        return "formerName=" + formerName + "note=" + note;
     }
 
 }
+
 /**
  * 代理商
  */
@@ -135,27 +144,29 @@ class AgentExt extends CustomerExt {
      */
     private String certification;
 
-    public void setSource(String source){
+    public void setSource(String source) {
         this.source = source;
     }
-    public String getSource(){
+
+    public String getSource() {
         return source;
     }
 
-    public void setCertification(String certification){
+    public void setCertification(String certification) {
         this.certification = certification;
     }
-    public String getCertification(){
+
+    public String getCertification() {
         return certification;
     }
 
-    
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 
 }
+
 /**
  * 代理商
  */
@@ -175,23 +186,24 @@ class Agent extends Customer {
         super(name, type);
     }
 
-    public void setPeriod(int period){
+    public void setPeriod(int period) {
         this.period = period;
     }
-    public int getPeriod(){
+
+    public int getPeriod() {
         return period;
     }
 
-    public void setProducts(int[] products){
+    public void setProducts(int[] products) {
         this.products = products;
     }
-    public int[] getProducts(){
+
+    public int[] getProducts() {
         return products;
     }
 
-    
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 }
@@ -213,6 +225,7 @@ class AgentFactory implements CustomerFactory {
     }
 
 }
+
 /**
  * 银行客户扩展
  */
@@ -228,27 +241,29 @@ class BankPartnerExt extends CustomerExt {
      */
     private int atmCount;
 
-    public void setbranchCount(int branchCount){
+    public void setbranchCount(int branchCount) {
         this.branchCount = branchCount;
     }
-    public int getBranchCount(){
+
+    public int getBranchCount() {
         return branchCount;
     }
 
-    public void setAtmCount(int atmCount){
+    public void setAtmCount(int atmCount) {
         this.atmCount = atmCount;
     }
-    public int getCertification(){
+
+    public int getCertification() {
         return atmCount;
     }
 
-    
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 
 }
+
 class BankPartner extends Customer {
 
     /**
@@ -265,23 +280,24 @@ class BankPartner extends Customer {
         super(name, type);
     }
 
-    public void setCode(String code){
+    public void setCode(String code) {
         this.code = code;
     }
-    public String getCode(){
+
+    public String getCode() {
         return code;
     }
 
-    public void setAddress(String address){
+    public void setAddress(String address) {
         this.address = address;
     }
-    public String getAddress(){
+
+    public String getAddress() {
         return address;
     }
 
-    
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 }
@@ -302,6 +318,7 @@ class BankPartnerFactory implements CustomerFactory {
     }
 
 }
+
 /**
  * 商户
  */
@@ -317,23 +334,24 @@ class MerchantExt extends CustomerExt {
      */
     private String introduceTel;
 
-    public void setIntroduceName(int introduceName){
+    public void setIntroduceName(int introduceName) {
         this.introduceName = introduceName;
     }
-    public int getIntroduceName(){
+
+    public int getIntroduceName() {
         return introduceName;
     }
 
-    public void setIntroduceTel(String introduceTel){
+    public void setIntroduceTel(String introduceTel) {
         this.introduceTel = introduceTel;
     }
-    public String getIntroduceTel(){
+
+    public String getIntroduceTel() {
         return introduceTel;
     }
 
-    
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 
@@ -355,22 +373,24 @@ class Merchant extends Customer {
         super(name, type);
     }
 
-    public void setContractType(int contractType){
+    public void setContractType(int contractType) {
         this.contractType = contractType;
     }
-    public int getContractType(){
+
+    public int getContractType() {
         return contractType;
     }
 
-    public void setSettmentDays(int settmentDays){
+    public void setSettmentDays(int settmentDays) {
         this.settmentDays = settmentDays;
     }
-    public int getSettmentDays(){
+
+    public int getSettmentDays() {
         return settmentDays;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 }

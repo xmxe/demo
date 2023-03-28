@@ -9,10 +9,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * 可重入: 单线程可以重复进入，但要重复退出
  * 可中断: lock.lockInterruptibly()
  * 可限时: 超时不能获得锁，就返回false，不会永久等待构成死锁
- * 公平锁: 先来先得, public ReentrantLock(boolean fair), 默认锁不公平的, 根据线程优先级竞争.
+ * 公平锁: 先来先得,public ReentrantLock(boolean fair),默认锁不公平的,根据线程优先级竞争.
  * 
- * void lock()：获得锁，如果锁被占用则等待。
- * void unlock()：释放锁。
+ * void lock():获得锁，如果锁被占用则等待。
+ * void unlock():释放锁。
  * int getHoldCount()方法的作用是查询当前线程保持此锁定的个数，也就是调用lock()方法的次数。
  * int getQueueLength()方法的作用是返回正等待获取此锁定的线程数。
  * boolean hasQueueThread(Thread thread)的作用是查询指定线程是否正在等待获取此锁定。
@@ -36,11 +36,11 @@ public class ReentrantLockTest implements Runnable {
         for (int j = 0; j < 10000; j++) {
             lock.lock();
             // 超时设置
-            // lock.tryLock(5, TimeUnit.SECONDS);
+            // lock.tryLock(5,TimeUnit.SECONDS);
             try {
                 i++;
             } finally {
-                // 需要放在finally里释放, 如果上面lock了两次, 这边也要unlock两次
+                // 需要放在finally里释放,如果上面lock了两次,这边也要unlock两次
                 lock.unlock();
             }
         }
@@ -61,9 +61,9 @@ public class ReentrantLockTest implements Runnable {
 /**
  * 如果发生死锁的话中断死锁demo
  * 
- * 线程1, 线程2分别去获取lock1, lock2, 触发死锁. 最终通过DeadlockChecker来触发线程中断
- **/ 
-class DeadLock implements Runnable{
+ * 线程1,线程2分别去获取lock1,lock2,触发死锁.最终通过DeadlockChecker来触发线程中断
+ **/
+class DeadLock implements Runnable {
 
     public static ReentrantLock lock1 = new ReentrantLock();
     public static ReentrantLock lock2 = new ReentrantLock();
@@ -76,24 +76,26 @@ class DeadLock implements Runnable{
     @Override
     public void run() {
         try {
-            if (lock == 1){
+            if (lock == 1) {
                 lock1.lockInterruptibly();
                 try {
                     Thread.sleep(500);
-                }catch (InterruptedException e){}
+                } catch (InterruptedException e) {
+                }
                 lock2.lockInterruptibly();
 
-            }else {
+            } else {
                 lock2.lockInterruptibly();
                 try {
                     Thread.sleep(500);
-                }catch (InterruptedException e){}
+                } catch (InterruptedException e) {
+                }
                 lock1.lockInterruptibly();
 
             }
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (lock1.isHeldByCurrentThread())
                 lock1.unlock();
             if (lock2.isHeldByCurrentThread())
@@ -105,13 +107,13 @@ class DeadLock implements Runnable{
     public static void main(String[] args) throws InterruptedException {
         DeadLock deadLock1 = new DeadLock(1);
         DeadLock deadLock2 = new DeadLock(2);
-        // 线程1, 线程2分别去获取lock1, lock2. 导致死锁
+        // 线程1,线程2分别去获取lock1,lock2.导致死锁
         Thread t1 = new Thread(deadLock1);
         Thread t2 = new Thread(deadLock2);
         t1.start();
         t2.start();
         Thread.sleep(1000);
-        // 死锁检查, 触发中断
+        // 死锁检查,触发中断
         DeadlockChecker.check();
 
     }

@@ -28,29 +28,33 @@ abstract class Customer2 {
      */
     private String type;
 
-    public Customer2(){}
-    public Customer2(String name,String type){
+    public Customer2() {
+    }
+
+    public Customer2(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
-    public void setType(String type){
+
+    public void setType(String type) {
         this.type = type;
     }
-    public String getType(){
+
+    public String getType() {
         return type;
     }
 
     @Override
-    public String toString(){
-        return "name="+name+"type="+type;
+    public String toString() {
+        return "name=" + name + "type=" + type;
     }
 
 }
@@ -104,17 +108,19 @@ class Agent2 extends Customer2 {
         super(name, type);
     }
 
-    public void setPeriod(int period){
+    public void setPeriod(int period) {
         this.period = period;
     }
-    public int getPeriod(){
+
+    public int getPeriod() {
         return period;
     }
 
-    public void setProducts(int[] products){
+    public void setProducts(int[] products) {
         this.products = products;
     }
-    public int[] getProducts(){
+
+    public int[] getProducts() {
         return products;
     }
 }
@@ -135,17 +141,19 @@ class Merchant2 extends Customer2 {
         super(name, type);
     }
 
-    public void setContractType(int contractType){
+    public void setContractType(int contractType) {
         this.contractType = contractType;
     }
-    public int getContractType(){
+
+    public int getContractType() {
         return contractType;
     }
 
-    public void setSettmentDays(int settmentDays){
+    public void setSettmentDays(int settmentDays) {
         this.settmentDays = settmentDays;
     }
-    public int getSettmentDays(){
+
+    public int getSettmentDays() {
         return settmentDays;
     }
 }
@@ -166,17 +174,19 @@ class BankPartner2 extends Customer2 {
         super(name, type);
     }
 
-    public void setCode(String code){
+    public void setCode(String code) {
         this.code = code;
     }
-    public String getCode(){
+
+    public String getCode() {
         return code;
     }
 
-    public void setAddress(String address){
+    public void setAddress(String address) {
         this.address = address;
     }
-    public String getAddress(){
+
+    public String getAddress() {
         return address;
     }
 }

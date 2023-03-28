@@ -74,11 +74,11 @@ public enum WeekEnum {
 	}
 
 	public static final WeekEnum[] _table = new WeekEnum[7];
-    static {
-        for (WeekEnum c : values()) {
-            _table[c.getValue()] = c;
-        }
-    }
+	static {
+		for (WeekEnum c : values()) {
+			_table[c.getValue()] = c;
+		}
+	}
 
 	/**
 	 * 抽象方法，由不同的枚举值提供不同的实现。

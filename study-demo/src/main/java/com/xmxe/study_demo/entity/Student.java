@@ -11,14 +11,14 @@ public class Student {
     public String name;
     protected String gender;
 
+    public Student() {
+    }
 
-    public Student() {}
-
-    public Student(Integer age,String name){
+    public Student(Integer age, String name) {
         this(name, age);
     }
 
-    private Student(String name,Integer age){
+    private Student(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
@@ -29,10 +29,9 @@ public class Student {
         this.age = age;
         this.address = address;
     }
-   
-    
+
     @OrderHandlerTypeAnnotation(source = "ddd")
-    public void method1(String name,Integer age){
+    public void method1(String name, Integer age) {
         System.out.println(1);
     }
 
@@ -48,8 +47,10 @@ public class Student {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Student student = (Student) o;
         return age == student.age &&
                 Objects.equals(id, student.id) &&
