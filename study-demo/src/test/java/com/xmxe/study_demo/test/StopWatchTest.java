@@ -69,6 +69,20 @@ public class StopWatchTest {
         System.out.printf("任务数量:%s,总耗时:%ss.\n",sw.getTaskCount(),sw.getTotalTimeSeconds());
         System.out.println(sw.prettyPrint());
 
+        // System.nanoTime() 单位纳秒 1纳秒=0.000001毫秒 1纳秒=0.000000001秒
+        long startTime = System.nanoTime();
+        // do something
+        Thread.sleep(3000);
+        long endTime = System.nanoTime();
+        double time = (endTime - startTime) / 1000000000.0;  // 将纳秒转换为秒
+        System.out.println(time + "s");
+        /*
+         * System.nanoTime()的初始值是在本JVM实例启动时"随机"选择的一个数字(可能是负值),随着JVM的运行而递增（常用来计算实时时间差）,System.currentTimeMillis表示系统时间,这就导致了的它们的几个差别:
+         * System.currentTimeMillis()表示系统时间(即UTC). System.nanoTime()无法表示当前时间,本质上它是一个随机数字.
+         * 在同一机器上的不同JVM上,System.currentTimeMillis是相同的,System.nanoTime()是不同的.
+         * System.currentTimeMillis()系统时间敏感,System.nanoTime()系统时间不敏感.比如我们将系统时间往前调一秒,System.currentTimeMillis()相比修改前会减少1000.而System.nanoTime()不会变化.
+         */
+
     }
 
     /*
