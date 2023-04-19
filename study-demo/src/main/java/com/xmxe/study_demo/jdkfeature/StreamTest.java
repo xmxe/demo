@@ -2,6 +2,7 @@ package com.xmxe.study_demo.jdkfeature;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import java.util.Stack;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import com.xmxe.study_demo.entity.Student;
@@ -422,6 +424,54 @@ public class StreamTest {
         Map<Boolean, List<Student>> partMap = students.stream()
                 .collect(Collectors.partitioningBy(v -> v.getAge() > 10));
 
+    }
+
+    /**
+     * 将一个包含行数据的List转换为列数据并输出到控制台
+     */
+    public void row2column(){
+        // 创建一个包含行数据的List
+        List<List<Integer>> rows = new ArrayList<>();
+        rows.add(Arrays.asList(1, 2, 3));
+        rows.add(Arrays.asList(4, 5, 6));
+        rows.add(Arrays.asList(7, 8, 9));
+
+        // 将行数据转换为列数据
+        List<List<Integer>> columns = transpose(rows);
+
+        // 输出结果
+        System.out.println("Original data:");
+        outputData(rows);
+        System.out.println("Transposed data:");
+        outputData(columns);
+    }
+
+    /**
+     * 将行数据转换为列数据.
+     */
+    public static <T> List<List<T>> transpose(List<List<T>> rows) {
+        int numCols = rows.get(0).size();
+        return rows.stream()
+                .flatMap(row -> IntStream.range(0, numCols)
+                .mapToObj(col -> new AbstractMap.SimpleEntry<>(col, row.get(col))))
+                .collect(Collectors.groupingBy(Map.Entry::getKey,Collectors.mapping(Map.Entry::getValue, Collectors.toList())))
+                .entrySet()
+                .stream()
+                .sorted(Comparator.comparingInt(Map.Entry::getKey))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 输出数据到控制台.
+     */
+    public static <T> void outputData(List<List<T>> data) {
+        for (List<T> row : data) {
+            for (T cell : row) {
+                System.out.print(cell.toString() + "\t");
+            }
+            System.out.println();
+        }
     }
 
 }
