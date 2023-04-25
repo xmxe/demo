@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util.httpclient;
+package com.xmxe.study_demo.util.httpclient.apache;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;

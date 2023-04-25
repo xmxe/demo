@@ -1,4 +1,4 @@
-package com.xmxe.study_demo.util.httpclient;
+package com.xmxe.study_demo.util.httpclient.apache;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
