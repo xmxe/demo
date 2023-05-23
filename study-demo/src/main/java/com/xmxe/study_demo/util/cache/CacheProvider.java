@@ -13,7 +13,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
 @SuppressWarnings("unchecked") // 取消警告
-public class LocalCacheProvider {
+public class CacheProvider {
 
     private static Map<String, Cache<String, Object>> _cacheMap = Maps.newConcurrentMap();
 

@@ -13,9 +13,9 @@ import com.google.common.cache.RemovalNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LocalCacheByGuava {
+public class CacheByGuava {
 
-    private static final Logger log = LoggerFactory.getLogger(LocalCacheByGuava.class);
+    private static final Logger log = LoggerFactory.getLogger(CacheByGuava.class);
 
     /** 缓存项最大数量 */
     private static final long GUAVA_CACHE_SIZE = 100000;
@@ -46,6 +46,8 @@ public class LocalCacheByGuava {
      */
     private static LoadingCache<String, Object> loadCache(CacheLoader<String, Object> cacheLoader) throws Exception {
         LoadingCache<String, Object> cache = CacheBuilder.newBuilder()
+                // 初始容量
+                .initialCapacity(5)
                 // 缓存池大小，在缓存项接近该大小时，Guava开始回收旧的缓存项
                 .maximumSize(GUAVA_CACHE_SIZE)
                 // 设置时间对象没有被读/写访问则对象从内存中删除(在另外的线程里面不定期维护)
@@ -60,7 +62,10 @@ public class LocalCacheByGuava {
                     }
                 })
                 // 开启Guava Cache的统计功能
-                .recordStats().build(cacheLoader);
+                .recordStats()
+                // 过期时间
+                .expireAfterWrite(3, TimeUnit.SECONDS)
+                .build(cacheLoader);
         return cache;
     }
 

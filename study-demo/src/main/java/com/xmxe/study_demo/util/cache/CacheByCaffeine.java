@@ -6,26 +6,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.ehcache.Cache;
-import org.ehcache.CacheManager;
-import org.ehcache.config.builders.CacheConfigurationBuilder;
-import org.ehcache.config.builders.CacheManagerBuilder;
-import org.ehcache.config.builders.ResourcePoolsBuilder;
-
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 /**
  * 
  * 学习下真正的缓存之王，以及在Spring Boot中的使用！https://mp.weixin.qq.com/s/lmneEosfILnp6g30MrYPjg
  */
-public class LocalCacheByCaffeine {
+public class CacheByCaffeine {
 
     /**
      * 通过Map的底层方式，直接将需要缓存的对象放在内存中
      * 优点：简单粗暴，不需要引入第三方包，比较适合一些比较简单的场景。
      * 缺点：没有缓存淘汰策略，定制化开发成本高。
      */
-    static class LRUCache extends LinkedHashMap {
+    static class LRUCache<K,V> extends LinkedHashMap<K,V>{
 
         /**
          * 可重入读写锁，保证并发读写安全性
@@ -45,7 +39,7 @@ public class LocalCacheByCaffeine {
         }
 
         @Override
-        public Object get(Object key) {
+        public V get(Object key) {
             readLock.lock();
             try {
                 return super.get(key);
@@ -55,7 +49,7 @@ public class LocalCacheByCaffeine {
         }
 
         @Override
-        public Object put(Object key, Object value) {
+        public V put(K key, V value) {
             writeLock.lock();
             try {
                 return super.put(key, value);
@@ -65,36 +59,11 @@ public class LocalCacheByCaffeine {
         }
 
         @Override
-        protected boolean removeEldestEntry(Map.Entry eldest) {
+        protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
             return this.size() > maxSize;
         }
     }
 
-    /**
-     * Ehcache是一个纯java的进程内缓存框架，具有快速、精干的特点。是hibernate默认的cacheprovider。
-     * 优点：支持多种缓存淘汰算法，包括LFU，LRU和FIFO；缓存支持堆内缓存，堆外缓存和磁盘缓存；支持多种集群方案，解决数据共享问题。
-     * 缺点：性能比Caffeine差
-     */
-    static class EncacheTest {
-
-        public static void main(String[] args) throws Exception {
-            // 声明一个cacheBuilder
-            CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                    .withCache("encacheInstance", CacheConfigurationBuilder
-                            // 声明一个容量为20的堆内缓存
-                            .newCacheConfigurationBuilder(String.class, String.class, ResourcePoolsBuilder.heap(20)))
-                    .build(true);
-            // 获取Cache实例
-            Cache<String, String> myCache = cacheManager.getCache("encacheInstance", String.class, String.class);
-            // 写缓存
-            myCache.put("key", "v");
-            // 读缓存
-            String value = myCache.get("key");
-            // 移除换粗
-            cacheManager.removeCache("myCache");
-            cacheManager.close();
-        }
-    }
 
     /**
      * Caffeine采用了W-TinyLFU（LUR和LFU的优点结合）开源的缓存技术。缓存性能接近理论最优，属于是Guava Cache的增强版
