@@ -427,6 +427,30 @@ public class StreamTest {
     }
 
     /**
+     * 查找数组或list某个元素的下标
+     */
+    public void getIndex(){
+        String[] arr = {"apple", "banana", "orange", "grape"};
+        // 使用IntStream.range方法创建一个从0开始到数组长度为止的整数流
+        int index = IntStream.range(0, arr.length)
+                .filter(i -> arr[i].equals("orange"))
+                .findFirst()
+                .orElse(-1);
+
+        List<String> list = Arrays.asList("apple", "banana", "orange", "grape");
+        int index2 = IntStream.range(0, list.size())
+                .filter(i -> list.get(i).equals("orange"))
+                .findFirst()
+                .orElse(-1);
+
+        if (index != -1) {
+            System.out.println("The index of 'orange' in array is: " + index);
+        } else {
+            System.out.println("Element not found in array.");
+        }
+    }
+
+    /**
      * 将一个包含行数据的List转换为列数据并输出到控制台
      */
     public void row2column(){
