@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.xmxe.study_demo.designpattern.strategy.annotation.OrderHandlerTypeAnnotation;
 
-public class Student {
+public class Student implements Comparable<Student>{
     private Long id;
     private String address;
     private Integer age;
@@ -93,5 +93,10 @@ public class Student {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return this.getAge() - o.getAge();
     }
 }

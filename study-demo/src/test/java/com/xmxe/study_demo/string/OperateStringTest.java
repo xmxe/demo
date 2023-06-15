@@ -18,7 +18,7 @@ import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-public class OperateString {
+public class OperateStringTest {
 
     /**
      * 多行字符串
@@ -44,7 +44,7 @@ public class OperateString {
         System.err.println(mutiLine3);
 
         // Java还可以通过Files.readAllBytes()方法从源文件中直接读取多行文本，格式和源文件保持一致
-        String mutiLine4 = new String(Files.readAllBytes(Paths.get("src/main/resource/cmower.txt")));
+        String mutiLine4 = new String(Files.readAllBytes(Paths.get("src/main/resource/log4j.properties")));
         System.err.println(mutiLine4);
 
     }
@@ -69,7 +69,6 @@ public class OperateString {
      * 删除字符串最后一个字符，最简单的方法就是使用substring()方法进行截取，0作为起始下标，length() - 1作为结束下标。
      * 不管怎么样，substring()方法不是null安全的，需要先判空
      */
-    @Test
     public void removeLastChar(String s) {
         String s1 = (s == null || s.length() == 0) ? null : (s.substring(0, s.length() - 1));
         System.out.println(s1);
