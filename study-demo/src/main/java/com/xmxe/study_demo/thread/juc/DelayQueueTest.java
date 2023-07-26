@@ -5,11 +5,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Delayed;
 
 /**
- * DelayQueue是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。
- * 这种队列是有序的，即队头对象的延迟到期时间最长。注意：不能将null元素放置到这种队列中。
+ * DelayQueue是一个无界的BlockingQueue,用于放置实现了Delayed接口的对象,其中的对象只能在其到期时才能从队列中取走。这种队列是有序的,即队头对象的延迟到期时间最长。注意：不能将null元素放置到这种队列中。
  *
- * Poll():获取并移除队列的超时元素，没有则返回空
- * take():获取并移除队列的超时元素，如果没有则wait当前线程，直到有元素满足超时条件，返回结果。
+ * Poll():获取并移除队列的超时元素,没有则返回空
+ * take():获取并移除队列的超时元素,如果没有则wait当前线程,直到有元素满足超时条件,返回结果。
  */
 public class DelayQueueTest {
     public static void main(String[] args) {
@@ -60,7 +59,7 @@ class OrderDelay implements Delayed {
     private String orderId;
     // 超时时间(纳秒)
     private long timeout;
-    // 订单状态,超时取出对象后判定订单是否下单，否则将超时订单删除.type=1订单有效,type=0订单无效
+    // 订单状态,超时取出对象后判定订单是否下单,否则将超时订单删除.type=1订单有效,type=0订单无效
     private int type;
 
     OrderDelay(String orderId, long timeout) {
@@ -69,8 +68,8 @@ class OrderDelay implements Delayed {
     }
 
     // compareTo方法必须提供与getDelay方法一致的排序
-    // 当生产者线程调用put之类的方法加入元素时，会触发Delayed接口中的compareTo方法进行排序，
-    // 也就是说队列中元素的顺序是按到期时间排序的，而非它们进入队列的顺序。排在队列头部的元素是最早到期的，越往后到期时间赿晚。
+    // 当生产者线程调用put之类的方法加入元素时,会触发Delayed接口中的compareTo方法进行排序,
+    // 也就是说队列中元素的顺序是按到期时间排序的,而非它们进入队列的顺序。排在队列头部的元素是最早到期的,越往后到期时间赿晚。
     // 添加第一个元素不会触发排序
     public int compareTo(Delayed other) {
         if (other == this)
@@ -83,7 +82,7 @@ class OrderDelay implements Delayed {
     }
 
     // 返回距离你自定义的超时时间还有多少
-    // 如果此方法返回的值小0或者等于0，则消费者线程会从队列中取出此元素，并进行处理
+    // 如果此方法返回的值小0或者等于0,则消费者线程会从队列中取出此元素,并进行处理
     @Override
     public long getDelay(TimeUnit unit) {
         long delay = unit.convert(timeout - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
@@ -93,7 +92,7 @@ class OrderDelay implements Delayed {
 
     @Override
     public String toString() {
-        String str = String.format("对象~~~orderId:%s，type=%d,timeout=%d", orderId, type, timeout);
+        String str = String.format("对象~~~orderId:%s,type=%d,timeout=%d", orderId, type, timeout);
         return str;
     }
 
@@ -116,56 +115,78 @@ class OrderDelay implements Delayed {
 }
 
 /*
- * // 将指定的元素插入到此延迟队列中。如果可以立即执行此操作而不违反容量限制，则在成功后返回true，如果当前没有可用空间，
- * 则抛出IllegalStateException。
+ * 将指定的元素插入到此延迟队列中。如果可以立即执行此操作而不违反容量限制,则在成功后返回true,如果当前没有可用空间,则抛出IllegalStateException。
  * boolean add(E e)
- * // 将指定集合中的所有元素添加到此队列中。
+ * 
+ * 将指定集合中的所有元素添加到此队列中。
  * boolean addAll(Collection<? extends E> c)
- * // 从此延迟队列中原子地删除所有元素。
+ * 
+ * 从此延迟队列中原子地删除所有元素。
  * void clear()
- * // 从该队列中删除所有可用的元素，并将它们添加到给定的集合中。
+ * 
+ * 从该队列中删除所有可用的元素,并将它们添加到给定的集合中。
  * int drainTo(Collection<? super E> c)
- * // 最多从该队列中删除给定数量的可用元素，并将它们添加到给定的集合中。
+ * 
+ * 最多从该队列中删除给定数量的可用元素,并将它们添加到给定的集合中。
  * int drainTo(Collection<? super E> c, int maxElements)
- * // 返回此队列中所有元素（已过期和未过期）的迭代器。
+ * 
+ * 返回此队列中所有元素（已过期和未过期）的迭代器。
  * Iterator<E> iterator()
- * // 将指定的元素插入到此队列中，如果可以立即执行此操作，而不会违反容量限制，true在成功时 false如果当前没有可用空间，则返回false。
+ * 
+ * 将指定的元素插入到此队列中,如果可以立即执行此操作,而不会违反容量限制,true在成功时 false如果当前没有可用空间,则返回false。
  * boolean offer(E e)
- * // 将指定的元素插入到此队列中，等待指定的等待时间（如有必要）才能使空间变得可用。
+ * 
+ * 将指定的元素插入到此队列中,等待指定的等待时间（如有必要）才能使空间变得可用。
  * boolean offer(E e, long timeout, TimeUnit unit)
- * // 检索但不删除此队列的头，如果此队列为空，则返回null。
+ * 
+ * 检索但不删除此队列的头,如果此队列为空,则返回null。
  * E peek()
- * // 检索并删除此队列的头，或者如果此队列没有已过期延迟的元素，则返回null。
+ * 
+ * 检索并删除此队列的头,或者如果此队列没有已过期延迟的元素,则返回null。
  * E poll()
- * // 检索并删除此队列的头部，如果需要，等待具有到期延迟的元素可用于此队列，或指定的等待时间到期。
+ * 
+ * 检索并删除此队列的头部,如果需要,等待具有到期延迟的元素可用于此队列,或指定的等待时间到期。
  * E poll(long timeout, TimeUnit unit)
- * // 将指定的元素插入到此延迟队列中。
+ * 
+ * 将指定的元素插入到此延迟队列中。
  * void put(E e)
- * // 返回该队列最好可以（在没有存储器或资源约束）接受而不会阻塞，或附加的元素的数量.Integer.MAX_VALUE如果没有固有的限制。
- * 总是返回Integer.MAX_VALUE，因为DelayQueue没有容量限制。
+ * 
+ * 返回该队列最好可以（在没有存储器或资源约束）接受而不会阻塞,或附加的元素的数量.Integer.MAX_VALUE如果没有固有的限制,总是返回Integer.MAX_VALUE,因为DelayQueue没有容量限制。
  * int remainingCapacity()
- * // 从该队列中删除指定元素的单个实例（如果存在），无论其是否已过期。
+ * 
+ * 从该队列中删除指定元素的单个实例（如果存在）,无论其是否已过期。
  * boolean remove(Object o)
- * // 删除指定集合中包含的所有此集合的元素（可选操作）。
+ * 
+ * 删除指定集合中包含的所有此集合的元素（可选操作）。
  * boolean removeAll(Collection<?> c)
- * // 返回此集合中的元素数。
+ * 
+ * 返回此集合中的元素数。
  * int size()
- * // 检索并删除此队列的头部，如果需要，等待有一个延迟到期的元素在此队列上可用。
+ * 
+ * 检索并删除此队列的头部,如果需要,等待有一个延迟到期的元素在此队列上可用。
  * E take()
- * // 返回一个包含此队列中所有元素的数组。
+ * 
+ * 返回一个包含此队列中所有元素的数组。
  * Object[] toArray()
- * // 返回一个包含此队列中所有元素的数组;返回的数组的运行时类型是指定数组的运行时类型。
+ * 
+ * 返回一个包含此队列中所有元素的数组;返回的数组的运行时类型是指定数组的运行时类型。
  * <T> T[] toArray(T[] a)
- * // 检索，但不删除，这个队列的头。
+ * 
+ * 检索,但不删除,这个队列的头。
  * E element()
- * // 如果此集合包含指定的元素，则返回true。
+ * 
+ * 如果此集合包含指定的元素,则返回true。
  * boolean contains(Object o)
- * // 如果此集合包含指定集合中的所有元素，则返回true。
+ * 
+ * 如果此集合包含指定集合中的所有元素,则返回true。
  * boolean containsAll(Collection<?> c)
- * // 如果此集合不包含元素，则返回true。
+ * 
+ * 如果此集合不包含元素,则返回true。
  * boolean isEmpty()
- * // 仅保留此集合中包含在指定集合中的元素（可选操作）
+ * 
+ * 仅保留此集合中包含在指定集合中的元素（可选操作）
  * boolean retainAll(Collection<?> c)
- * // 返回此集合的字符串表示形式。
+ * 
+ * 返回此集合的字符串表示形式。
  * String toString()
  */

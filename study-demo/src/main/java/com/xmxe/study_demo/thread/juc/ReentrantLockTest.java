@@ -6,10 +6,12 @@ import java.lang.management.ThreadMXBean;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 可重入: 单线程可以重复进入，但要重复退出
- * 可中断: lock.lockInterruptibly()
+ * 互斥性：ReentrantLock保证了同一时刻只有一个线程可以持有锁，其他线程必须等待。
+ * 可重入性：同一个线程可以多次获取该锁，而不会造成死锁。单线程可以重复进入，但要重复退出
+ * 公平性：可以选择公平锁，按照线程请求锁的顺序获取锁，避免线程饥饿。public ReentrantLock(boolean fair),默认锁不公平的,根据线程优先级竞争.
+ * 可中断性：提供了可中断的获取锁方式，避免线程在获取锁时长时间阻塞。lock.lockInterruptibly()
+ * 条件变量：支持和Condition配合使用，实现复杂的线程通信和同步。
  * 可限时: 超时不能获得锁，就返回false，不会永久等待构成死锁
- * 公平锁: 先来先得,public ReentrantLock(boolean fair),默认锁不公平的,根据线程优先级竞争.
  * 
  * void lock():获得锁，如果锁被占用则等待。
  * void unlock():释放锁。

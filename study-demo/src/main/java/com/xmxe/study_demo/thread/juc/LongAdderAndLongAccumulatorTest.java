@@ -18,9 +18,10 @@ public class LongAdderAndLongAccumulatorTest {
 
     /**
      * LongAccumulator提供了自定义的函数式接口，可以根据规则进行累加，不管是加减多少，或者是乘除多少，或者取最大值，想怎么弄，规则自己定
+     * public LongAccumulator(LongBinaryOperator accumulatorFunction,long identity)
+     * accumulatorFunction表示函数式接口参数 identity表示初始值
      */
-
-    // public LongAccumulator(LongBinaryOperator accumulatorFunction,long identity)LongBinaryOperator：函数式接口参数；identity：初始值
+    
     // 定义一个累加规则的LongAccumulator
     private static LongAccumulator longAccumulatorAdd = new LongAccumulator((left, right) -> left + right, 0);
     private static final int MAX_POOL_SIZE = 5, MAX_LOOP_SIZE = 10;
@@ -73,6 +74,22 @@ public class LongAdderAndLongAccumulatorTest {
         add(longAccumulatorAdd, 2);
         // 求最大值
         max(longAccumulatorMax);
+
+        // 创建一个初始值为0的LongAccumulator
+        LongAccumulator accumulator = new LongAccumulator((x, y) -> {
+            System.out.println("x代表初始值-->"+x);
+            System.out.println("y代表传入的值-->"+y);
+            return x + y;
+        }, 0);
+
+        // 执行累加操作
+        accumulator.accumulate(10);
+        accumulator.accumulate(20);
+        accumulator.accumulate(30);
+
+        // 获取当前累加值
+        long result = accumulator.get();
+        System.out.println("累加结果：" + result);
     }
 
 }

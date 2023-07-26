@@ -12,10 +12,8 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * Future、FutureTask、ExecutorService...
- * https://mp.weixin.qq.com/s/Pb2XF-DiUFMQAXxlJwerwg
  * 
- * 使用场景
- * 任务需要中断，获取返回结果，将原来十个接口的活用一个接口搞定
+ * FutureTask使用场景:任务需要中断，获取返回结果，将原来十个接口的活用一个接口搞定
  * 例：
  * Future<Long> fansCountFT = executor.submit(() -> userService.countFansCountByUserId(userId));
  * Future<Long> msgCountFT = executor.submit(() -> userService.countMsgCountByUserId(userId));
@@ -55,24 +53,23 @@ public class FutureTaskTest {
         /**
          * Future就是对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果。必要时可以通过get方法获取执行结果，该方法会阻塞直到任务返回结果。
          * public interface Future<T> {
-         * 取消任务.取消任务成功返回true,取消任务失败返回false
-         * @param mayInterruptIfRunning:是否允许取消正在执行却没有执行完毕的任务
-         * 如果设置true，则表示可以取消正在执行过程中的任务,如果任务正在执行，若mayInterruptIfRunning为true，则会立即中断执行任务的线程并返回true，
-         * 若mayInterruptIfRunning为false，则会返回true且不会中断任务执行线程，如果任务还没有执行，则无论mayInterruptIfRunning为true还是false，返回true,并且任务不会执行,如果任务已经完成或取消，则无论mayInterruptIfRunning为true还是false，返回false
-         * boolean cancel(boolean mayInterruptIfRunning);
+         * 
+         *     取消任务.取消任务成功返回true,取消任务失败返回false
+         *     @param mayInterruptIfRunning:是否允许取消正在执行却没有执行完毕的任务,如果设置true，则表示可以取消正在执行过程中的任务,如果任务正在执行，若mayInterruptIfRunning为true，则会立即中断执行任务的线程并返回true,若mayInterruptIfRunning为false，则会返回true且不会中断任务执行线程，如果任务还没有执行，则无论mayInterruptIfRunning为true还是false，返回true,并且任务不会执行,如果任务已经完成或取消，则无论mayInterruptIfRunning为true还是false，返回false
+         *     boolean cancel(boolean mayInterruptIfRunning);
          *
-         * 任务是否被取消成功，如果在任务正常完成前被取消成功，则返回true
-         * boolean isCancelled();
+         *     任务是否被取消成功，如果在任务正常完成前被取消成功，则返回true
+         *     boolean isCancelled();
          *
-         * 任务是否完成
-         * boolean isDone();
+         *     任务是否完成
+         *     boolean isDone();
          *
-         * 通过阻塞获取执行结果
-         * T get() throws InterruptedException,ExecutionException;
+         *     通过阻塞获取执行结果
+         *     T get() throws InterruptedException,ExecutionException;
          *
-         * 通过阻塞获取执行结果。如果在指定的时间内没有返回，则返回null
-         * T get(long timeout, TimeUnit unit) throws InterruptedException,
-         * ExecutionException, TimeoutException;
+         *     通过阻塞获取执行结果。如果在指定的时间内没有返回，则返回null
+         *     T get(long timeout, TimeUnit unit) throws InterruptedException,ExecutionException, TimeoutException;
+         * 
          * }
          */
         // future测试
@@ -96,6 +93,7 @@ public class FutureTaskTest {
          * INTERRUPTING:正在中断执行任务的线程5
          * INTERRUPTED:任务被中断6
          */
+        
         // futuretask测试
         FutureTask<String> task = new FutureTask<String>(callable) {
             // 异步任务执行完成，回调
@@ -141,4 +139,21 @@ public class FutureTaskTest {
  * calcel(boolean mayInterruptIfRunning)为中断任务，但是为什么设计的时候需要加入mayInterruptIfRunning参数来使正在进行的任务中断或者不中断继续执行呢，为什么不直接设计成一个无参的cancel()方法直接定义成中断正在执行的任务的方法？为什么还要设计一个不中断的方法参数
  * 经过测试cancel(false)得出自己的结论，不一定正确，当使用cancel(false)的时候，Callable里面的方法会正常执行，但是不会返回结果了，而使用cancel(true)的时候，Callable里面的方法就不会正常执行了，更不会返回结果了,当调用get()的时候就会抛出CancellationException异常,而isCancelled()方法只要是调用了cancel(boolean)就会返回true
  * featuretask使用线程池提交的话调用cancel(false),Callable里面的方法同调用cancel(true)时一样不会执行Callable里面的代码,不知什么原因,有可能是线程池里面的线程不允许中断，调用featuretask.run()是调用Callable里面的任务执行完后回调done()方法然后在继续往下执行，所以任务无法设置为中断，isDone()一直返回true（自己的结论未必正确）
+ */
+
+/**
+ * Future和FutureTask都是在Java多线程编程中用于处理异步任务的接口和类，但它们之间有一些区别。
+ * 接口 vs 类：
+ * Future是一个接口，是用于表示一个可能还没有完成的异步任务的结果。
+ * FutureTask是一个实现了Future接口的具体类，同时也实现了Runnable接口，可以被提交到线程池中执行。
+ * 实现方式：
+ * Future接口只提供了对结果的基本操作（如检查是否完成、获取结果），并没有提供任务的执行逻辑。
+ * FutureTask是一个可以将任务逻辑封装起来的类，同时提供了对任务执行的管理和控制，并可以方便地取消任务的执行。
+ * 取消任务：
+ * Future接口提供了cancel()方法来尝试取消任务的执行，但它并不保证一定能取消任务的执行。
+ * FutureTask类通过继承Future接口，并且实现了取消任务的逻辑，提供了更灵活的控制任务的取消。
+ * 使用方式：
+ * Future接口主要用于表示执行结果，并通过get()方法获取结果。通常配合使用ExecutorService来提交异步任务获取Future对象。
+ * FutureTask类既可以表示任务的执行结果，也可以作为Runnable对象提交给线程池执行。可以通过get()方法获取任务执行结果，并提供了更多对任务的管理方法。
+ * 总结来说，Future接口是用于表示异步任务结果的接口，而FutureTask是一个具体类，实现了Future接口，并提供了更多的任务管理和控制的功能。在实际使用中，Future接口适用于简单的任务结果获取，而FutureTask适用于更加复杂的任务管理和控制场景。
  */

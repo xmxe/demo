@@ -5,20 +5,20 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
- * 保证原子性
- * 使用自旋+cas无锁保证线程安全
+ * 保证原子性,使用自旋+cas无锁保证线程安全
+ * 
+ * 通过AtomicStampedReference、AtomicMarkableReference构造函数我们知道，AtomicStampedReference记录中间变化过的次数，而AtomicMarkableReference只是知道中间是否变化过，具体次数就不知道了，但都能解决ABA的问题
  */
 public class AtomicReferenceTest {
     public static void main(String[] args) {
 
         /**
-         * AtomicReference:通过volatile和Unsafe提供的CAS函数实现原子操作。自旋+CAS的无锁操作保证共享变量的线程安全
+         * AtomicReference:通过volatile和Unsafe提供的CAS函数实现原子操作。自旋+CAS的无锁操作保证共享变量的线程安全。
          * value是volatile类型，这保证了当某线程修改value的值时，其他线程看到的value的值都是最新的值，即修改之后的volatile的值
          * 但是CAS操作可能存在ABA问题(A值被B值替换后又被A值替换)。AtomicStampedReference的出现就是为了解决这问题
-         * 
-         * 常用方法:
-         * 原子性地更新AtomicReference内部的value值，其中expect代表当前AtomicReference的value值，update则是需要设置的新引用值。
-         * 该方法会返回一个boolean的结果，当expect和AtomicReference的当前值不相等时，修改会失败，返回值为false，若修改成功则会返回true。
+         *
+         * 常用方法
+         * 原子性地更新AtomicReference内部的value值，其中expect代表当前AtomicReference的value值，update则是需要设置的新引用值。该方法会返回一个boolean的结果，当expect和AtomicReference的当前值不相等时，修改会失败，返回值为false，若修改成功则会返回true。
          * compareAndSet(V expect, V update)
          * 
          * 原子性地更新AtomicReference内部的value值，并且返回AtomicReference的旧值。
@@ -58,7 +58,7 @@ public class AtomicReferenceTest {
          * 
          * 构造函数,传入引用和戳
          * public AtomicStampedReference(V initialRef, int initialStamp) {
-         * pair = Pair.of(initialRef, initialStamp);
+         *     pair = Pair.of(initialRef, initialStamp);
          * }
          * 
          * attemptStamp():如果expectReference和目前值一致，设置当前对象的版本号戳为newStamp
@@ -74,15 +74,13 @@ public class AtomicReferenceTest {
 
         /**
          * AtomicMarkableReference
-         * AtomicStampedReference可以知道，引用变量中途被更改了几次。有时候，我们并不关心引用变量更改了几次，只是单纯的关心是否更改过，所以就有了AtomicMarkableReference。
+         * AtomicStampedReference可以知道引用变量中途被更改了几次。有时候，我们并不关心引用变量更改了几次，只是单纯的关心是否更改过，所以就有了AtomicMarkableReference。
          * AtomicMarkableReference的唯一区别就是不再用int标识引用，而是使用boolean变量——表示引用变量是否被更改过。
          * 
          * 构造函数
          * public AtomicMarkableReference(V initialRef, boolean initialMark) {
-         * pair = Pair.of(initialRef, initialMark);
+         *     pair = Pair.of(initialRef, initialMark);
          * }
-         * 
-         * 通过AtomicStampedReference、AtomicMarkableReference构造函数我们知道，AtomicStampedReference记录中间变化过的次数，而AtomicMarkableReference只是知道中间是否变化过，具体次数就不知道了，但都能解决ABA的问题
          * 
          */
         AtomicMarkableReference<String> atomicMarkableReference = new AtomicMarkableReference<String>("initialRef",
