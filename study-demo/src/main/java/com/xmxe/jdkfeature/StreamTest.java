@@ -2,6 +2,8 @@ package com.xmxe.jdkfeature;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -277,6 +279,8 @@ public class StreamTest {
         studentList.stream().sorted(Comparator.comparing(Student::getName)).forEach(System.out::println);
         // 反转
         studentList.stream().sorted(Comparator.comparing(Student::getAge).reversed()).forEach(System.out::println);
+        // 同上 但是需要将s强转成Student 否则使用reversed()报错
+        studentList.stream().sorted(Comparator.comparing((Student s) -> s.getAge()).reversed()).forEach(System.out::println);
         // 并行排序
         studentList.parallelStream().sorted(Comparator.comparing(Student::getAge)).collect(Collectors.toList());
 
@@ -362,7 +366,10 @@ public class StreamTest {
         // 多重分组,先根据年龄分再根据地址分
         Map<Integer, Map<String, List<Student>>> typeAgeMap = students.stream()
                 .collect(Collectors.groupingBy(Student::getAge, Collectors.groupingBy(Student::getAddress)));
-        
+        // 分组聚合 统计学生相同年龄个数
+        Map<Integer, Integer> ageCounts = students.stream()
+                .collect(Collectors.groupingBy(Student::getAge, Collectors.summingInt(s -> 1)));
+
     }
 
     /**
@@ -397,9 +404,12 @@ public class StreamTest {
     }
 
     /**
-     * 查找数组或list某个元素的下标
+     * IntStream.range是Java 8中的一个方法，用于生成一个整数流（IntStream），该流包含指定范围内的连续整数。
+     * IntStream.range(1, 5) // 生成整数流包含1, 2, 3, 4
      */
-    public void getIndex(){
+    public void intStream(){
+        // 查找数组或list某个元素的下标
+
         String[] arr = {"apple", "banana", "orange", "grape"};
         // 使用IntStream.range方法创建一个从0开始到数组长度为止的整数流
         int index = IntStream.range(0, arr.length)
@@ -418,6 +428,17 @@ public class StreamTest {
         } else {
             System.out.println("Element not found in array.");
         }
+
+        // 两个相同大小List进行元素计算
+        // 例如计算本月用电量与上月用电量的环比
+        List<Double> ydl = List.of(3.1, 4.1, 5.2);
+        List<Double> lastydl = List.of(3.3, 2.4, 4.5);
+        List<Double> hb = IntStream.range(0, ydl.size())
+				.mapToObj(i -> {
+					BigDecimal ydlBigdecimal = new BigDecimal(String.valueOf(ydl.get(i)));
+					BigDecimal lastydlBigdecimal = new BigDecimal(String.valueOf(lastydl.get(i)));
+					return ydlBigdecimal.subtract(lastydlBigdecimal).divide(lastydlBigdecimal, 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")).doubleValue();
+				}).collect(Collectors.toList());
     }
 
     /**
