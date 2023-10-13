@@ -159,6 +159,9 @@ public class StreamTest {
         Student maxS = students.stream().max((stu1, stu2) -> Integer.compare(stu1.getAge(), stu2.getAge())).get();
         int maxLines = list.stream().mapToInt(String::length).max().getAsInt();
         int minLines = list.stream().mapToInt(String::length).min().getAsInt();
+        // Comparator.naturalOrder()会按照元素的自然顺序（即默认的升序）来比较元素
+        int max1 = number.stream().max(Comparator.naturalOrder()).orElse(1);
+        String min1 = list.stream().min(Comparator.naturalOrder()).orElse(null);
 
         // generate()该方法主要用于生成一个无限连续的无序流，流中的元素由用户定义的supplier函数生成。该方法一般配合limit方法使用
         // 通过实现Supplier类的方法可以自定义流计算规则。随机获取两条学生信息
