@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 import org.springframework.util.Assert;
 
 /**
+ * https://mp.weixin.qq.com/s/tcn3XlnvtrlLPIC5kw-kjA
  * CompletableFuture实现了CompletionStage接口和Future接口,前者是对后者的一个扩展,增加了异步回调、流式处理、多个Future组合处理的能力,使Java在处理多任务的协同工作时更加顺畅便利
  */
 public class CompletableFutureTest {
@@ -56,7 +57,7 @@ public class CompletableFutureTest {
 
         // join()和get()方法都是用来获取CompletableFuture异步之后的返回值
         // get()方法抛出的是经过检查的异常,ExecutionException,InterruptedException,需要用户手动处理（抛出(throws)或者try catch）
-        // join()方法抛出的是uncheck异常（即RuntimeException),不会强制开发者抛出,会将异常包装成CompletionException异常/CancellationException异常
+        // join()方法抛出的是uncheck异常(即RuntimeException),不会强制开发者抛出,会将异常包装成CompletionException异常/CancellationException异常
     }
 
     /**

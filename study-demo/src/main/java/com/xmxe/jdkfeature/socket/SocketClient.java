@@ -7,7 +7,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
 
 public class SocketClient {
 
@@ -20,6 +29,13 @@ public class SocketClient {
 		symbolEndOfSocket();
 
 		bufferSocketClient();
+
+		// BIO
+		bioClient();
+		// NIO
+		nioClient();
+		// AIO
+		aioClient();
 	}
 
 	/**
@@ -147,6 +163,134 @@ public class SocketClient {
 			}
 		}
 
+	}
+
+
+	public static void bioClient() throws IOException{
+		Socket socket = null;
+        PrintWriter out = null;
+        BufferedReader in = null;
+        try {
+            socket = new Socket("localhost", 4444);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (UnknownHostException e) {
+            System.err.println("Don't know about host: localhost.");
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection to: localhost.");
+            System.exit(1);
+        }
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        String userInput;
+        while ((userInput = stdIn.readLine()) != null) {
+            out.println(userInput);
+            System.out.println("echo: " + in.readLine());
+            if (userInput.equals("Bye.")) {
+                break;
+            }
+        }
+        out.close();
+        in.close();
+        stdIn.close();
+        socket.close();
+	}
+
+	public static void nioClient() throws IOException{
+		// 创建SocketChannel并指定ip地址和端口号
+        SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 8888));
+        System.out.println("==============NIO客户端启动================");
+        // 非阻塞模式
+        socketChannel.configureBlocking(false);
+        String hello="你好，靓仔！";
+        ByteBuffer buffer = ByteBuffer.wrap(hello.getBytes());
+        // 向通道中写入数据
+        socketChannel.write(buffer);
+        System.out.println("发送消息：" + hello);
+        buffer.clear();
+        // 将channel注册到Selector并监听READ事件
+        socketChannel.register(Selector.open(), SelectionKey.OP_READ, buffer);
+        while (true) {
+            // 读取服务端数据
+            if (socketChannel.read(buffer) > 0) {
+                buffer.flip();
+                String msg = new String(buffer.array(), 0, buffer.limit());
+                System.out.println("收到服务端消息：" + msg);
+                break;
+            }
+        }
+        // 关闭输入流
+        socketChannel.shutdownInput();
+        // 关闭SocketChannel连接
+        socketChannel.close();
+	}
+
+	public static void aioClient() throws Exception{
+		// 创建异步Socket通道
+        AsynchronousSocketChannel client = AsynchronousSocketChannel.open();
+        // 异步连接服务器
+        client.connect(new InetSocketAddress("127.0.0.1", 8888), null, new CompletionHandler<Void, Object>() {
+            // 创建ByteBuffer
+            final ByteBuffer buffer = ByteBuffer.wrap(("你好，靓仔！").getBytes());
+
+            @Override
+            public void completed(Void result, Object attachment) {
+                // 异步发送消息给服务器
+                client.write(buffer, null, new CompletionHandler<Integer, Object>() {
+                    // 创建ByteBuffer
+                    final ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+
+                    @Override
+                    public void completed(Integer result, Object attachment) {
+                        readBuffer.clear();
+                        // 异步读取服务器发送的消息
+                        client.read(readBuffer, null, new CompletionHandler<Integer, Object>() {
+                            @Override
+                            public void completed(Integer result, Object attachment) {
+                                readBuffer.flip();
+                                String msg = new String(readBuffer.array(), 0, result);
+                                System.out.println("收到服务端消息：" + msg);
+                            }
+
+                            @Override
+                            public void failed(Throwable exc, Object attachment) {
+                                exc.printStackTrace();
+                                try {
+                                    client.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void failed(Throwable exc, Object attachment) {
+                        exc.printStackTrace();
+                        try {
+                            client.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void failed(Throwable exc, Object attachment) {
+                exc.printStackTrace();
+                try {
+                    client.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        // 等待连接处理完毕
+        Thread.sleep(1000);
+        // 关闭输入流和Socket通道
+        client.shutdownInput();
+        client.close();
 	}
 
 }

@@ -2,15 +2,29 @@ package com.xmxe.jdkfeature.socket;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousChannelGroup;
+import java.nio.channels.AsynchronousServerSocketChannel;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class SocketServer {
 
@@ -25,6 +39,13 @@ public class SocketServer {
 		twoWayCommunicationServerUseThread();
 
 		bufferSocketServer();
+
+		// BIO
+		bioServer();
+		// NIO
+		nioServer();
+		// AIO
+		aioServer();
 	}
 
 	/**
@@ -281,5 +302,211 @@ public class SocketServer {
 			e.printStackTrace();
 		}
 
+	}
+
+
+	public static void bioServer() throws IOException{
+		ServerSocket serverSocket = null;
+		try {
+			serverSocket = new ServerSocket(4444);
+		} catch (IOException e) {
+			System.err.println("Could not listen on port: 4444.");
+			System.exit(1);
+		}
+
+		Socket clientSocket = null;
+		try {
+			clientSocket = serverSocket.accept();
+		} catch (IOException e) {
+			System.err.println("Accept failed.");
+			System.exit(1);
+		}
+
+		PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(
+						clientSocket.getInputStream()));
+		String inputLine;
+
+		while ((inputLine = in.readLine()) != null) {
+			out.println(inputLine);
+			out.flush();
+			if (inputLine.equals("Bye.")) {
+				break;
+			}
+		}
+
+		out.close();
+		in.close();
+		clientSocket.close();
+		serverSocket.close();
+	}
+
+	public static void nioServer() throws IOException{
+		// 创建一个选择器selector
+        Selector selector= Selector.open();
+        // 创建serverSocketChannel
+        ServerSocketChannel serverSocketChannel=ServerSocketChannel.open();
+        // 绑定端口
+        serverSocketChannel.socket().bind(new InetSocketAddress(8888));
+        // 必须得设置成非阻塞模式
+        serverSocketChannel.configureBlocking(false);
+        // 将channel注册到selector并设置监听事件为ACCEPT
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        System.out.println("===========NIO服务端启动============");
+        while(true){
+            // 超时等待
+            if(selector.select(1000)==0){
+                System.out.println("===========NIO服务端超时等待============");
+                continue;
+            }
+            // 有客户端请求被轮询监听到，获取返回的SelectionKey集合
+            Iterator<SelectionKey> iterator=selector.selectedKeys().iterator();
+            // 迭代器遍历SelectionKey集合
+            while (iterator.hasNext()){
+                SelectionKey key=iterator.next();
+                // 判断是否为ACCEPT事件
+                if (key.isAcceptable()){
+                    // 处理接收请求事件
+                    SocketChannel socketChannel=((ServerSocketChannel) key.channel()).accept();
+                    // 非阻塞模式
+                    socketChannel.configureBlocking(false);
+                    // 注册到Selector并设置监听事件为READ
+                    socketChannel.register(selector,SelectionKey.OP_READ, ByteBuffer.allocate(1024));
+                    System.out.println("成功连接客户端");
+                }
+                // 判断是否为READ事件
+                if (key.isReadable()){
+                    SocketChannel socketChannel = (SocketChannel) key.channel();
+
+                    try {
+                        // 获取以前设置的附件对象，如果没有则新建一个
+                        ByteBuffer buffer = (ByteBuffer) key.attachment();
+                        if (buffer == null) {
+                            buffer = ByteBuffer.allocate(1024);
+                            key.attach(buffer);
+                        }
+                        // 清空缓冲区
+                        buffer.clear();
+                        // 将通道中的数据读到缓冲区
+                        int len = socketChannel.read(buffer);
+                        if (len > 0) {
+                            buffer.flip();
+                            String message = new String(buffer.array(), 0, len);
+                            System.out.println("收到客户端消息：" + message);
+                        } else if (len < 0) {
+                            // 接收到-1，表示连接已关闭
+                            key.cancel();
+                            socketChannel.close();
+                            continue;
+                        }
+                        // 注册写事件，下次向客户端发送消息
+                        socketChannel.register(selector, SelectionKey.OP_WRITE, buffer);
+                    } catch (IOException e) {
+                        // 取消SelectionKey并关闭对应的SocketChannel
+                        key.cancel();
+                        socketChannel.close();
+                    }
+                }
+                // 判断是否为WRITE事件
+                if (key.isWritable()){
+                    SocketChannel socketChannel = (SocketChannel) key.channel();
+                    // 获取buffer
+                    ByteBuffer buffer = (ByteBuffer) key.attachment();
+                    String hello = "你好，坤坤！";
+                    // 清空buffer
+                    buffer.clear();
+                    // buffer中写入消息
+                    buffer.put(hello.getBytes());
+                    buffer.flip();
+                    // 向channel中写入消息
+                    socketChannel.write(buffer);
+                    buffer.clear();
+                    System.out.println("向客户端发送消息：" + hello);
+                    // 设置下次读写操作，向 Selector 进行注册
+                    socketChannel.register(selector, SelectionKey.OP_READ, buffer);
+                }
+                // 移除本次处理的SelectionKey,防止重复处理
+                iterator.remove();
+            }
+        }
+	}
+
+
+	public static void aioServer() throws Exception {
+		// 创建异步通道组，处理IO事件
+        AsynchronousChannelGroup group = AsynchronousChannelGroup.withFixedThreadPool(10, Executors.defaultThreadFactory());
+        // 创建异步服务器Socket通道，并绑定端口
+        AsynchronousServerSocketChannel server = AsynchronousServerSocketChannel.open(group).bind(new InetSocketAddress(8888));
+        System.out.println("=============AIO服务端启动=========");
+
+        // 异步等待接收客户端连接
+        server.accept(null, new CompletionHandler<AsynchronousSocketChannel, Object>() {
+            // 创建ByteBuffer
+            final ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+            @Override
+            public void completed(AsynchronousSocketChannel channel, Object attachment) {
+                System.out.println("客户端连接成功");
+                try {
+                    buffer.clear();
+                    // 异步读取客户端发送的消息
+                    channel.read(buffer, null, new CompletionHandler<Integer, Object>() {
+                        @Override
+                        public void completed(Integer len, Object attachment) {
+                            buffer.flip();
+                            String message = new String(buffer.array(), 0, len);
+                            System.out.println("收到客户端消息：" + message);
+
+                            // 异步发送消息给客户端
+                            channel.write(ByteBuffer.wrap(("你好，阿坤！").getBytes()), null, new CompletionHandler<Integer, Object>() {
+                                @Override
+                                public void completed(Integer result, Object attachment) {
+                                    // 关闭输出流
+                                    try {
+                                        channel.shutdownOutput();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void failed(Throwable exc, Object attachment) {
+                                    exc.printStackTrace();
+                                    try {
+                                        channel.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void failed(Throwable exc, Object attachment) {
+                            exc.printStackTrace();
+                            try {
+                                channel.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // 继续异步等待接收客户端连接
+                server.accept(null, this);
+            }
+
+            @Override
+            public void failed(Throwable exc, Object attachment) {
+                exc.printStackTrace();
+                // 继续异步等待接收客户端连接
+                server.accept(null, this);
+            }
+        });
+        // 等待所有连接都处理完毕
+        group.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
 	}
 }
