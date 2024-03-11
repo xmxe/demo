@@ -10,7 +10,7 @@ import java.util.concurrent.Delayed;
  * poll():获取并移除队列的超时元素,没有则返回空
  * take():获取并移除队列的超时元素,如果没有则wait当前线程,直到有元素满足超时条件,返回结果。
  */
-public class DelayQueueTest {
+public class DelayQueueTested {
     public static void main(String[] args) {
         // 模拟5个订单 超时时间为5s 超过5s如果订单没有支付则判定为超时订单
         OrderDelay oider1 = new OrderDelay("000001", TimeUnit.MILLISECONDS.convert(20, TimeUnit.SECONDS));
