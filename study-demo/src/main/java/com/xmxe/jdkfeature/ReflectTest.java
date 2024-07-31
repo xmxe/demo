@@ -35,12 +35,13 @@ public class ReflectTest {
             System.out.println("通过构造方法获取实例来代替class.newInstance()过时的方法"+s);
         }
 
-        // 获取所有pubic修饰的成员变量,getDeclaredField是获取类本身所有field,包括private
+        // 获取所有pubic修饰的成员变量
         Field[] fields = clazz.getFields();
         for (Field field : fields) {
             System.out.println("获取所有pubic修饰的成员变量==="+field);
+            // field.set(o, "");
         }
-        // 获取所有成员变量
+        // 获取所有成员变量,getDeclaredFields是获取类本身所有field,包括private
         Field[] fields2 =  clazz.getDeclaredFields();
         for (Field field1 : fields2) {
             System.out.println("获取所有成员变量==="+field1);
