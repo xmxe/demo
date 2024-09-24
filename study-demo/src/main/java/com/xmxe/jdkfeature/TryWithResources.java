@@ -1,7 +1,8 @@
 package com.xmxe.jdkfeature;
 
 /**
- *  try语句如何更优雅的关闭资源？请看这里！ (https://mp.weixin.qq.com/s/mG1YCV7oOfdv5WMQIc9Ngw)
+ * try语句如何更优雅的关闭资源？请看这里 (https://mp.weixin.qq.com/s/mG1YCV7oOfdv5WMQIc9Ngw)
+ * 为什么推荐大家优先使用try-with-resources而非try-finally (https://mp.weixin.qq.com/s/NeCtfWRCAGluuol0nUX7nw)
  */
 public class TryWithResources {
    public static void main(String[] args) {
