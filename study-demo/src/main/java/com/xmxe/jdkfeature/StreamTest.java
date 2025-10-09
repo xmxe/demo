@@ -445,6 +445,46 @@ public class StreamTest {
     }
 
     /**
+     * Stream.iterate()用于创建一个无限的顺序流，通常用于生成序列数据
+     */
+    public void streamIterate(){
+        // 创建从1开始的数字序列
+        Stream<Integer> numbers = Stream.iterate(1, n -> n + 1);
+        List<Integer> first5 = numbers.limit(5).collect(Collectors.toList());
+        System.out.println(first5); // [1, 2, 3, 4, 5]
+
+        // 创建偶数序列
+        Stream<Integer> evenNumbers = Stream.iterate(0, n -> n + 2);
+        List<Integer> first5Even = evenNumbers.limit(5).collect(Collectors.toList());
+        System.out.println(first5Even); // [0, 2, 4, 6, 8]
+        
+        // 创建小时序列
+        LocalDateTime start = LocalDateTime.of(2023, 10, 1, 8, 0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HH");
+
+        Stream<String> hourStream = Stream.iterate(start, time -> time.plusHours(1))
+            .map(time -> time.format(formatter));
+
+        List<String> hours = hourStream.limit(5).collect(Collectors.toList());
+        System.out.println(hours); 
+        // [20231001-08, 20231001-09, 20231001-10, 20231001-11, 20231001-12]
+
+        // Java8的iterate会创建无限流，必须使用limit()限制大小
+        // Java9+可以使用takeWhile()或带条件的iterate来避免无限流
+        
+        // Java9引入了带条件的iterate，可以避免无限流的问题
+        // 生成1到10的数字
+        Stream<Integer> numbers = Stream.iterate(1, n -> n <= 10, n -> n + 1);
+        List<Integer> result = numbers.collect(Collectors.toList());
+        System.out.println(result); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+        // 生成0到100的偶数
+        Stream<Integer> evens = Stream.iterate(0, n -> n <= 20, n -> n + 2);
+        List<Integer> evenList = evens.collect(Collectors.toList());
+        System.out.println(evenList); // [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+    }
+
+    /**
      * 将一个包含行数据的List转换为列数据并输出到控制台(List行转列)
      */
     public void row2column(){
