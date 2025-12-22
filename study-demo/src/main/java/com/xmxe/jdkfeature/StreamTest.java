@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -474,8 +476,8 @@ public class StreamTest {
         
         // Java9引入了带条件的iterate，可以避免无限流的问题
         // 生成1到10的数字
-        Stream<Integer> numbers = Stream.iterate(1, n -> n <= 10, n -> n + 1);
-        List<Integer> result = numbers.collect(Collectors.toList());
+        Stream<Integer> numbers_ = Stream.iterate(1, n -> n <= 10, n -> n + 1);
+        List<Integer> result = numbers_.collect(Collectors.toList());
         System.out.println(result); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
         // 生成0到100的偶数
