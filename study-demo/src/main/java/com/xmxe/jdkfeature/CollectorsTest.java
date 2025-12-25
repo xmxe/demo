@@ -1,5 +1,6 @@
 package com.xmxe.jdkfeature;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
@@ -118,5 +119,26 @@ public class CollectorsTest {
     
         // toSet()返回一个Collector收集器,它将输入元素累积到一个新的Set中。返回的Set的类型,可变性,可序列化或线程安全性无法保证;如果需要更多地控制返回的Set,请使用toCollection(Supplier)。这是一个Collector.Characteristics#UNORDERED无序收集器。
         Set<Student> set = students.stream().collect(Collectors.toSet());
+
+        // List<Map>根据Map里面某一个key的value值 去重
+        // 如:根据"id"去重，保留第一个出现的
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(Map.of("id", 1, "name", "Alice"));
+        list.add(Map.of("id", 2, "name", "Bob"));
+        list.add(Map.of("id", 1, "name", "Alice2")); // 重复id
+        list.add(Map.of("id", 3, "name", "Charlie"));
+        list.add(Map.of("id", 2, "name", "Bob2")); // 重复id
+        List<Map<String, Object>> distinctList = list.stream()
+            .collect(Collectors.toMap(
+                ma -> ma.get("id"),  // key: 根据id去重
+                ma -> ma,            // value: Map本身
+                (existing, replacement) -> existing  // 冲突时保留第一个
+            ))
+            .values()
+            .stream()
+            .collect(Collectors.toList());
+
+        System.out.println(distinctList);
+        // 输出: [{name=Alice, id=1}, {name=Bob, id=2}, {name=Charlie, id=3}]
     }
 }
