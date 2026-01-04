@@ -90,6 +90,8 @@ public class EnumTest {
 		System.out.println("枚举valueOf()返回的是enum " + WeekEnum.valueOf("SUN").getValue());// 枚举valueOf()返回的是enum 1
 
 		System.out.println(Arrays.toString(WeekEnum._table));// [SUN, MON, TUE, WED, THU, FRI, SAT]
+
+		System.out.println(EnergyTypeEnum.getNameByCode("6"));
 	}
 
 	/**

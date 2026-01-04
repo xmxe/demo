@@ -4,6 +4,9 @@ import java.util.BitSet;
 
 import com.google.common.base.Charsets;
 
+/**
+ * 布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。
+ */
 public class BloomFilter {
     /**
      * 一个长度为10亿的比特位
